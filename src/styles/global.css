@@ -1,0 +1,256 @@
+@import "tailwindcss";
+
+/* ── DESIGN TOKENS ─────────────────────────────────────── */
+:root {
+  --void: #030308;
+  --deep: #07080d;
+  --mid: #0c0e15;
+  --rise: #14171f;
+  --edge: #1f2330;
+
+  --text-pure: #ffffff;
+  --text-primary: #e8edf5;
+  --text-secondary: #8b94a8;
+  --text-tertiary: #555c6e;
+  --text-ghost: #2e3340;
+
+  --signal-cyan: #00d4ff;
+  --signal-violet: #a78bfa;
+  --signal-mint: #4ade80;
+  --signal-amber: #fbbf24;
+  --signal-blood: #ef4444;
+
+  --t-quick: 160ms;
+  --t-base: 240ms;
+  --t-deliberate: 400ms;
+  --t-ritual: 900ms;
+  --ease-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
+  --ease-entrance: cubic-bezier(0, 0, 0.38, 0.9);
+}
+
+/* ── BASE ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background: var(--void);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(0, 212, 255, 0.2);
+  color: var(--text-pure);
+}
+
+/* ── TYPOGRAPHY ─────────────────────────────────────────── */
+.font-cinzel   { font-family: 'Cinzel', Georgia, serif; }
+.font-inter    { font-family: 'Inter', system-ui, sans-serif; }
+.font-mono     { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+.font-serif    { font-family: 'Instrument Serif', Georgia, serif; }
+
+/* ── SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--edge); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-ghost); }
+
+/* ── SACRED FRAME CARD ─────────────────────────────────── */
+.sacred-frame {
+  position: relative;
+  background: var(--rise);
+  border: 1px solid var(--edge);
+  transition:
+    border-color var(--t-base) var(--ease-expressive),
+    box-shadow var(--t-base) var(--ease-expressive),
+    transform var(--t-base) var(--ease-expressive);
+}
+
+.sacred-frame .corner-tl,
+.sacred-frame .corner-tr,
+.sacred-frame .corner-bl,
+.sacred-frame .corner-br {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--signal-cyan);
+  border-style: solid;
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease-expressive);
+  pointer-events: none;
+}
+.sacred-frame .corner-tl { top: -1px; left: -1px;   border-width: 2px 0 0 2px; }
+.sacred-frame .corner-tr { top: -1px; right: -1px;  border-width: 2px 2px 0 0; }
+.sacred-frame .corner-bl { bottom: -1px; left: -1px;  border-width: 0 0 2px 2px; }
+.sacred-frame .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+.sacred-frame:hover .corner-tl,
+.sacred-frame:hover .corner-tr,
+.sacred-frame:hover .corner-bl,
+.sacred-frame:hover .corner-br { opacity: 1; }
+
+.sacred-frame:hover {
+  border-color: rgba(0, 212, 255, 0.25);
+  box-shadow: 0 8px 40px rgba(0, 212, 255, 0.07), 0 0 0 1px rgba(0, 212, 255, 0.06) inset;
+  transform: translateY(-2px);
+}
+
+/* ── SECTION REVEAL DEFAULTS ────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s var(--ease-entrance), transform 0.6s var(--ease-entrance);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── CUSTOM CURSOR DOT ──────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--signal-cyan);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 200ms, height 200ms, opacity 200ms;
+  opacity: 0;
+}
+.cursor-dot.visible { opacity: 0.7; }
+.cursor-dot.large { width: 18px; height: 18px; opacity: 0.5; }
+
+/* ── GLOW BUTTON ────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--signal-cyan);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 2px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--t-base) var(--ease-expressive),
+    border-color var(--t-base) var(--ease-expressive),
+    box-shadow var(--t-base) var(--ease-expressive),
+    transform var(--t-quick) var(--ease-expressive);
+}
+.btn-primary:hover {
+  background: rgba(0, 212, 255, 0.14);
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--edge);
+  border-radius: 2px;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--t-base), border-color var(--t-base), transform var(--t-quick);
+}
+.btn-ghost:hover {
+  color: var(--text-primary);
+  border-color: var(--text-ghost);
+  transform: translateY(-1px);
+}
+
+/* ── BUILDER MODE / ORACLE MODE OVERLAYS ────────────────── */
+.builder-mode-overlay,
+.oracle-overlay,
+.drakken-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.builder-mode-overlay {
+  background: rgba(3, 3, 8, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  opacity: 0;
+  transition: opacity 400ms;
+}
+.builder-mode-overlay.active { opacity: 1; }
+.builder-mode-overlay .close-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: none;
+  border: 1px solid var(--edge);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  transition: border-color var(--t-base), color var(--t-base);
+}
+.builder-mode-overlay .close-btn:hover {
+  border-color: var(--signal-cyan);
+  color: var(--signal-cyan);
+}
+
+.oracle-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(3, 3, 8, 0.85) 0%, rgba(3, 3, 8, 0.6) 100%);
+  opacity: 0;
+  animation: oracleReveal 3s var(--ease-entrance) forwards;
+}
+@keyframes oracleReveal {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.drakken-flash {
+  background: rgba(0, 212, 255, 0.04);
+  animation: drakkFlash 0.8s var(--ease-expressive) forwards;
+}
+@keyframes drakkFlash {
+  0%   { opacity: 0; }
+  15%  { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── REDUCED MOTION ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}

@@ -1,0 +1,113 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Drakken Labs — AI-Native Software Studio',
+  description = 'AI-native software studio. Premium desktop apps, automation systems, and frontend engineering. Built in Malaysia. Operating worldwide.',
+  ogImage = '/og.png',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://drakkenlabs.com');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Schema.org -->
+    <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "name": "Han Myo Naing",
+          "url": "https://drakkenlabs.com",
+          "sameAs": ["https://github.com/hanmyonaing"],
+          "jobTitle": "Software Engineer & AI-Native Builder",
+          "worksFor": { "@type": "Organization", "name": "Drakken Labs" }
+        },
+        {
+          "@type": "Organization",
+          "name": "Drakken Labs",
+          "url": "https://drakkenlabs.com",
+          "description": "AI-native software studio specializing in premium desktop apps, automation systems, and frontier frontend engineering.",
+          "founder": { "@type": "Person", "name": "Han Myo Naing" },
+          "foundingLocation": "Malaysia"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+  </head>
+
+  <body>
+    <!-- Custom cursor dot -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+
+    <slot />
+
+    <!-- Global init scripts -->
+    <script>
+      // Cursor dot
+      const dot = document.getElementById('cursor-dot');
+      if (dot && window.matchMedia('(pointer: fine)').matches) {
+        document.addEventListener('mousemove', (e) => {
+          dot.style.left = e.clientX + 'px';
+          dot.style.top = e.clientY + 'px';
+          dot.classList.add('visible');
+        });
+        document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
+        document.querySelectorAll('a, button, [role="button"], canvas').forEach((el) => {
+          el.addEventListener('mouseenter', () => dot.classList.add('large'));
+          el.addEventListener('mouseleave', () => dot.classList.remove('large'));
+        });
+      }
+    </script>
+
+    <script>
+      import { initTransitions } from '../scripts/transitions';
+      import { initEasterEggs } from '../scripts/easterEggs';
+      document.addEventListener('DOMContentLoaded', () => {
+        initTransitions();
+        initEasterEggs();
+      });
+    </script>
+  </body>
+</html>
+

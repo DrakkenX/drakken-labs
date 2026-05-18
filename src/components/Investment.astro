@@ -1,0 +1,227 @@
+---
+const tiers = [
+  {
+    name: 'STARTER',
+    from: 'From RM 3,000',
+    timeline: '1–2 weeks',
+    desc: 'Custom tools, MVPs, scripts, and workflow automations. Ideal for founders who need a specific problem solved without the overhead of an agency.',
+    features: ['Custom automation scripts', 'AI-integrated tools', 'Web forms & dashboards', 'Single-scope solutions'],
+    signal: 'cyan',
+    featured: false,
+  },
+  {
+    name: 'PROFESSIONAL',
+    from: 'From RM 8,000',
+    timeline: '3–6 weeks',
+    desc: 'Full applications, complex integrations, and premium frontends. For teams that need production-grade software with thoughtful architecture.',
+    features: ['Full-stack web apps', 'Claude API integrations', 'Premium frontend build', 'AI automation systems', 'Documentation included'],
+    signal: 'violet',
+    featured: true,
+  },
+  {
+    name: 'FLAGSHIP',
+    from: 'From RM 25,000',
+    timeline: '8–16 weeks',
+    desc: 'Native desktop apps, AI ecosystems, and multi-month engagements. Built with the same stack that shipped AEGIS. Limited to 2 slots per month.',
+    features: ['Tauri native desktop app', 'Multi-model AI architecture', 'Memory systems', 'Full test coverage', 'Post-ship support', 'Exclusive slot'],
+    signal: 'amber',
+    featured: false,
+  },
+];
+---
+
+<section id="investment" aria-labelledby="inv-heading">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <p class="section-label font-mono">INVESTMENT</p>
+      <h2 id="inv-heading" class="section-title font-cinzel">
+        What It Costs
+      </h2>
+      <p class="section-sub font-inter reveal" data-delay="100">
+        No retainers. No surprises. Fixed scope, fixed price.
+      </p>
+    </div>
+
+    <div class="tiers-grid" data-stagger>
+      {tiers.map(({ name, from, timeline, desc, features, signal, featured }) => (
+        <article
+          class={`sacred-frame tier-card stagger-child${featured ? ' tier-featured' : ''}`}
+          data-signal={signal}
+        >
+          <span class="corner-tl"></span><span class="corner-tr"></span>
+          <span class="corner-bl"></span><span class="corner-br"></span>
+
+          {featured && <div class="tier-badge font-mono">MOST POPULAR</div>}
+
+          <div class="tier-header">
+            <h3 class="tier-name font-cinzel">{name}</h3>
+            <p class="tier-from font-inter">{from}</p>
+            <p class="tier-timeline font-mono">{timeline}</p>
+          </div>
+
+          <p class="tier-desc font-inter">{desc}</p>
+
+          <ul class="tier-features">
+            {features.map((f) => (
+              <li class="font-inter">
+                <span class="feat-check" aria-hidden="true">◆</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          <a href="#contact" class={`tier-cta font-inter${featured ? ' btn-primary' : ' btn-ghost'}`}>
+            Start a conversation →
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <p class="inv-note font-inter reveal" data-delay="200">
+      Not sure which fits? <a href="#contact">Let's talk</a> — I'll tell you honestly if your idea fits a cheaper solution.
+    </p>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 7rem 2rem;
+    background: var(--deep);
+  }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-header { margin-bottom: 3.5rem; }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--text-tertiary); margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600; letter-spacing: 0.12em; color: var(--text-pure); margin-bottom: 0.75rem; }
+  .section-sub { font-size: 0.9rem; color: var(--text-secondary); }
+
+  /* ── TIERS ────────────────────────────────────────── */
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--edge);
+    border: 1px solid var(--edge);
+    margin-bottom: 2rem;
+  }
+
+  .tier-card {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background: var(--mid);
+    border: none;
+    border-radius: 0;
+    position: relative;
+  }
+
+  .tier-featured {
+    background: var(--rise);
+  }
+
+  .tier-badge {
+    position: absolute;
+    top: -1px;
+    right: 1.5rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--signal-violet);
+    background: var(--mid);
+    padding: 0.25rem 0.75rem;
+    border: 1px solid rgba(167,139,250,0.3);
+    border-top: 2px solid var(--signal-violet);
+  }
+
+  /* Signal color accents */
+  .tier-card[data-signal="cyan"]   { border-top: 2px solid rgba(0,212,255,0.4); }
+  .tier-card[data-signal="violet"] { border-top: 2px solid rgba(167,139,250,0.6); }
+  .tier-card[data-signal="amber"]  { border-top: 2px solid rgba(251,191,36,0.4); }
+
+  .tier-header { display: flex; flex-direction: column; gap: 0.25rem; }
+
+  .tier-name {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--text-pure);
+  }
+
+  .tier-from {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .tier-timeline {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+  }
+
+  .tier-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    flex-grow: 1;
+  }
+
+  .tier-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .tier-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .feat-check {
+    font-size: 0.45rem;
+    color: var(--signal-cyan);
+    margin-top: 0.3rem;
+    flex-shrink: 0;
+  }
+
+  .tier-cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+
+  /* ── NOTE ─────────────────────────────────────────── */
+  .inv-note {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    margin-top: 2rem;
+  }
+  .inv-note a {
+    color: var(--signal-cyan);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--t-quick);
+  }
+  .inv-note a:hover { border-bottom-color: var(--signal-cyan); }
+
+  /* ── STAGGER ──────────────────────────────────────── */
+  .stagger-child {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s var(--ease-entrance), transform 0.5s var(--ease-entrance);
+  }
+  .stagger-child.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 900px) {
+    .tiers-grid { grid-template-columns: 1fr; }
+    .tier-featured { order: -1; }
+  }
+</style>

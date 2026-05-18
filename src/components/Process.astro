@@ -1,0 +1,163 @@
+---
+const steps = [
+  {
+    num: '01',
+    name: 'DISCOVERY',
+    duration: '1–2 days',
+    desc: 'We map the problem space, define success, and surface the real constraints. No bloated briefs. Just clarity.',
+  },
+  {
+    num: '02',
+    name: 'ARCHITECTURE',
+    duration: '1–2 days',
+    desc: 'Tech stack chosen for the work, not the resume. Tradeoffs documented. Scope locked.',
+  },
+  {
+    num: '03',
+    name: 'BUILD',
+    duration: '5–14 days',
+    desc: 'Execution in focused sprints. AI-augmented velocity. Daily progress. No black holes.',
+  },
+  {
+    num: '04',
+    name: 'POLISH',
+    duration: '2–5 days',
+    desc: 'The 20% that determines perception. Micro-interactions, edge cases, performance tuning.',
+  },
+  {
+    num: '05',
+    name: 'SHIP',
+    duration: 'Delivery',
+    desc: 'Documented handoff. Deployment-ready. Post-ship support included.',
+  },
+];
+---
+
+<section id="process" aria-labelledby="process-heading">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <p class="section-label font-mono">PROCESS</p>
+      <h2 id="process-heading" class="section-title font-cinzel">
+        How It Works
+      </h2>
+    </div>
+
+    <!-- Connector line -->
+    <div class="process-line-track" aria-hidden="true">
+      <div class="process-line-fill"></div>
+    </div>
+
+    <div class="process-steps" data-stagger>
+      {steps.map(({ num, name, duration, desc }) => (
+        <article class="process-step stagger-child">
+          <div class="step-num font-mono">{num}</div>
+          <div class="step-content">
+            <h3 class="step-name font-cinzel">{name}</h3>
+            <p class="step-duration font-mono">{duration}</p>
+            <p class="step-desc font-inter">{desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 7rem 2rem;
+    background: var(--void);
+    overflow: hidden;
+  }
+
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-header { margin-bottom: 4rem; }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--text-tertiary); margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600; letter-spacing: 0.12em; color: var(--text-pure); }
+
+  /* ── CONNECTOR LINE ───────────────────────────────── */
+  .process-line-track {
+    position: relative;
+    height: 1px;
+    background: var(--edge);
+    margin-bottom: 0;
+    overflow: hidden;
+  }
+
+  .process-line-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, var(--signal-cyan), var(--signal-violet), var(--signal-mint));
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1.2s cubic-bezier(0.4, 0.14, 0.3, 1) 0.3s;
+  }
+
+  /* ── STEPS ────────────────────────────────────────── */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid var(--edge);
+    border-top: none;
+  }
+
+  .process-step {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--edge);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    cursor: default;
+    transition: background var(--t-base) var(--ease-expressive);
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: var(--mid); }
+
+  .step-num {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--signal-cyan);
+  }
+
+  .step-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--text-pure);
+  }
+
+  .step-duration {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+  }
+
+  .step-desc {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-top: auto;
+  }
+
+  /* ── STAGGER ──────────────────────────────────────── */
+  .stagger-child {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s var(--ease-entrance), transform 0.5s var(--ease-entrance);
+  }
+  .stagger-child.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 900px) {
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-step:nth-child(2n) { border-right: none; }
+    .process-step { border-bottom: 1px solid var(--edge); }
+  }
+  @media (max-width: 520px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step { border-right: none; }
+  }
+</style>

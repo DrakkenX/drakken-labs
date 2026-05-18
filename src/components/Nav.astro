@@ -1,0 +1,202 @@
+---
+const links = [
+  { label: 'Work',       href: '#showcase' },
+  { label: 'Services',   href: '#capabilities' },
+  { label: 'Process',    href: '#process' },
+  { label: 'Investment', href: '#investment' },
+  { label: 'Contact',    href: '#contact' },
+];
+---
+
+<header id="site-nav" role="banner">
+  <nav aria-label="Main navigation">
+    <a href="#hero" class="nav-wordmark font-cinzel" aria-label="Drakken Labs home">
+      DRAKKEN
+    </a>
+
+    <ul class="nav-links" role="list">
+      {links.map(({ label, href }) => (
+        <li>
+          <a href={href} data-nav-link class="nav-link font-inter">{label}</a>
+        </li>
+      ))}
+    </ul>
+
+    <a href="#contact" class="nav-cta btn-primary font-inter">
+      Start a Project
+    </a>
+
+    <!-- Mobile toggle -->
+    <button class="nav-mobile-toggle" aria-label="Menu" aria-expanded="false" id="nav-toggle">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
+    <ul role="list">
+      {links.map(({ label, href }) => (
+        <li><a href={href} class="font-inter">{label}</a></li>
+      ))}
+      <li><a href="#contact" class="font-inter nav-mobile-cta">Start a Project →</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-mobile-menu');
+  let open = false;
+
+  toggle?.addEventListener('click', () => {
+    open = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    menu?.classList.toggle('open', open);
+    if (menu) menu.setAttribute('aria-hidden', String(!open));
+  });
+
+  // Close on link click
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      open = false;
+      toggle?.setAttribute('aria-expanded', 'false');
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+    });
+  });
+
+  // Scroll-based nav opacity
+  const nav = document.getElementById('site-nav');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 40;
+    nav?.classList.toggle('scrolled', scrolled);
+  }, { passive: true });
+</script>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    padding: 0 2rem;
+    transition: background var(--t-base), backdrop-filter var(--t-base), border-color var(--t-base);
+    border-bottom: 1px solid transparent;
+  }
+
+  header.scrolled {
+    background: rgba(3, 3, 8, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: var(--edge);
+  }
+
+  nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-wordmark {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    color: var(--text-pure);
+    text-decoration: none;
+    transition: color var(--t-base);
+    flex-shrink: 0;
+  }
+  .nav-wordmark:hover { color: var(--signal-cyan); }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 0.25rem;
+    margin-left: auto;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 2px;
+    transition: color var(--t-quick), background var(--t-quick);
+  }
+  .nav-link:hover,
+  .nav-link:global(.nav-active) {
+    color: var(--text-primary);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .nav-cta {
+    margin-left: 1rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    flex-shrink: 0;
+  }
+
+  .nav-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+  }
+  .nav-mobile-toggle span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--text-secondary);
+    transition: transform var(--t-base), opacity var(--t-base);
+  }
+
+  .nav-mobile-menu {
+    display: none;
+    background: rgba(7, 8, 13, 0.97);
+    backdrop-filter: blur(20px);
+    padding: 1.5rem 2rem 2rem;
+    border-bottom: 1px solid var(--edge);
+  }
+  .nav-mobile-menu ul { list-style: none; }
+  .nav-mobile-menu li + li { margin-top: 0.25rem; }
+  .nav-mobile-menu a {
+    display: block;
+    padding: 0.75rem 0;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--edge);
+    transition: color var(--t-quick);
+  }
+  .nav-mobile-menu a:hover { color: var(--text-primary); }
+  .nav-mobile-cta {
+    color: var(--signal-cyan) !important;
+    border-bottom-color: transparent !important;
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .nav-mobile-toggle { display: flex; }
+    .nav-mobile-menu.open { display: block; }
+  }
+
+  /* Keyboard focus visible */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--signal-cyan);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+</style>

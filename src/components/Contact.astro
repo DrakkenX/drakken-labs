@@ -1,0 +1,356 @@
+---
+---
+
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="contact-inner">
+    <div class="contact-header reveal">
+      <p class="section-label font-mono">CONTACT</p>
+      <h2 id="contact-heading" class="contact-title font-cinzel">
+        Tell me what you're building.
+      </h2>
+    </div>
+
+    <div class="contact-body">
+      <!-- Form -->
+      <form
+        id="contact-form"
+        class="contact-form reveal"
+        data-delay="100"
+        novalidate
+      >
+        <div class="form-row">
+          <div class="form-field">
+            <label for="cf-name" class="form-label font-mono">NAME</label>
+            <input
+              type="text"
+              id="cf-name"
+              name="name"
+              class="form-input font-inter"
+              placeholder="Han Myo Naing"
+              required
+              autocomplete="name"
+            />
+          </div>
+          <div class="form-field">
+            <label for="cf-email" class="form-label font-mono">EMAIL</label>
+            <input
+              type="email"
+              id="cf-email"
+              name="email"
+              class="form-input font-inter"
+              placeholder="you@company.com"
+              required
+              autocomplete="email"
+            />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-type" class="form-label font-mono">PROJECT TYPE</label>
+          <div class="form-select-wrapper">
+            <select id="cf-type" name="type" class="form-select font-inter" required>
+              <option value="" disabled selected>Select a tier...</option>
+              <option value="starter">Starter — From RM 3,000</option>
+              <option value="professional">Professional — From RM 8,000</option>
+              <option value="flagship">Flagship — From RM 25,000</option>
+              <option value="exploring">Just exploring</option>
+            </select>
+            <span class="select-arrow" aria-hidden="true">↓</span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="cf-message" class="form-label font-mono">TELL ME ABOUT IT</label>
+          <textarea
+            id="cf-message"
+            name="message"
+            class="form-textarea font-inter"
+            placeholder="Describe your project, the problem it solves, and your timeline..."
+            rows="5"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-submit-row">
+          <button type="submit" id="cf-submit" class="btn-primary font-inter submit-btn">
+            <span id="btn-text">Send transmission</span>
+            <span id="btn-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="form-note font-mono">No spam. Reply within 24h.</p>
+        </div>
+
+        <!-- Success / Error states -->
+        <div id="form-success" class="form-success" aria-live="polite" hidden>
+          <span class="success-icon" aria-hidden="true">◆</span>
+          <span class="font-inter">Transmission received. I'll be in touch soon.</span>
+        </div>
+        <div id="form-error" class="form-error" aria-live="polite" hidden>
+          <span class="font-inter">Something went wrong. Email me directly at drakken.diablo@gmail.com</span>
+        </div>
+      </form>
+
+      <!-- Aside info -->
+      <aside class="contact-aside reveal" data-delay="200">
+        <div class="aside-block">
+          <p class="aside-label font-mono">RESPONSE TIME</p>
+          <p class="aside-value font-inter">Within 24 hours</p>
+        </div>
+        <div class="aside-block">
+          <p class="aside-label font-mono">LOCATION</p>
+          <p class="aside-value font-inter">Putra Heights, Selangor, Malaysia<br/><span style="color:var(--text-tertiary);font-size:0.8em">Operating worldwide</span></p>
+        </div>
+        <div class="aside-block">
+          <p class="aside-label font-mono">AVAILABILITY</p>
+          <p class="aside-value font-inter" style="color:var(--signal-mint)">2 slots remaining — May 2026</p>
+        </div>
+        <div class="aside-links">
+          <a href="https://github.com" target="_blank" rel="noopener" class="aside-link font-mono">GitHub ↗</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="aside-link font-mono">LinkedIn ↗</a>
+          <a href="https://x.com" target="_blank" rel="noopener" class="aside-link font-mono">X ↗</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const btnText = document.getElementById('btn-text');
+  const btnArrow = document.getElementById('btn-arrow');
+  const successEl = document.getElementById('form-success');
+  const errorEl = document.getElementById('form-error');
+  const submitBtn = document.getElementById('cf-submit') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!submitBtn || !btnText) return;
+
+    // Validate
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Loading state
+    submitBtn.disabled = true;
+    btnText.textContent = 'Sending...';
+    if (btnArrow) btnArrow.style.opacity = '0.3';
+
+    const data = new FormData(form);
+
+    try {
+      // Replace with your Formspree endpoint: https://formspree.io/f/YOUR_ID
+      const res = await fetch('https://formspree.io/f/xpwrqdvj', {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        form.reset();
+        if (successEl) successEl.hidden = false;
+        if (errorEl) errorEl.hidden = true;
+        btnText.textContent = 'Sent ✓';
+        // Notify Sentinel
+        document.dispatchEvent(new CustomEvent('sentinel:success'));
+        // Ring pulse on sentinel wrapper
+        const wrapper = document.getElementById('sentinel-wrapper');
+        wrapper?.classList.add('sentinel-success');
+        setTimeout(() => wrapper?.classList.remove('sentinel-success'), 800);
+      } else {
+        throw new Error('Non-ok response');
+      }
+    } catch {
+      if (errorEl) errorEl.hidden = false;
+      if (successEl) successEl.hidden = true;
+      btnText.textContent = 'Send transmission';
+      if (btnArrow) btnArrow.style.opacity = '1';
+      submitBtn.disabled = false;
+    }
+  });
+
+  // Focus underline effect
+  document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+    '.form-input, .form-textarea, .form-select'
+  ).forEach((el) => {
+    el.addEventListener('focus', () => el.classList.add('focused'));
+    el.addEventListener('blur', () => el.classList.remove('focused'));
+  });
+</script>
+
+<style>
+  section {
+    padding: 7rem 2rem;
+    background: var(--void);
+  }
+
+  .contact-inner { max-width: 1100px; margin: 0 auto; }
+  .contact-header { margin-bottom: 3.5rem; }
+
+  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--text-tertiary); margin-bottom: 0.75rem; }
+  .contact-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-pure);
+    font-style: italic;
+  }
+
+  /* ── LAYOUT ───────────────────────────────────────── */
+  .contact-body {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* ── FORM ─────────────────────────────────────────── */
+  .contact-form { display: flex; flex-direction: column; gap: 1.75rem; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .form-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--edge);
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    padding: 0.6rem 0;
+    width: 100%;
+    outline: none;
+    transition: border-color var(--t-base) var(--ease-expressive);
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: var(--text-ghost); }
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    border-bottom: 2px solid var(--signal-cyan);
+    padding-bottom: calc(0.6rem - 1px);
+  }
+  .form-input:focus-visible,
+  .form-textarea:focus-visible,
+  .form-select:focus-visible { outline: none; }
+
+  .form-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+  .form-select-wrapper { position: relative; }
+  .select-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    pointer-events: none;
+    font-size: 0.75rem;
+  }
+  .form-select option { background: var(--mid); color: var(--text-primary); }
+
+  /* Submit row */
+  .form-submit-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .submit-btn { padding: 0.875rem 2.25rem; font-size: 0.9rem; }
+  .form-note { font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-ghost); }
+
+  /* States */
+  .form-success {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(74,222,128,0.06);
+    border: 1px solid rgba(74,222,128,0.2);
+    color: var(--signal-mint);
+    font-size: 0.875rem;
+  }
+  .success-icon { font-size: 0.6rem; flex-shrink: 0; }
+  .form-error {
+    padding: 1rem;
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: var(--signal-blood);
+    font-size: 0.875rem;
+  }
+
+  /* ── ASIDE ────────────────────────────────────────── */
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    border: 1px solid var(--edge);
+    background: var(--mid);
+  }
+
+  .aside-block { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .aside-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+    margin-bottom: 0.15rem;
+  }
+
+  .aside-value {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  .aside-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--edge);
+  }
+
+  .aside-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--t-quick);
+  }
+  .aside-link:hover { color: var(--signal-cyan); }
+
+  /* ── REVEAL ───────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s var(--ease-entrance), transform 0.6s var(--ease-entrance);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 900px) {
+    .contact-body { grid-template-columns: 1fr; }
+    .contact-aside { order: -1; }
+  }
+  @media (max-width: 520px) {
+    .form-row { grid-template-columns: 1fr; }
+    .form-submit-row { flex-direction: column; align-items: flex-start; }
+    .submit-btn { width: 100%; justify-content: center; }
+  }
+</style>

@@ -1,0 +1,104 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer aria-label="Site footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="#hero" class="footer-wordmark font-cinzel">DRAKKEN LABS</a>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub" class="footer-social font-mono">GH</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="footer-social font-mono">LI</a>
+        <a href="https://x.com" target="_blank" rel="noopener" aria-label="X / Twitter" class="footer-social font-mono">X</a>
+      </div>
+    </div>
+
+    <div class="footer-divider" aria-hidden="true"></div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy font-cinzel">
+        &copy; {year} · Built in Malaysia · Han Myo Naing
+      </p>
+      <p class="footer-classify font-mono" aria-hidden="true">
+        CLASSIFIED · ALPHA-3 · CONTAIN THE FUTURE
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    padding: 3rem 2rem 2.5rem;
+    background: var(--void);
+    border-top: 1px solid var(--edge);
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-wordmark {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color var(--t-base);
+  }
+  .footer-wordmark:hover { color: var(--text-primary); }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .footer-social {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-ghost);
+    text-decoration: none;
+    transition: color var(--t-quick);
+  }
+  .footer-social:hover { color: var(--signal-cyan); }
+
+  .footer-divider {
+    height: 1px;
+    background: var(--edge);
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--text-ghost);
+    font-variant: small-caps;
+  }
+
+  .footer-classify {
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
+    color: var(--edge);
+  }
+
+  @media (max-width: 520px) {
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>

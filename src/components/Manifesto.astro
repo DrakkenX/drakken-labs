@@ -1,0 +1,109 @@
+---
+---
+
+<section id="manifesto" aria-labelledby="manifesto-heading">
+  <div class="manifesto-inner">
+    <p class="manifesto-label font-mono reveal" data-delay="0">MANIFESTO</p>
+
+    <div class="manifesto-lines" data-stagger>
+      <p class="manifesto-line stagger-child font-serif">
+        We build what shouldn't exist yet.
+      </p>
+      <p class="manifesto-line stagger-child font-serif manifesto-secondary">
+        Software as ceremony. Code as craft.<br />
+        AI as creative partner, not replacement.
+      </p>
+      <p class="manifesto-line stagger-child font-serif manifesto-secondary">
+        Quality compounds. Speed multiplies.<br />
+        The future belongs to those who build with intention.
+      </p>
+    </div>
+  </div>
+
+  <!-- Ambient particles -->
+  <div class="manifesto-bg" aria-hidden="true">
+    <div class="m-glow-1"></div>
+    <div class="m-glow-2"></div>
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--deep);
+    overflow: hidden;
+    padding: 6rem 2rem;
+  }
+
+  .manifesto-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    width: 100%;
+  }
+
+  .manifesto-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--text-tertiary);
+    margin-bottom: 3rem;
+  }
+
+  .manifesto-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .manifesto-line {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    line-height: 1.5;
+    color: var(--text-primary);
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+
+  .manifesto-secondary {
+    font-size: clamp(1rem, 2.2vw, 1.45rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ── STAGGER SETUP ────────────────────────────────── */
+  .stagger-child {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.65s var(--ease-entrance),
+      transform 0.65s var(--ease-entrance);
+  }
+  .stagger-child.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── AMBIENT ──────────────────────────────────────── */
+  .manifesto-bg { position: absolute; inset: 0; pointer-events: none; }
+  .m-glow-1 {
+    position: absolute;
+    width: 400px; height: 400px;
+    top: -100px; left: -100px;
+    background: radial-gradient(ellipse, rgba(167,139,250,0.05) 0%, transparent 70%);
+    animation: mGlow 18s ease-in-out infinite;
+  }
+  .m-glow-2 {
+    position: absolute;
+    width: 300px; height: 300px;
+    bottom: -50px; right: -50px;
+    background: radial-gradient(ellipse, rgba(0,212,255,0.04) 0%, transparent 70%);
+    animation: mGlow 22s ease-in-out infinite reverse;
+  }
+  @keyframes mGlow {
+    0%,100% { transform: scale(1) translate(0,0); }
+    50%     { transform: scale(1.15) translate(3%,5%); }
+  }
+</style>

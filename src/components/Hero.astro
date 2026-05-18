@@ -1,0 +1,255 @@
+---
+---
+
+<section id="hero" aria-label="Drakken Labs introduction">
+  <!-- Aurora background -->
+  <div class="hero-aurora" aria-hidden="true">
+    <div class="aurora-1"></div>
+    <div class="aurora-2"></div>
+    <div class="aurora-3"></div>
+  </div>
+
+  <!-- Light beam -->
+  <div class="hero-beam" aria-hidden="true"></div>
+
+  <!-- Content -->
+  <div class="hero-content">
+    <h1 class="hero-title font-cinzel" aria-label="Drakken Labs">
+      <span class="letter" style="--i:0">D</span><span class="letter" style="--i:1">R</span><span class="letter" style="--i:2">A</span><span class="letter" style="--i:3">K</span><span class="letter" style="--i:4">K</span><span class="letter" style="--i:5">E</span><span class="letter" style="--i:6">N</span>
+    </h1>
+
+    <p class="hero-name font-cinzel">han myo naing</p>
+
+    <div class="hero-divider" aria-hidden="true"></div>
+
+    <p class="hero-sub font-inter">
+      AI-NATIVE SOFTWARE STUDIO<br />
+      <span class="hero-location">Built in Malaysia · Operating worldwide</span>
+    </p>
+
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary font-inter">
+        Start a Project
+        <span aria-hidden="true">→</span>
+      </a>
+      <a href="#manifesto" class="btn-ghost font-inter">
+        Manifesto
+        <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span class="font-mono">scroll</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--void);
+  }
+
+  /* ── AURORA ─────────────────────────────────────────── */
+  .hero-aurora {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .aurora-1 {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    top: -25%;
+    left: -15%;
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.11) 0%, transparent 72%);
+    animation: auraDrift1 14s ease-in-out infinite;
+  }
+  .aurora-2 {
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    top: -15%;
+    right: -15%;
+    background: radial-gradient(ellipse at center, rgba(167,139,250,0.09) 0%, transparent 70%);
+    animation: auraDrift2 17s ease-in-out infinite;
+  }
+  .aurora-3 {
+    position: absolute;
+    width: 45%;
+    height: 45%;
+    bottom: 10%;
+    left: 30%;
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.04) 0%, transparent 70%);
+    animation: auraDrift3 20s ease-in-out infinite;
+  }
+  @keyframes auraDrift1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33%     { transform: translate(4%,8%) scale(1.08); }
+    66%     { transform: translate(-3%,4%) scale(0.96); }
+  }
+  @keyframes auraDrift2 {
+    0%,100% { transform: translate(0,0) scale(1.05); }
+    50%     { transform: translate(-6%,6%) scale(0.96); }
+  }
+  @keyframes auraDrift3 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    50%     { transform: translate(5%,-5%) scale(1.1); }
+  }
+
+  /* ── LIGHT BEAM ─────────────────────────────────────── */
+  .hero-beam {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 55%;
+    background: linear-gradient(to bottom, rgba(0,212,255,0.7) 0%, rgba(0,212,255,0.1) 80%, transparent 100%);
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: top center;
+    animation: beamDrop 0.5s cubic-bezier(0,0,0.38,0.9) 0.15s forwards;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes beamDrop {
+    from { transform: translateX(-50%) scaleY(0); opacity: 0.8; }
+    to   { transform: translateX(-50%) scaleY(1); opacity: 1; }
+  }
+
+  /* ── CONTENT ─────────────────────────────────────────── */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    max-width: 800px;
+  }
+
+  /* Title letter-by-letter */
+  .hero-title {
+    font-size: clamp(3rem, 12vw, 7.5rem);
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    color: var(--text-pure);
+    margin-bottom: 1rem;
+    line-height: 1;
+    user-select: none;
+  }
+  .hero-title .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: letterReveal 0.35s cubic-bezier(0,0,0.38,0.9) both;
+    animation-delay: calc(0.3s + var(--i) * 0.065s);
+  }
+  @keyframes letterReveal {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Name */
+  .hero-name {
+    font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    color: var(--text-tertiary);
+    text-transform: lowercase;
+    font-variant: small-caps;
+    margin-bottom: 1.75rem;
+    opacity: 0;
+    animation: fadeUp 0.4s var(--ease-entrance) calc(0.3s + 7 * 0.065s + 0.05s) both;
+  }
+
+  /* Divider */
+  .hero-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--edge);
+    margin: 0 auto 1.75rem;
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: dividerDraw 0.5s var(--ease-expressive) calc(0.3s + 7 * 0.065s + 0.15s) both;
+  }
+  @keyframes dividerDraw {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* Subtitle */
+  .hero-sub {
+    font-size: clamp(0.7rem, 1.4vw, 0.875rem);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.4s var(--ease-entrance) calc(0.3s + 7 * 0.065s + 0.35s) both;
+  }
+  .hero-location {
+    font-size: 0.7em;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    display: block;
+    margin-top: 0.3rem;
+  }
+
+  /* CTAs */
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.4s var(--ease-entrance) calc(0.3s + 7 * 0.065s + 0.55s) both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLL HINT ─────────────────────────────────────── */
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeUp 0.6s ease calc(0.3s + 7 * 0.065s + 1s) both;
+  }
+  .hero-scroll-hint span {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--text-ghost);
+  }
+  .scroll-bar {
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, var(--text-ghost), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 0.4; transform: scaleY(1); }
+    50%     { opacity: 1;   transform: scaleY(1.2); }
+  }
+
+  /* ── MOBILE ─────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    .hero-title { letter-spacing: 0.2em; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-ghost { width: 100%; max-width: 280px; justify-content: center; }
+  }
+</style>

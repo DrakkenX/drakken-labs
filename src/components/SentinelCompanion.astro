@@ -1,0 +1,104 @@
+---
+// The Sentinel — fixed iridescent companion. Lives on every page.
+---
+
+<div id="sentinel-wrapper" aria-hidden="true">
+  <canvas id="sentinel-canvas" width="80" height="80"></canvas>
+  <div id="sentinel-ring-pulse"></div>
+</div>
+
+<script>
+  const canvas = document.getElementById('sentinel-canvas') as HTMLCanvasElement | null;
+
+  if (canvas) {
+    // Reveal sentinel after 1.2s (per spec)
+    setTimeout(() => {
+      const wrapper = document.getElementById('sentinel-wrapper');
+      if (wrapper) wrapper.classList.add('ignited');
+    }, 1200);
+
+    // Lazy-load Three.js after first paint
+    const load = async () => {
+      const { initSentinel } = await import('../scripts/sentinel');
+      initSentinel(canvas);
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(load, { timeout: 2000 });
+    } else {
+      setTimeout(load, 200);
+    }
+  }
+</script>
+
+<style>
+  #sentinel-wrapper {
+    position: fixed;
+    top: 80px;
+    right: 60px;
+    width: 80px;
+    height: 80px;
+    z-index: 1000;
+    pointer-events: auto;
+    opacity: 0;
+    transform: scale(0.4);
+    transition:
+      opacity 700ms cubic-bezier(0, 0, 0.38, 0.9),
+      transform 700ms cubic-bezier(0, 0, 0.38, 0.9);
+  }
+
+  #sentinel-wrapper.ignited {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  #sentinel-canvas {
+    display: block;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  #sentinel-ring-pulse {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 212, 255, 0);
+    pointer-events: none;
+    transition: border-color 400ms;
+  }
+
+  /* Ring pulse on CTA success */
+  :global(.sentinel-success) #sentinel-ring-pulse {
+    animation: ringPulse 0.6s ease-out forwards;
+  }
+
+  @keyframes ringPulse {
+    0%   { border-color: rgba(0,212,255,0.8); transform: scale(1); }
+    100% { border-color: rgba(0,212,255,0); transform: scale(1.6); }
+  }
+
+  /* Mobile: smaller, bottom-right */
+  @media (max-width: 768px) {
+    #sentinel-wrapper {
+      top: auto;
+      bottom: 24px;
+      right: 24px;
+      width: 50px;
+      height: 50px;
+    }
+    #sentinel-canvas {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #sentinel-wrapper {
+      opacity: 1;
+      transform: scale(1);
+      transition: none;
+    }
+  }
+</style>
