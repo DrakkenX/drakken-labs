@@ -15,6 +15,10 @@
   if (!window.matchMedia('(pointer: fine)').matches) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  // Alias after null guard so TypeScript knows they're non-null
+  const dotEl  = dot;
+  const ringEl = ring;
+
   let dotX  = 0, dotY  = 0;
   let ringX = 0, ringY = 0;
   let mouseX = 0, mouseY = 0;
@@ -24,13 +28,13 @@
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    dot.classList.add('visible');
-    ring.classList.add('visible');
+    dotEl.classList.add('visible');
+    ringEl.classList.add('visible');
   });
 
   document.addEventListener('mouseleave', () => {
-    dot.classList.remove('visible');
-    ring.classList.remove('visible');
+    dotEl.classList.remove('visible');
+    ringEl.classList.remove('visible');
   });
 
   // Large state on interactive elements
@@ -38,18 +42,18 @@
     'a, button, [role="button"], input, textarea, select, label'
   ).forEach((el) => {
     el.addEventListener('mouseenter', () => {
-      ring.classList.add('large');
+      ringEl.classList.add('large');
       isOver = true;
     });
     el.addEventListener('mouseleave', () => {
-      ring.classList.remove('large');
+      ringEl.classList.remove('large');
       isOver = false;
     });
   });
 
   // Click spring — WAAPI, hardware accelerated
   document.addEventListener('click', () => {
-    ring.animate(
+    ringEl.animate(
       [
         { transform: 'translate(-50%,-50%) scale(1)',   opacity: '0.9' },
         { transform: 'translate(-50%,-50%) scale(1.5)', opacity: '0.3' },
@@ -70,10 +74,10 @@
     ringX += (mouseX - ringX) * 0.14;
     ringY += (mouseY - ringY) * 0.14;
 
-    dot.style.left  = dotX  + 'px';
-    dot.style.top   = dotY  + 'px';
-    ring.style.left = ringX + 'px';
-    ring.style.top  = ringY + 'px';
+    dotEl.style.left  = dotX  + 'px';
+    dotEl.style.top   = dotY  + 'px';
+    ringEl.style.left = ringX + 'px';
+    ringEl.style.top  = ringY + 'px';
   }
 
   tick();

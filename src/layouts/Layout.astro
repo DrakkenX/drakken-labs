@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/overlays.css';
 
 interface Props {
   title?: string;
@@ -63,7 +64,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://drakkenlabs
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Fonts — preconnect first for LCP optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -73,13 +73,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://drakkenlabs
   </head>
 
   <body>
+    <!-- Global film grain overlay (z-999) -->
+    <div class="overlay-grain" aria-hidden="true"></div>
+    <!-- Global edge vignette (z-998) -->
+    <div class="overlay-vignette" aria-hidden="true"></div>
+
     <!-- z=0: 3D scene canvas (behind everything) -->
     <slot name="scene" />
+
+    <!-- Cinematic loader (z-9999) -->
+    <slot name="loader" />
 
     <!-- z=10+: page content -->
     <slot />
 
-    <!-- Custom cursor (desktop only, loaded via component) -->
+    <!-- Custom cursor -->
     <slot name="cursor" />
 
     <!-- Transitions + easter eggs init -->

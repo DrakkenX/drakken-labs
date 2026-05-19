@@ -2,6 +2,23 @@
 ---
 
 <section id="hero" aria-label="Drakken Labs">
+  <!-- VIDEO BACKGROUND — deepest layer, below aurora + 3D canvas -->
+  <div class="hero-video-bg" aria-hidden="true">
+    <video
+      class="hero-video"
+      src="/media/hero-atmosphere.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+    ></video>
+    <!-- Radial vignette over video -->
+    <div class="hero-video-vignette"></div>
+    <!-- Film grain (Hero-only layer) -->
+    <div class="hero-video-grain"></div>
+  </div>
+
   <!-- Viewport corner ticks — cathedral signature -->
   <div class="viewport-corner tl" aria-hidden="true"></div>
   <div class="viewport-corner tr" aria-hidden="true"></div>
@@ -80,6 +97,57 @@
   }
 
   /* ── AURORA ──────────────────────────────────────────── */
+  /* ── VIDEO BG ──────────────────────────────────────── */
+  .hero-video-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+    filter: blur(2px) brightness(0.6) saturate(1.2);
+  }
+
+  .hero-video-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      #030308 90%
+    );
+  }
+
+  .hero-video-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  /* Mobile: disable video, keep gradient fallback */
+  @media (max-width: 768px) {
+    .hero-video { display: none; }
+    .hero-video-bg {
+      background: radial-gradient(ellipse at 50% 30%, rgba(0,212,255,0.08), transparent 65%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video { display: none; }
+  }
+
+  /* ── AURORA ──────────────────────────────────────── */
   .hero-aurora {
     position: absolute;
     inset: 0;

@@ -81,22 +81,23 @@ function initNavHighlight() {
 
 /* ── Process line draw ────────────────────────────────────── */
 function initProcessLine() {
-  const line = document.querySelector<HTMLElement>('.process-line-fill');
-  if (!line) return;
+  // Support both old CSS fill div and new SVG line element
+  const svgLine = document.querySelector<SVGLineElement>('.process-line-draw');
+  const cssLine = document.querySelector<HTMLElement>('.process-line-fill');
 
   const obs = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        // CSS transition handles the draw animation
-        line.style.transform = 'scaleX(1)';
+        if (svgLine) svgLine.style.strokeDashoffset = '0';
+        if (cssLine) cssLine.style.transform = 'scaleX(1)';
         obs.unobserve(entry.target);
       });
     },
     { threshold: 0.2 }
   );
 
-  const track = line.parentElement;
+  const track = (svgLine ?? cssLine)?.closest('.process-track');
   if (track) obs.observe(track);
 }
 

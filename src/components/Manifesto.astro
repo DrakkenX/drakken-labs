@@ -2,6 +2,20 @@
 ---
 
 <section id="manifesto" aria-labelledby="manifesto-heading">
+  <!-- Full-bleed photographic background -->
+  <div class="section-bg manifesto-bg" aria-hidden="true">
+    <img
+      src="/media/texture-1.jpg"
+      alt=""
+      class="section-bg-img"
+      loading="lazy"
+      decoding="async"
+      width="1920"
+      height="1080"
+    />
+    <div class="section-bg-vignette"></div>
+  </div>
+
   <!-- Left vertical thread — echoes hero beam -->
   <div class="thread-line" aria-hidden="true"></div>
 
@@ -14,9 +28,9 @@
       <span>MANIFESTO</span>
     </div>
 
-    <!-- Heading -->
+    <!-- Heading — "shouldn't" gets Instrument Serif italic accent -->
     <h2 id="manifesto-heading" class="manifesto-heading font-serif reveal" data-delay="80">
-      We build what shouldn't exist yet.
+      We build what <em class="word-accent">shouldn't</em> exist yet.
     </h2>
 
     <!-- Lines stagger in -->
@@ -33,6 +47,39 @@
   </div>
 </section>
 
+<script>
+  (() => {
+    // Parallax on manifesto background image
+    const bg = document.querySelector<HTMLElement>('.manifesto-bg .section-bg-img');
+    if (!bg) return;
+    if (window.matchMedia('(max-width: 768px)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const loadParallax = async () => {
+      const { gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to(bg, {
+        yPercent: -30,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#manifesto',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadParallax, { timeout: 3000 });
+    } else {
+      setTimeout(loadParallax, 600);
+    }
+  })();
+</script>
+
 <style>
   section {
     position: relative;
@@ -43,6 +90,36 @@
     background: var(--deep);
     overflow: hidden;
     z-index: var(--z-page);
+  }
+
+  /* ── BACKGROUND IMAGE ────────────────────────────────── */
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .section-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 120%; /* extra height for parallax travel */
+    object-fit: cover;
+    filter: brightness(0.25) saturate(0.6) blur(1px);
+    transform: translateY(0);
+    will-change: transform;
+  }
+
+  .section-bg-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 30% 50%,
+      transparent 0%,
+      #030308 80%
+    );
   }
 
   /* Ambient violet glow */
@@ -58,6 +135,7 @@
       transparent 70%
     );
     pointer-events: none;
+    z-index: 1;
     animation: mGlow 18s ease-in-out infinite;
   }
 
@@ -68,12 +146,12 @@
 
   .manifesto-inner {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     max-width: 720px;
     padding-left: 3rem;
   }
 
-  /* Heading — Instrument Serif italic for editorial authority */
+  /* Heading — Instrument Serif italic */
   .manifesto-heading {
     font-style: italic;
     font-size: clamp(1.8rem, 4.5vw, 3.5rem);
@@ -82,6 +160,15 @@
     margin-bottom: 3rem;
     letter-spacing: -0.01em;
     text-wrap: balance;
+  }
+
+  /* Instrument Serif italic accent on "shouldn't" */
+  .word-accent {
+    font-style: italic;
+    font-family: 'Instrument Serif', Georgia, serif;
+    color: rgba(255, 255, 255, 0.95);
+    /* subtle cyan tint — the emotional anchor */
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.12);
   }
 
   /* Paragraph lines */
@@ -109,5 +196,6 @@
     section { padding: 6rem 1.5rem; }
     .manifesto-inner { padding-left: 1.5rem; }
     .thread-line { left: 16px; }
+    .section-bg-img { filter: brightness(0.2) saturate(0.5) blur(2px); }
   }
 </style>

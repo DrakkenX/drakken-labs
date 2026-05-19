@@ -1,0 +1,55 @@
+/**
+ * Cinematic overlay system — two persistent fixed layers above all content.
+ * z-index 999 — below nav (100 → wrong, nav is z=100 so actually we're fine at 999
+ *   since these are pointer-events:none)
+ * Layer A: Animated film grain (SVG noise + flicker)
+ * Layer B: Edge vignette (radial dark gradient)
+ */
+
+/* ── LAYER A: Film Grain ─────────────────────────────────── */
+.overlay-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  /* SVG fractal noise as data URI */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  /* Film flicker — stepped translate shift every ~80ms */
+  animation: grainFlicker 0.72s steps(9) infinite;
+}
+
+@keyframes grainFlicker {
+  0%   { transform: translate(0, 0); }
+  11%  { transform: translate(-2px, 1px); }
+  22%  { transform: translate(1px, -2px); }
+  33%  { transform: translate(2px, 1px); }
+  44%  { transform: translate(-1px, 2px); }
+  55%  { transform: translate(0, -1px); }
+  66%  { transform: translate(-2px, -2px); }
+  77%  { transform: translate(1px, 2px); }
+  88%  { transform: translate(2px, -1px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ── LAYER B: Edge Vignette ──────────────────────────────── */
+.overlay-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(3, 3, 8, 0.40) 84%,
+    rgba(3, 3, 8, 0.80) 100%
+  );
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .overlay-grain { animation: none; }
+}

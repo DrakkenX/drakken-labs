@@ -2,8 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import SceneCanvas from '../components/SceneCanvas.astro';
 import CustomCursor from '../components/CustomCursor.astro';
+import CinematicLoader from '../components/CinematicLoader.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
+import HeroStats from '../components/HeroStats.astro';
 import Manifesto from '../components/Manifesto.astro';
 import Capabilities from '../components/Capabilities.astro';
 import Showcase from '../components/Showcase.astro';
@@ -14,19 +16,17 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
-  <!-- 3D scene sits behind all page content -->
   <SceneCanvas slot="scene" />
-
-  <!-- Custom cursor -->
+  <CinematicLoader slot="loader" />
   <CustomCursor slot="cursor" />
 
-  <!-- Skip-to-content accessibility link -->
   <a href="#main-content" class="skip-link font-inter">Skip to main content</a>
 
   <Nav />
 
   <main id="main-content" style="position:relative;z-index:var(--z-page)">
     <Hero />
+    <HeroStats />
     <Manifesto />
     <Capabilities />
     <Showcase />

@@ -1,0 +1,291 @@
+---
+// Hubtown-style scroll-pinned stats section.
+// Outer section is 500vh tall — inner content pins for that entire scroll.
+// 4 chapters transition at 25% scroll-progress intervals.
+---
+
+<!-- Outer scroll-area container — provides the scroll "runway" -->
+<section id="hero-stats" aria-label="Studio statistics">
+  <!-- Inner pinned frame — GSAP ScrollTrigger pins this -->
+  <div class="hero-stats-frame" id="hero-stats-frame">
+    <!-- Left vertical thread line -->
+    <div class="stats-thread" aria-hidden="true"></div>
+
+    <!-- Chapter 0: INTENTION -->
+    <div class="stat-chapter active" data-chapter="0" role="region" aria-label="Intention">
+      <p class="chapter-eyebrow font-cinzel">[ INTENTION ]</p>
+      <p class="chapter-stat font-serif">
+        <span class="stat-num font-mono" data-final="8959">0</span>&hairsp;lines
+      </p>
+      <p class="chapter-sub font-inter">
+        AEGIS v1.0 — civilian cyber defense, shipped in 5 days
+      </p>
+    </div>
+
+    <!-- Chapter 1: VELOCITY -->
+    <div class="stat-chapter" data-chapter="1" role="region" aria-label="Velocity">
+      <p class="chapter-eyebrow font-cinzel">[ VELOCITY ]</p>
+      <p class="chapter-stat font-serif">
+        5–10<span style="font-size:0.5em; vertical-align:super">×</span>&thinsp;output
+      </p>
+      <p class="chapter-sub font-inter">
+        AI-leveraged engineering, memory-driven, end to end
+      </p>
+    </div>
+
+    <!-- Chapter 2: CRAFT -->
+    <div class="stat-chapter" data-chapter="2" role="region" aria-label="Craft">
+      <p class="chapter-eyebrow font-cinzel">[ CRAFT ]</p>
+      <p class="chapter-stat font-serif">
+        60&thinsp;fps&nbsp;·&nbsp;0&thinsp;errors
+      </p>
+      <p class="chapter-sub font-inter">
+        Spring physics, sacred frames, surgical iteration
+      </p>
+    </div>
+
+    <!-- Chapter 3: PURPOSE -->
+    <div class="stat-chapter" data-chapter="3" role="region" aria-label="Purpose">
+      <p class="chapter-eyebrow font-cinzel">[ PURPOSE ]</p>
+      <p class="chapter-stat font-serif">
+        Built for those<br />who need defending
+      </p>
+      <p class="chapter-sub font-inter">
+        Software that ships. Code that compounds.
+      </p>
+    </div>
+
+    <!-- Right ambient glow -->
+    <div class="stats-ambient" aria-hidden="true"></div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    // GSAP + ScrollTrigger
+    const loadGSAP = async () => {
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+
+      const frame    = document.getElementById('hero-stats-frame');
+      const section  = document.getElementById('hero-stats');
+      const chapters = document.querySelectorAll<HTMLElement>('.stat-chapter');
+
+      if (!frame || !section || !chapters.length) return;
+
+      // Reduced motion: don't animate, just show chapter 0
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        chapters[0]?.classList.add('active');
+        return;
+      }
+
+      let activeIndex = 0;
+
+      function tweenNumber(el: HTMLElement, target: number) {
+        const start = performance.now();
+        const dur   = 800;
+        function step(now: number) {
+          const p = Math.min((now - start) / dur, 1);
+          const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+          el.textContent = String(Math.round(e * target));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      function showChapter(index: number) {
+        if (index === activeIndex) return;
+        const outEl = chapters[activeIndex];
+        const inEl  = chapters[index];
+        if (!outEl || !inEl) return;
+
+        gsap.to(outEl, {
+          opacity: 0,
+          y: -20,
+          duration: 0.4,
+          ease: 'power2.out',
+          onComplete: () => outEl.classList.remove('active'),
+        });
+
+        inEl.classList.add('active');
+        gsap.fromTo(inEl,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', delay: 0.1 }
+        );
+
+        // Tween numbers in the incoming chapter
+        const numEl = inEl.querySelector<HTMLElement>('.stat-num');
+        if (numEl && numEl.dataset['final']) {
+          tweenNumber(numEl, parseInt(numEl.dataset['final'], 10));
+        }
+
+        activeIndex = index;
+      }
+
+      // Initial number tween for chapter 0
+      const initNum = chapters[0]?.querySelector<HTMLElement>('.stat-num');
+      if (initNum && initNum.dataset['final']) {
+        tweenNumber(initNum, parseInt(initNum.dataset['final'], 10));
+      }
+
+      ScrollTrigger.create({
+        trigger: '#hero-stats',
+        pin: '#hero-stats-frame',
+        start: 'top top',
+        end: '+=400vh',
+        anticipatePin: 1,
+        onUpdate(self) {
+          const idx = Math.min(Math.floor(self.progress * 4), 3);
+          showChapter(idx);
+        },
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => loadGSAP(), { timeout: 3000 });
+    } else {
+      setTimeout(() => loadGSAP(), 500);
+    }
+  })();
+</script>
+
+<style>
+  /* Outer section — provides the scroll runway (5× viewport = 4 chapters) */
+  #hero-stats {
+    position: relative;
+    height: 500vh;
+    background: var(--void);
+    z-index: var(--z-page);
+  }
+
+  /* Inner frame — pinned by GSAP ScrollTrigger */
+  .hero-stats-frame {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 12vw;
+    overflow: hidden;
+  }
+
+  /* Left vertical thread line */
+  .stats-thread {
+    position: absolute;
+    left: calc(12vw - 2rem);
+    top: 15%;
+    bottom: 15%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(0, 212, 255, 0.45) 25%,
+      rgba(0, 212, 255, 0.45) 75%,
+      transparent
+    );
+  }
+
+  /* Ambient glow */
+  .stats-ambient {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40vw;
+    height: 40vw;
+    max-width: 600px;
+    max-height: 600px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(167, 139, 250, 0.06) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  /* ── CHAPTERS ────────────────────────────────────────── */
+  .stat-chapter {
+    position: absolute;
+    left: 12vw;
+    right: 12vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    max-width: 700px;
+  }
+
+  .stat-chapter.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition:
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Eyebrow label */
+  .chapter-eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.24em;
+    color: var(--signal-cyan);
+    font-variant: small-caps;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Main stat — large Instrument Serif */
+  .chapter-stat {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.1;
+    color: var(--text-pure);
+    letter-spacing: -0.02em;
+  }
+
+  /* Numeric counter inside stat */
+  .stat-num {
+    font-style: normal;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sub-line */
+  .chapter-sub {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    color: rgba(232, 237, 245, 0.6);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  /* ── MOBILE ──────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    /* Collapse pinned section on mobile — too complex for small screens */
+    #hero-stats {
+      height: auto;
+      min-height: 70vh;
+    }
+    .hero-stats-frame {
+      position: relative;
+      height: auto;
+      padding: 6rem 2rem;
+    }
+    .stat-chapter {
+      position: relative;
+      left: 0;
+      right: 0;
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    /* Show only chapter 0 on mobile */
+    .stat-chapter:not([data-chapter="0"]) { display: none; }
+  }
+</style>

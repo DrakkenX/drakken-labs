@@ -1,60 +1,109 @@
 ---
+// Geometric glyphs: triangle, square, hexagon, octagon, circle
+const glyphs = [
+  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-0"><polygon points="12,3 22,20 2,20" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-1"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-2"><polygon points="12,2 20,7 20,17 12,22 4,17 4,7" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-3"><polygon points="8,2 16,2 22,8 22,16 16,22 8,22 2,16 2,8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-4"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>`,
+];
+
 const steps = [
   {
     num: '01',
     name: 'DISCOVERY',
     duration: '1–2 days',
     desc: 'Map the problem space, define success, surface the real constraints. No bloated briefs.',
-    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>`,
   },
   {
     num: '02',
     name: 'ARCHITECTURE',
     duration: '1–2 days',
     desc: 'Stack chosen for the work, not the resume. Tradeoffs documented. Scope locked.',
-    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1"/><path d="M2 6H14M6 6V14" stroke="currentColor" stroke-width="1"/></svg>`,
   },
   {
     num: '03',
     name: 'EXECUTION',
     duration: '5–14 days',
     desc: 'AI-augmented sprints. Daily builds. No black holes between check-ins.',
-    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
   {
     num: '04',
     name: 'CRAFT',
     duration: '2–5 days',
     desc: 'The 20% that determines perception. Micro-interactions, edge cases, taste-driven iteration.',
-    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6.5H15L11 9.5L12.5 14L8 11L3.5 14L5 9.5L1 6.5H6L8 2Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>`,
   },
   {
     num: '05',
     name: 'SHIP',
     duration: 'Delivery',
     desc: 'Documented handoff. Deployment-ready. Post-ship support included.',
-    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2V14M2 8L8 2L14 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
 ];
 ---
 
 <section id="process" aria-labelledby="process-heading">
+  <!-- Full-bleed photographic background -->
+  <div class="section-bg process-bg" aria-hidden="true">
+    <img
+      src="/media/texture-3.jpg"
+      alt=""
+      class="section-bg-img"
+      loading="lazy"
+      decoding="async"
+      width="1920"
+      height="1080"
+    />
+    <div class="section-bg-vignette"></div>
+  </div>
+
   <div class="section-inner">
     <div class="section-header reveal">
       <div class="section-label"><span>PROCESS</span></div>
-      <h2 id="process-heading" class="section-heading">How It Works</h2>
+      <h2 id="process-heading" class="section-heading">
+        How It <em class="heading-accent font-serif">Works</em>
+      </h2>
     </div>
 
-    <!-- Animated connector line -->
+    <!-- Animated SVG connector line (replaces plain div) -->
     <div class="process-track" aria-hidden="true">
-      <div class="process-line-fill"></div>
+      <svg class="process-svg-line" viewBox="0 0 1200 2" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#00d4ff"/>
+            <stop offset="50%"  stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#00d4ff"/>
+          </linearGradient>
+        </defs>
+        <!-- Static base line -->
+        <line x1="0" y1="1" x2="1200" y2="1" stroke="#1f2330" stroke-width="1"/>
+        <!-- Animated gradient dash that draws on scroll-trigger -->
+        <line
+          class="process-line-draw"
+          x1="0" y1="1" x2="1200" y2="1"
+          stroke="url(#lineGrad)"
+          stroke-width="1.5"
+          stroke-dasharray="1200"
+          stroke-dashoffset="1200"
+        />
+        <!-- Continuous flowing dash on top -->
+        <line
+          class="process-line-flow"
+          x1="0" y1="1" x2="1200" y2="1"
+          stroke="url(#lineGrad)"
+          stroke-width="1"
+          stroke-dasharray="60 40"
+          stroke-dashoffset="0"
+          opacity="0.5"
+        />
+      </svg>
     </div>
 
     <!-- Steps -->
     <div class="process-steps" data-stagger data-stagger-step="80">
-      {steps.map(({ num, name, duration, desc, icon }) => (
-        <article class="process-step stagger-child">
-          <div class="step-icon" aria-hidden="true" set:html={icon} />
+      {steps.map(({ num, name, duration, desc }, i) => (
+        <article class="process-step stagger-child" data-step={i}>
+          <div class="step-glyph" aria-hidden="true" set:html={glyphs[i]} />
           <div class="step-num font-mono">{num}</div>
           <div class="step-name font-cinzel">{name}</div>
           <div class="step-duration font-mono">{duration}</div>
@@ -65,6 +114,51 @@ const steps = [
   </div>
 </section>
 
+<script>
+  (() => {
+    // Active step pulse on viewport intersection
+    const steps = document.querySelectorAll<HTMLElement>('.process-step');
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('step-active', entry.isIntersecting);
+        });
+      },
+      { threshold: 0.6, rootMargin: '-20% 0px -20% 0px' }
+    );
+    steps.forEach((s) => obs.observe(s));
+
+    // Process background parallax
+    const bg = document.querySelector<HTMLElement>('.process-bg .section-bg-img');
+    if (!bg) return;
+    if (window.matchMedia('(max-width: 768px)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const loadParallax = async () => {
+      const { gsap } = await import('gsap');
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to(bg, {
+        yPercent: -30,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#process',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadParallax, { timeout: 3000 });
+    } else {
+      setTimeout(loadParallax, 600);
+    }
+  })();
+</script>
+
 <style>
   section {
     padding: 8rem 2rem;
@@ -74,32 +168,71 @@ const steps = [
     position: relative;
   }
 
-  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
   .section-header { margin-bottom: 3.5rem; }
 
-  /* ── CONNECTOR LINE ─────────────────────────────────── */
-  .process-track {
-    position: relative;
-    height: 1px;
-    background: var(--edge);
+  /* Instrument Serif italic accent */
+  .heading-accent {
+    font-style: italic;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1em;
+  }
+
+  /* ── SECTION BG ─────────────────────────────────────── */
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
     overflow: hidden;
   }
 
-  .process-line-fill {
+  .section-bg-img {
     position: absolute;
-    inset-block: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
-    background: linear-gradient(
-      to right,
-      var(--signal-cyan) 0%,
-      var(--signal-violet) 50%,
-      var(--signal-mint) 100%
+    height: 120%;
+    object-fit: cover;
+    filter: brightness(0.2) blur(3px);
+    will-change: transform;
+  }
+
+  .section-bg-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at 60% 50%,
+      transparent 20%,
+      #030308 80%
     );
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-    box-shadow: 0 0 8px rgba(0,212,255,0.4);
+  }
+
+  /* ── SVG CONNECTOR LINE ─────────────────────────────── */
+  .process-track {
+    width: 100%;
+    height: 2px;
+    overflow: visible;
+  }
+
+  .process-svg-line {
+    width: 100%;
+    height: 2px;
+    overflow: visible;
+    display: block;
+  }
+
+  /* Draw-on reveal (triggered by transitions.ts observer) */
+  .process-line-draw {
+    transition: stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  }
+
+  /* Continuous flowing dash — 8s loop */
+  .process-line-flow {
+    animation: dashFlow 8s linear infinite;
+  }
+
+  @keyframes dashFlow {
+    to { stroke-dashoffset: -200; }
   }
 
   /* ── STEPS ──────────────────────────────────────────── */
@@ -124,19 +257,42 @@ const steps = [
       box-shadow var(--t-base) var(--ease-out-expo);
   }
 
-  .process-step:hover {
+  .process-step:hover,
+  .process-step.step-active {
     background: var(--rise);
     box-shadow: 0 -2px 0 var(--signal-cyan) inset;
   }
 
-  .step-icon {
-    width: 16px;
-    height: 16px;
+  /* Geometric glyph */
+  .step-glyph {
+    width: 20px;
+    height: 20px;
     color: var(--signal-cyan);
-    opacity: 0.6;
-    transition: opacity var(--t-base);
+    opacity: 0.55;
+    transition:
+      opacity var(--t-base),
+      transform var(--t-deliberate) var(--ease-spring);
   }
-  .process-step:hover .step-icon { opacity: 1; }
+
+  /* Each glyph rotates at its own speed */
+  .glyph-svg { width: 100%; height: 100%; }
+
+  .glyph-0 { animation: glyphSpin 14s linear infinite; }
+  .glyph-1 { animation: glyphSpin 18s linear infinite reverse; }
+  .glyph-2 { animation: glyphSpin 12s linear infinite; }
+  .glyph-3 { animation: glyphSpin 22s linear infinite reverse; }
+  .glyph-4 { animation: glyphSpin 10s linear infinite; }
+
+  @keyframes glyphSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Active step: pulse cyan + scale */
+  .process-step.step-active .step-glyph,
+  .process-step:hover .step-glyph {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 
   .step-num {
     font-size: 0.55rem;
@@ -173,5 +329,12 @@ const steps = [
   }
   @media (max-width: 520px) {
     .process-steps { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .section-bg-img { filter: brightness(0.15) blur(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glyph-0, .glyph-1, .glyph-2, .glyph-3, .glyph-4 { animation: none; }
+    .process-line-flow { animation: none; }
   }
 </style>
