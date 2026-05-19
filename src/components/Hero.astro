@@ -4,6 +4,11 @@
 <!-- Noto Serif JP for kanji backdrop — async, non-blocking -->
 <style is:global>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap');
+
+  /* ── Signature character — swap here to change the kanji ── */
+  :root {
+    --signature-char: '守';  /* mamoru: guard / defend / protect */
+  }
 </style>
 
 <section id="hero" aria-label="Drakken Labs" data-animate="false">
@@ -22,7 +27,8 @@
   <!-- ────────────────────────────────────────────────────── -->
   <!-- LAYER 1: KANJI BACKDROP — 守 (mamoru / "protect")    -->
   <!-- ────────────────────────────────────────────────────── -->
-  <div class="hero-kanji" aria-hidden="true" data-parallax="20">守</div>
+  <!-- data-parallax drives the JS mouse offset; char lives in CSS var -->
+  <div class="hero-kanji" aria-hidden="true" data-parallax="20"></div>
 
   <!-- LAYER 3: SAMURAI LINES — flanking the wordmark -->
   <div class="samurai-lines" aria-hidden="true">
@@ -163,8 +169,8 @@
 
     const loader = document.getElementById('cinematic-loader');
     if (!loader || loader.style.display === 'none' || !loader.parentElement) {
-      // No loader present or already dismissed
-      setTimeout(startAnimations, 60);
+      // No loader present or already dismissed — 300ms grace to ensure render
+      setTimeout(startAnimations, 300);
     } else {
       // Watch for loader to be removed / hidden
       const obs = new MutationObserver(() => {
@@ -295,37 +301,45 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    /* Base transform — breathing overrides this in its keyframes */
     transform: translate(calc(-50% + 8vw), -50%);
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+    will-change: transform;
+    /* Default opacity: 0 until data-animate fires */
+    opacity: 0;
+  }
+
+  /* The actual character lives here — swap via --signature-char */
+  .hero-kanji::before {
+    content: var(--signature-char, '\5B88'); /* 守 unicode fallback */
+    display: block;
     font-family: 'Noto Serif JP', 'Hiragino Mincho Pro', 'Yu Mincho', 'MS PMincho', serif;
     font-weight: 200;
     font-size: 70vh;
     line-height: 1;
     color: var(--signal-cyan);
-    opacity: 0;
-    pointer-events: none;
-    user-select: none;
-    text-shadow: 0 0 80px rgba(0, 212, 255, 0.3);
-    z-index: 1;
-    will-change: transform;
-    /* Breathing animation */
-    animation: kanjiBreath 12s ease-in-out 2s infinite;
+    text-shadow:
+      0 0 120px rgba(0, 212, 255, 0.4),
+      0 0 60px  rgba(0, 212, 255, 0.2);
   }
 
   @keyframes kanjiBreath {
-    0%, 100% { transform: translate(calc(-50% + 8vw), -50%) scale(1); }
+    0%, 100% { transform: translate(calc(-50% + 8vw), -50%) scale(1);    }
     50%       { transform: translate(calc(-50% + 8vw), -50%) scale(1.02); }
   }
 
-  /* Reveal animation — triggered by data-animate */
+  /* Reveal + breathe — triggered by data-animate */
   section[data-animate="true"] .hero-kanji {
     animation:
-      kanjiFadeIn 1.5s cubic-bezier(0, 0, 0.38, 0.9) 0ms both,
-      kanjiBreath 12s ease-in-out 2s infinite;
+      kanjiFadeIn  1.5s cubic-bezier(0, 0, 0.38, 0.9) 0ms     both,
+      kanjiBreath 12s  ease-in-out                    1.5s infinite;
   }
 
   @keyframes kanjiFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 0.04; }
+    from { opacity: 0;    }
+    to   { opacity: 0.10; }
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -339,7 +353,7 @@
     width: min(900px, 90vw);
     height: 220px;
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;  /* above kanji z=2, below content z=4 */
     display: flex;
     justify-content: space-between;
     align-items: stretch;
@@ -381,8 +395,8 @@
     width: 1px;
     background: linear-gradient(
       to bottom,
-      var(--signal-cyan) 0%,
-      rgba(0, 212, 255, 0.3) 60%,
+      rgba(0, 212, 255, 0.9) 0%,
+      rgba(0, 212, 255, 0.5) 55%,
       transparent 100%
     );
     min-height: 160px;
@@ -413,31 +427,28 @@
     content: '';
     position: absolute;
     top: -100%;
-    left: -60%;
-    width: 200px;
+    left: -80%;
+    width: 320px;
     height: 200%;
     background: linear-gradient(
       105deg,
       transparent 0%,
-      rgba(0, 212, 255, 0.06) 40%,
-      rgba(0, 212, 255, 0.08) 50%,
-      rgba(0, 212, 255, 0.06) 60%,
+      rgba(0, 212, 255, 0.12) 35%,
+      rgba(0, 212, 255, 0.18) 50%,
+      rgba(0, 212, 255, 0.12) 65%,
       transparent 100%
     );
-    transform: rotate(0deg);
-    animation: bladeFlash 1.2s ease-in-out 5s infinite;
-    animation-delay: 5s;
-    /* Cycles every 8 seconds: 1.2s active, 6.8s waiting */
-    animation-iteration-count: infinite;
-    animation-duration: 8s;
-    animation-timing-function: linear;
+    /* Single clean declaration — no overrides below */
+    animation: bladeFlash 8s linear 5s infinite;
   }
 
   @keyframes bladeFlash {
-    0%        { transform: translateX(-100%) rotate(0deg); opacity: 0; }
-    5%        { opacity: 1; }
-    14%       { transform: translateX(200vw) rotate(0deg); opacity: 0; }
-    15%, 100% { transform: translateX(200vw); opacity: 0; }
+    /* 0-12.5% = first second: streak travels across viewport */
+    0%    { transform: translateX(-20%);   opacity: 0; }
+    3%    { transform: translateX(0%);     opacity: 1; }
+    12%   { transform: translateX(160vw); opacity: 0; }
+    /* 12.5-100% = waiting until next cycle */
+    13%, 100% { transform: translateX(160vw); opacity: 0; }
   }
 
   /* ─────────────────────────────────────────────────────── */
@@ -574,8 +585,8 @@
 
   section[data-animate="true"] .drakken-l {
     animation:
-      strokeDraw  1.8s cubic-bezier(0.16,1,0.3,1) calc(0.6s + var(--li) * 0.12s) both,
-      strokeFade  0.4s ease                        calc(0.6s + var(--li) * 0.12s + 1.8s) both;
+      strokeDraw  1.4s cubic-bezier(0.16,1,0.3,1) calc(0.6s + var(--li) * 0.18s) both,
+      strokeFade  0.4s ease                        calc(0.6s + var(--li) * 0.18s + 1.4s) both;
   }
 
   @keyframes strokeDraw {
@@ -615,7 +626,7 @@
   }
 
   section[data-animate="true"] .drakken-fill .fl {
-    animation: fillReveal 0.5s cubic-bezier(0.16,1,0.3,1) calc(0.6s + var(--i) * 0.12s + 1.75s) both;
+    animation: fillReveal 0.5s cubic-bezier(0.16,1,0.3,1) calc(0.6s + var(--i) * 0.18s + 1.35s) both;
   }
 
   @keyframes fillReveal {
@@ -713,10 +724,11 @@
   .quote-text {
     font-family: 'Instrument Serif', Georgia, serif;
     font-style: italic;
-    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 0.02em;
+    font-size: clamp(1.1rem, 2vw, 1.625rem);
+    color: rgba(255, 255, 255, 0.70);
+    letter-spacing: 0.04em;
     line-height: 1.4;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.10);
   }
 
   .quote-attr {
@@ -799,40 +811,46 @@
   }
 
   section[data-animate="true"] .hero-scroll-prompt {
-    animation: fadeIn 0.6s ease 2.8s both;
+    animation: fadeIn 0.8s ease 2.8s both;
+  }
+
+  /* Explicit final opacity so the element stays visible after animation */
+  section[data-animate="true"] .hero-scroll-prompt[style*="opacity"] {
+    /* JS scroll handler overrides — this comment preserves intent */
   }
 
   .scroll-label {
     font-size: 0.6rem;
     letter-spacing: 0.3em;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.60);
   }
 
   .scroll-track {
     position: relative;
     width: 1px;
-    height: 32px;
-    background: rgba(255,255,255,0.15);
+    height: 40px;
+    background: rgba(255, 255, 255, 0.20);
     overflow: hidden;
   }
 
   .scroll-dot {
     position: absolute;
-    top: -4px;
+    top: -5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--signal-cyan);
+    box-shadow: 0 0 6px rgba(0, 212, 255, 0.8);
     animation: dotTravel 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 
   @keyframes dotTravel {
-    0%   { top: -4px; opacity: 0; }
+    0%   { top: -5px; opacity: 0; }
     10%  { opacity: 1; }
-    90%  { opacity: 1; }
-    100% { top: 36px; opacity: 0; }
+    88%  { opacity: 1; }
+    100% { top: 45px; opacity: 0; }
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -866,10 +884,8 @@
      MOBILE
      ═══════════════════════════════════════════════════════ */
   @media (max-width: 768px) {
-    .hero-kanji {
-      font-size: 50vh;
-      transform: translate(-50%, -50%);
-    }
+    .hero-kanji::before { font-size: 50vh; }
+    .hero-kanji { transform: translate(-50%, -50%); }
     .samurai-lines { display: none; }
   }
 
@@ -894,7 +910,7 @@
     .drakken-l  { stroke-dashoffset: 0; stroke-opacity: 0; }
     .drakken-fill .fl { opacity: 1; filter: none; }
     section[data-animate="true"] * { animation-duration: 0.01ms !important; }
-    .hero-kanji { opacity: 0.04 !important; }
+    .hero-kanji { opacity: 0.10 !important; }
     .hero-name, .hero-tagline, .hero-sub, .hero-quote,
     .hero-cta, .hero-scroll-prompt, .viewport-corner { opacity: 1 !important; }
     .viewport-corner {
