@@ -1,56 +1,161 @@
 ---
+// 12 ambient particles — pure CSS, no JS
+const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;delay:number;dx:number;dy:number}> = [
+  { x:'8%',  y:'18%', size:2, opacity:0.28, dur:13, delay:0,  dx:12,  dy:-10 },
+  { x:'22%', y:'62%', size:3, opacity:0.18, dur:16, delay:2,  dx:-8,  dy:14  },
+  { x:'42%', y:'12%', size:2, opacity:0.32, dur:11, delay:4,  dx:10,  dy:8   },
+  { x:'68%', y:'38%', size:2, opacity:0.22, dur:14, delay:1,  dx:-14, dy:-8  },
+  { x:'83%', y:'72%', size:3, opacity:0.16, dur:17, delay:3,  dx:8,   dy:-12 },
+  { x:'12%', y:'82%', size:2, opacity:0.26, dur:12, delay:5,  dx:-10, dy:-6  },
+  { x:'55%', y:'52%', size:2, opacity:0.20, dur:15, delay:2,  dx:6,   dy:10  },
+  { x:'88%', y:'22%', size:3, opacity:0.18, dur:10, delay:6,  dx:-8,  dy:14  },
+  { x:'34%', y:'88%', size:2, opacity:0.24, dur:13, delay:1,  dx:14,  dy:-8  },
+  { x:'76%', y:'8%',  size:2, opacity:0.20, dur:16, delay:4,  dx:-6,  dy:12  },
+  { x:'60%', y:'68%', size:3, opacity:0.16, dur:12, delay:3,  dx:10,  dy:-10 },
+  { x:'4%',  y:'44%', size:2, opacity:0.30, dur:14, delay:0,  dx:-12, dy:8   },
+];
 ---
 
 <section id="manifesto" aria-labelledby="manifesto-heading">
-  <!-- Full-bleed photographic background -->
-  <div class="section-bg manifesto-bg" aria-hidden="true">
+
+  <!-- L1: Cosmic texture background -->
+  <div class="m-bg" aria-hidden="true">
     <img
       src="/media/texture-1.jpg"
       alt=""
-      class="section-bg-img"
+      class="m-bg-img"
       loading="lazy"
       decoding="async"
       width="1920"
       height="1080"
     />
-    <div class="section-bg-vignette"></div>
+    <div class="m-bg-vignette"></div>
   </div>
 
-  <!-- Left vertical thread — echoes hero beam -->
-  <div class="thread-line" aria-hidden="true"></div>
+  <!-- L6: Ambient floating particles (pure CSS) -->
+  <div class="m-particles" aria-hidden="true">
+    {particles.map((p, i) => (
+      <div
+        class={`particle particle-${i}`}
+        style={`left:${p.x};top:${p.y};width:${p.size}px;height:${p.size}px;opacity:${p.opacity};animation-duration:${p.dur}s;animation-delay:-${p.delay}s;--dx:${p.dx}px;--dy:${p.dy}px`}
+      ></div>
+    ))}
+  </div>
 
-  <!-- Violet ambient -->
-  <div class="manifesto-glow" aria-hidden="true"></div>
+  <!-- L7: Side ornament lines -->
+  <div class="ornament ornament-l" aria-hidden="true">
+    <div class="ornament-line"></div>
+    <span class="ornament-text">EST · 2025</span>
+    <div class="ornament-line"></div>
+  </div>
+  <div class="ornament ornament-r" aria-hidden="true">
+    <div class="ornament-line"></div>
+    <span class="ornament-text">DRAKKEN LABS</span>
+    <div class="ornament-line"></div>
+  </div>
 
-  <div class="manifesto-inner">
-    <!-- Section label with flanking lines -->
-    <div class="section-label reveal">
-      <span>MANIFESTO</span>
+  <!-- Violet ambient glow -->
+  <div class="m-glow" aria-hidden="true"></div>
+
+  <!-- Main editorial content -->
+  <div class="m-inner">
+
+    <!-- L2: DANZAN-style section label -->
+    <div class="m-label" aria-label="Manifesto">
+      <div class="m-label-line"></div>
+      <div class="m-label-center">
+        <!-- Δ triangle left -->
+        <svg class="m-delta" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="5,0 10,10 0,10" fill="none" stroke="#00d4ff" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+        <span class="m-label-text font-cinzel">MANIFESTO</span>
+        <!-- Δ triangle right (inverted) -->
+        <svg class="m-delta m-delta-r" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <polygon points="5,0 10,10 0,10" fill="none" stroke="#00d4ff" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="m-label-line"></div>
     </div>
 
-    <!-- Heading — "shouldn't" gets Instrument Serif italic accent -->
-    <h2 id="manifesto-heading" class="manifesto-heading font-serif reveal" data-delay="80">
-      We build what <em class="word-accent">shouldn't</em> exist yet.
+    <!-- L3: Heading with word-by-word reveal -->
+    <h2 id="manifesto-heading" class="m-heading font-serif" aria-label="We build what shouldn't exist yet.">
+      <span class="word" style="--wi:0">We</span>
+      <span class="word" style="--wi:1">build</span>
+      <span class="word" style="--wi:2">what</span>
+      <span class="word italic" style="--wi:3">shouldn't</span>
+      <span class="word" style="--wi:4">exist</span>
+      <span class="word" style="--wi:5">yet.</span>
     </h2>
 
-    <!-- Lines stagger in -->
-    <div class="manifesto-lines" data-stagger data-stagger-step="200" data-stagger-delay="200">
-      <p class="manifesto-line stagger-child font-inter">
+    <!-- L4: Three manifesto lines -->
+    <div class="m-lines">
+      <p class="m-line font-inter" style="--li:0">
         Software as ceremony. Code as craft.
-        AI as creative partner, not replacement.
       </p>
-      <p class="manifesto-line secondary stagger-child font-inter">
-        Quality compounds. Speed multiplies.<br />
+      <p class="m-line font-inter" style="--li:1">
+        AI as creative partner — not replacement.
+      </p>
+      <p class="m-line font-inter" style="--li:2">
+        Quality compounds. Speed multiplies.
         The future belongs to those who build with intention.
       </p>
     </div>
+
+    <!-- L5: Signature signoff -->
+    <div class="m-signoff">
+      <div class="m-signoff-line"></div>
+      <p class="m-signoff-name font-serif">— DRAKKEN</p>
+      <p class="m-signoff-attr font-mono">Han Myo Naing, Founder</p>
+    </div>
+
   </div>
 </section>
 
 <script>
   (() => {
-    // Parallax on manifesto background image
-    const bg = document.querySelector<HTMLElement>('.manifesto-bg .section-bg-img');
+    // ── Word-by-word heading reveal (one-shot IntersectionObserver) ──
+    const heading = document.querySelector<HTMLElement>('#manifesto-heading');
+    const words   = heading?.querySelectorAll<HTMLElement>('.word');
+    const lines   = document.querySelectorAll<HTMLElement>('.m-line');
+    const signoff = document.querySelector<HTMLElement>('.m-signoff');
+
+    if (!heading || !words?.length) return;
+
+    const WORD_STAGGER   = 180;  // ms between words
+    const LINE_1_DELAY   = 1600; // ms after heading observer fires
+    const SIGNOFF_DELAY  = 2800; // ms after heading observer fires
+
+    let fired = false;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || fired) return;
+          fired = true;
+
+          // Reveal words with stagger
+          words.forEach((word, i) => {
+            setTimeout(() => word.classList.add('revealed'), i * WORD_STAGGER);
+          });
+
+          // Lines fade up after heading completes
+          lines.forEach((line, i) => {
+            const delay = LINE_1_DELAY + i * 300;
+            setTimeout(() => line.classList.add('revealed'), delay);
+          });
+
+          // Signoff last
+          setTimeout(() => signoff?.classList.add('revealed'), SIGNOFF_DELAY);
+
+          obs.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    obs.observe(heading);
+
+    // ── Background parallax ──────────────────────────────────────
+    const bg = document.querySelector<HTMLElement>('.m-bg-img');
     if (!bg) return;
     if (window.matchMedia('(max-width: 768px)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -59,7 +164,6 @@
       const { gsap } = await import('gsap');
       const { ScrollTrigger } = await import('gsap/ScrollTrigger');
       gsap.registerPlugin(ScrollTrigger);
-
       gsap.to(bg, {
         yPercent: -30,
         ease: 'none',
@@ -83,17 +187,18 @@
 <style>
   section {
     position: relative;
-    min-height: 60vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 8rem 2rem 8rem 4rem;
+    justify-content: center;
+    padding: 8rem 5rem;
     background: var(--deep);
     overflow: hidden;
     z-index: var(--z-page);
   }
 
-  /* ── BACKGROUND IMAGE ────────────────────────────────── */
-  .section-bg {
+  /* ══ L1: BACKGROUND IMAGE ═══════════════════════════════════ */
+  .m-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -101,37 +206,107 @@
     overflow: hidden;
   }
 
-  .section-bg-img {
+  .m-bg-img {
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 120%; /* extra height for parallax travel */
+    height: 120%;
     object-fit: cover;
-    filter: brightness(0.25) saturate(0.6) blur(1px);
+    filter: brightness(0.35) saturate(0.7) blur(1px);
     transform: translateY(0);
     will-change: transform;
   }
 
-  .section-bg-vignette {
+  .m-bg-vignette {
     position: absolute;
     inset: 0;
     background: radial-gradient(
-      circle at 30% 50%,
-      transparent 0%,
-      #030308 80%
+      circle at 50% 50%,
+      transparent 20%,
+      #030308 90%
     );
   }
 
-  /* Ambient violet glow */
-  .manifesto-glow {
+  /* ══ L6: PARTICLES ══════════════════════════════════════════ */
+  .m-particles {
     position: absolute;
-    width: 600px;
-    height: 600px;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    animation: particleDrift var(--dur, 12s) ease-in-out var(--delay, 0s) infinite alternate;
+  }
+
+  /* Each particle uses CSS custom property offsets for unique drift */
+  @keyframes particleDrift {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(calc(var(--dx) * 0.6), calc(var(--dy) * -0.4)); }
+    50%  { transform: translate(var(--dx), var(--dy)); }
+    75%  { transform: translate(calc(var(--dx) * 0.3), calc(var(--dy) * 0.8)); }
+    100% { transform: translate(0, 0); }
+  }
+
+  /* ══ L7: SIDE ORNAMENT LINES ════════════════════════════════ */
+  .ornament {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 60%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .ornament-l { left: 32px; }
+  .ornament-r { right: 32px; }
+
+  .ornament-line {
+    width: 1px;
+    flex: 1;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 212, 255, 0.45) 30%,
+      rgba(0, 212, 255, 0.45) 70%,
+      transparent 100%
+    );
+    min-height: 40px;
+  }
+
+  .ornament-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.28);
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 10px 0;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .ornament-r .ornament-text {
+    transform: rotate(180deg);
+  }
+
+  /* ══ AMBIENT GLOW ═══════════════════════════════════════════ */
+  .m-glow {
+    position: absolute;
+    width: 700px;
+    height: 700px;
     top: -100px;
-    left: 20%;
+    left: 15%;
     background: radial-gradient(
       ellipse at center,
-      rgba(167, 139, 250, 0.06) 0%,
+      rgba(167, 139, 250, 0.07) 0%,
       transparent 70%
     );
     pointer-events: none;
@@ -144,58 +319,183 @@
     50%       { transform: scale(1.1) translate(3%, 5%); }
   }
 
-  .manifesto-inner {
+  /* ══ INNER CONTENT ══════════════════════════════════════════ */
+  .m-inner {
     position: relative;
-    z-index: 2;
-    max-width: 720px;
-    padding-left: 3rem;
-  }
-
-  /* Heading — Instrument Serif italic */
-  .manifesto-heading {
-    font-style: italic;
-    font-size: clamp(1.8rem, 4.5vw, 3.5rem);
-    line-height: 1.25;
-    color: var(--text-pure);
-    margin-bottom: 3rem;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
-  }
-
-  /* Instrument Serif italic accent on "shouldn't" */
-  .word-accent {
-    font-style: italic;
-    font-family: 'Instrument Serif', Georgia, serif;
-    color: rgba(255, 255, 255, 0.95);
-    /* subtle cyan tint — the emotional anchor */
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.12);
-  }
-
-  /* Paragraph lines */
-  .manifesto-lines {
+    z-index: 3;
+    max-width: 860px;
+    width: 100%;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    gap: 0;
   }
 
-  .manifesto-line {
+  /* ══ L2: SECTION LABEL ══════════════════════════════════════ */
+  .m-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .m-label-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(0, 212, 255, 0.5);
+    flex-shrink: 0;
+  }
+
+  .m-label-center {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .m-delta {
+    width: 9px;
+    height: 9px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .m-delta-r {
+    transform: rotate(180deg);
+  }
+
+  .m-label-text {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.32em;
+    color: rgba(0, 212, 255, 0.7);
+    font-variant: small-caps;
+  }
+
+  /* ══ L3: HEADING — word-by-word reveal ══════════════════════ */
+  .m-heading {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: normal;
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    line-height: 1.2;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: -0.01em;
+    max-width: 1000px;
+    text-align: center;
+    margin-bottom: 3.5rem;
+    text-shadow: 0 0 60px rgba(0, 212, 255, 0.15);
+    text-wrap: balance;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25em 0.3em;
+  }
+
+  /* Each word: hidden until IntersectionObserver fires */
+  .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity  0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .word.italic {
+    font-style: italic;
+  }
+
+  .word.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ══ L4: THREE MANIFESTO LINES ══════════════════════════════ */
+  .m-lines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+    max-width: 740px;
+    width: 100%;
+  }
+
+  .m-line {
     font-size: clamp(1rem, 2vw, 1.25rem);
     line-height: 1.75;
-    color: rgba(232, 237, 245, 0.68);
-    max-width: 560px;
+    color: rgba(255, 255, 255, 0.68);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity  0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
     text-wrap: pretty;
   }
 
-  .manifesto-line.secondary {
-    color: rgba(139, 148, 168, 0.8);
-    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  .m-line.revealed {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  /* ── RESPONSIVE ──────────────────────────────────────── */
+  /* ══ L5: SIGNATURE SIGNOFF ══════════════════════════════════ */
+  .m-signoff {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity  0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .m-signoff.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .m-signoff-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(0, 212, 255, 0.5);
+    margin-bottom: 0.25rem;
+  }
+
+  .m-signoff-name {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 0.9375rem;
+    color: rgba(0, 212, 255, 0.65);
+    letter-spacing: 0.2em;
+  }
+
+  .m-signoff-attr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.32);
+    text-transform: uppercase;
+  }
+
+  /* ══ MOBILE ════════════════════════════════════════════════ */
   @media (max-width: 768px) {
-    section { padding: 6rem 1.5rem; }
-    .manifesto-inner { padding-left: 1.5rem; }
-    .thread-line { left: 16px; }
-    .section-bg-img { filter: brightness(0.2) saturate(0.5) blur(2px); }
+    section { padding: 6rem 2rem; }
+    .ornament { display: none; }
+    .m-bg-img { filter: brightness(0.25) saturate(0.6) blur(2px); }
+    /* Reduce particle count via CSS (show only even-indexed) */
+    .particle:nth-child(odd) { display: none; }
+  }
+
+  /* ══ REDUCED MOTION ════════════════════════════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    .particle { animation: none; }
+    .m-bg-img { animation: none; }
+    .m-glow   { animation: none; }
+    .word     { opacity: 1; transform: none; transition: none; }
+    .m-line   { opacity: 1; transform: none; transition: none; }
+    .m-signoff { opacity: 1; transform: none; transition: none; }
   }
 </style>
