@@ -1,31 +1,55 @@
 ---
 const tiers = [
   {
-    name: 'STARTER',
-    from: 'From RM 3,000',
-    timeline: '1–2 weeks',
-    desc: 'Custom tools, MVPs, scripts, and workflow automations. Ideal for founders who need a specific problem solved without the overhead of an agency.',
-    features: ['Custom automation scripts', 'AI-integrated tools', 'Web forms & dashboards', 'Single-scope solutions'],
+    id: 'exploration',
+    name: 'EXPLORATION',
+    price: 'RM 1,500 – 3,000',
+    timeline: '1 week',
+    desc: 'Scoping engagement. Deep problem audit, architecture recommendation, and delivery roadmap. No obligation to continue.',
+    features: [
+      'Problem space mapping',
+      'Tech stack recommendation',
+      'Effort estimate ± 20%',
+      'Risk identification',
+      'Written architecture doc',
+    ],
     signal: 'cyan',
     featured: false,
+    badge: null,
   },
   {
-    name: 'PROFESSIONAL',
-    from: 'From RM 8,000',
+    id: 'execution',
+    name: 'EXECUTION',
+    price: 'RM 5,000 – 15,000',
     timeline: '3–6 weeks',
-    desc: 'Full applications, complex integrations, and premium frontends. For teams that need production-grade software with thoughtful architecture.',
-    features: ['Full-stack web apps', 'Claude API integrations', 'Premium frontend build', 'AI automation systems', 'Documentation included'],
+    desc: 'Full project delivery. Production-grade code, thoughtful architecture, daily progress. This is the standard engagement.',
+    features: [
+      'Full-stack development',
+      'Claude API integrations',
+      'Premium UI engineering',
+      'Documentation handoff',
+      'Post-ship support (2 weeks)',
+    ],
     signal: 'violet',
     featured: true,
+    badge: 'MOST COMMON',
   },
   {
-    name: 'FLAGSHIP',
-    from: 'From RM 25,000',
-    timeline: '8–16 weeks',
-    desc: 'Native desktop apps, AI ecosystems, and multi-month engagements. Built with the same stack that shipped AEGIS. Limited to 2 slots per month.',
-    features: ['Tauri native desktop app', 'Multi-model AI architecture', 'Memory systems', 'Full test coverage', 'Post-ship support', 'Exclusive slot'],
+    id: 'command',
+    name: 'COMMAND',
+    price: 'RM 8,000+ / mo',
+    timeline: 'Retainer',
+    desc: 'Monthly engagement for teams that need a dedicated AI-native engineer. Priority access, continuous delivery.',
+    features: [
+      'Unlimited scope iterations',
+      'Dedicated availability',
+      'AI system architecture',
+      'Native desktop apps (Tauri)',
+      'Strategy + execution',
+    ],
     signal: 'amber',
     featured: false,
+    badge: null,
   },
 ];
 ---
@@ -33,76 +57,82 @@ const tiers = [
 <section id="investment" aria-labelledby="inv-heading">
   <div class="section-inner">
     <div class="section-header reveal">
-      <p class="section-label font-mono">INVESTMENT</p>
-      <h2 id="inv-heading" class="section-title font-cinzel">
-        What It Costs
-      </h2>
-      <p class="section-sub font-inter reveal" data-delay="100">
-        No retainers. No surprises. Fixed scope, fixed price.
+      <div class="section-label"><span>INVESTMENT</span></div>
+      <h2 id="inv-heading" class="section-heading">What It Costs</h2>
+      <p class="section-sub font-inter reveal" data-delay="80">
+        Fixed scope. Fixed price. No retainers unless you want one.
       </p>
     </div>
 
-    <div class="tiers-grid" data-stagger>
-      {tiers.map(({ name, from, timeline, desc, features, signal, featured }) => (
+    <div class="tiers-grid" data-stagger data-stagger-step="100">
+      {tiers.map(({ name, price, timeline, desc, features, signal, featured, badge }) => (
         <article
-          class={`sacred-frame tier-card stagger-child${featured ? ' tier-featured' : ''}`}
+          class={`sacred-frame accent-top tier-card stagger-child${featured ? ' tier-featured' : ''}`}
           data-signal={signal}
         >
-          <span class="corner-tl"></span><span class="corner-tr"></span>
-          <span class="corner-bl"></span><span class="corner-br"></span>
+          <span class="corner-tl"></span>
+          <span class="corner-tr"></span>
+          <span class="corner-bl"></span>
+          <span class="corner-br"></span>
 
-          {featured && <div class="tier-badge font-mono">MOST POPULAR</div>}
+          {badge && (
+            <div class="tier-badge font-mono">{badge}</div>
+          )}
 
           <div class="tier-header">
             <h3 class="tier-name font-cinzel">{name}</h3>
-            <p class="tier-from font-inter">{from}</p>
-            <p class="tier-timeline font-mono">{timeline}</p>
+            <div class="tier-price font-inter">{price}</div>
+            <div class="tier-timeline font-mono">{timeline}</div>
           </div>
 
           <p class="tier-desc font-inter">{desc}</p>
 
-          <ul class="tier-features">
+          <ul class="tier-features" role="list">
             {features.map((f) => (
               <li class="font-inter">
-                <span class="feat-check" aria-hidden="true">◆</span>
+                <span class="feat-mark" aria-hidden="true" style={`color:var(--signal-${signal})`}>◆</span>
                 {f}
               </li>
             ))}
           </ul>
 
-          <a href="#contact" class={`tier-cta font-inter${featured ? ' btn-primary' : ' btn-ghost'}`}>
-            Start a conversation →
+          <a
+            href="#contact"
+            class={featured ? 'btn-primary font-inter tier-cta' : 'btn-ghost font-inter tier-cta'}
+          >
+            Begin conversation
+            <span class="btn-arrow" aria-hidden="true">→</span>
           </a>
         </article>
       ))}
     </div>
 
     <p class="inv-note font-inter reveal" data-delay="200">
-      Not sure which fits? <a href="#contact">Let's talk</a> — I'll tell you honestly if your idea fits a cheaper solution.
+      Not sure which fits?
+      <a href="#contact">Let's talk</a> — I'll tell you honestly if a simpler solution works.
     </p>
   </div>
 </section>
 
 <style>
   section {
-    padding: 7rem 2rem;
+    padding: 8rem 2rem;
     background: var(--deep);
+    z-index: var(--z-page);
+    position: relative;
   }
-
   .section-inner { max-width: 1100px; margin: 0 auto; }
   .section-header { margin-bottom: 3.5rem; }
-  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--text-tertiary); margin-bottom: 0.75rem; }
-  .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600; letter-spacing: 0.12em; color: var(--text-pure); margin-bottom: 0.75rem; }
-  .section-sub { font-size: 0.9rem; color: var(--text-secondary); }
+  .section-sub { font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.75rem; }
 
-  /* ── TIERS ────────────────────────────────────────── */
+  /* ── GRID ────────────────────────────────────────────── */
   .tiers-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     background: var(--edge);
     border: 1px solid var(--edge);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
   }
 
   .tier-card {
@@ -114,49 +144,67 @@ const tiers = [
     border: none;
     border-radius: 0;
     position: relative;
+    min-height: 520px;
   }
 
   .tier-featured {
     background: var(--rise);
   }
 
+  /* Signal top-edge accent lines */
+  .tier-card[data-signal="cyan"]::before   { background: rgba(0,212,255,0.45);   }
+  .tier-card[data-signal="violet"]::before { background: rgba(167,139,250,0.55); }
+  .tier-card[data-signal="amber"]::before  { background: rgba(251,191,36,0.45);  }
+
+  /* Corner tick colors per signal */
+  .tier-card[data-signal="cyan"]   .corner-tl,
+  .tier-card[data-signal="cyan"]   .corner-tr,
+  .tier-card[data-signal="cyan"]   .corner-bl,
+  .tier-card[data-signal="cyan"]   .corner-br { border-color: var(--signal-cyan);   }
+  .tier-card[data-signal="violet"] .corner-tl,
+  .tier-card[data-signal="violet"] .corner-tr,
+  .tier-card[data-signal="violet"] .corner-bl,
+  .tier-card[data-signal="violet"] .corner-br { border-color: var(--signal-violet); }
+  .tier-card[data-signal="amber"]  .corner-tl,
+  .tier-card[data-signal="amber"]  .corner-tr,
+  .tier-card[data-signal="amber"]  .corner-bl,
+  .tier-card[data-signal="amber"]  .corner-br { border-color: var(--signal-amber);  }
+
+  /* Badge */
   .tier-badge {
     position: absolute;
     top: -1px;
     right: 1.5rem;
-    font-size: 0.55rem;
+    font-size: 0.52rem;
     letter-spacing: 0.2em;
     color: var(--signal-violet);
     background: var(--mid);
-    padding: 0.25rem 0.75rem;
+    padding: 0.2rem 0.65rem;
     border: 1px solid rgba(167,139,250,0.3);
     border-top: 2px solid var(--signal-violet);
   }
+  .tier-featured .tier-badge { background: var(--rise); }
 
-  /* Signal color accents */
-  .tier-card[data-signal="cyan"]   { border-top: 2px solid rgba(0,212,255,0.4); }
-  .tier-card[data-signal="violet"] { border-top: 2px solid rgba(167,139,250,0.6); }
-  .tier-card[data-signal="amber"]  { border-top: 2px solid rgba(251,191,36,0.4); }
-
-  .tier-header { display: flex; flex-direction: column; gap: 0.25rem; }
+  .tier-header { display: flex; flex-direction: column; gap: 0.3rem; }
 
   .tier-name {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.2em;
     color: var(--text-pure);
   }
 
-  .tier-from {
-    font-size: 1.4rem;
+  .tier-price {
+    font-size: 1.35rem;
     font-weight: 600;
     color: var(--text-primary);
     letter-spacing: -0.01em;
+    line-height: 1.2;
   }
 
   .tier-timeline {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
     color: var(--text-tertiary);
   }
 
@@ -171,37 +219,35 @@ const tiers = [
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.55rem;
   }
+
   .tier-features li {
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.55rem;
     font-size: 0.8rem;
     color: var(--text-secondary);
     line-height: 1.5;
   }
-  .feat-check {
-    font-size: 0.45rem;
-    color: var(--signal-cyan);
-    margin-top: 0.3rem;
+
+  .feat-mark {
+    font-size: 0.42rem;
+    margin-top: 0.38rem;
     flex-shrink: 0;
   }
 
   .tier-cta {
+    margin-top: auto;
     width: 100%;
     justify-content: center;
-    margin-top: auto;
-    text-align: center;
-    padding: 0.75rem 1rem;
   }
 
-  /* ── NOTE ─────────────────────────────────────────── */
+  /* Note */
   .inv-note {
     text-align: center;
     font-size: 0.85rem;
     color: var(--text-tertiary);
-    margin-top: 2rem;
   }
   .inv-note a {
     color: var(--signal-cyan);
@@ -211,17 +257,10 @@ const tiers = [
   }
   .inv-note a:hover { border-bottom-color: var(--signal-cyan); }
 
-  /* ── STAGGER ──────────────────────────────────────── */
-  .stagger-child {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s var(--ease-entrance), transform 0.5s var(--ease-entrance);
-  }
-  .stagger-child.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── RESPONSIVE ───────────────────────────────────── */
+  /* ── RESPONSIVE ──────────────────────────────────────── */
   @media (max-width: 900px) {
     .tiers-grid { grid-template-columns: 1fr; }
     .tier-featured { order: -1; }
+    .tier-card { min-height: auto; }
   }
 </style>

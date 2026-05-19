@@ -1,39 +1,64 @@
 @import "tailwindcss";
 
-/* ── DESIGN TOKENS ─────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   DRAKKEN LABS — Bloomberg Cathedral Design System
+   ═══════════════════════════════════════════════════════════ */
+
 :root {
+  /* SURFACE LADDER */
   --void: #030308;
   --deep: #07080d;
   --mid: #0c0e15;
   --rise: #14171f;
   --edge: #1f2330;
 
+  /* TEXT LADDER */
   --text-pure: #ffffff;
   --text-primary: #e8edf5;
   --text-secondary: #8b94a8;
   --text-tertiary: #555c6e;
   --text-ghost: #2e3340;
 
+  /* SIGNALS — semantic use ONLY */
   --signal-cyan: #00d4ff;
   --signal-violet: #a78bfa;
   --signal-mint: #4ade80;
   --signal-amber: #fbbf24;
   --signal-blood: #ef4444;
 
-  --t-quick: 160ms;
-  --t-base: 240ms;
+  /* EASING — Emil Kowalski–grade curves */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer:    cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* MOTION DURATIONS */
+  --t-quick:      120ms;
+  --t-base:       220ms;
   --t-deliberate: 400ms;
-  --t-ritual: 900ms;
-  --ease-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
-  --ease-entrance: cubic-bezier(0, 0, 0.38, 0.9);
+  --t-ritual:     800ms;
+
+  /* LAYER STACK */
+  --z-scene:  0;
+  --z-page:   10;
+  --z-nav:    100;
+  --z-cursor: 9000;
+  --z-overlay: 10000;
 }
 
-/* ── BASE ───────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── BASE RESET ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -42,38 +67,71 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grain overlay — GPU-safe fixed pseudo-element */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* Dot grid — cathedral floor feel */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.028) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
 }
 
 ::selection {
-  background: rgba(0, 212, 255, 0.2);
+  background: rgba(0, 212, 255, 0.18);
   color: var(--text-pure);
 }
 
-/* ── TYPOGRAPHY ─────────────────────────────────────────── */
+/* ── TYPOGRAPHY ────────────────────────────────────────────── */
 .font-cinzel   { font-family: 'Cinzel', Georgia, serif; }
 .font-inter    { font-family: 'Inter', system-ui, sans-serif; }
 .font-mono     { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
 .font-serif    { font-family: 'Instrument Serif', Georgia, serif; }
 
-/* ── SCROLLBAR ──────────────────────────────────────────── */
-::-webkit-scrollbar { width: 4px; }
+/* ── SCROLLBAR ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--void); }
 ::-webkit-scrollbar-thumb { background: var(--edge); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-ghost); }
 
-/* ── SACRED FRAME CARD ─────────────────────────────────── */
+/* ── SACRED FRAME — signature component ───────────────────── */
+/*
+ * The Sacred Frame is the Drakken identity mark.
+ * Octagonal clip-path + 4 cyan corner L-ticks + hover glow.
+ * Use on every card — capabilities, showcase, investment, contact.
+ */
 .sacred-frame {
   position: relative;
-  background: var(--rise);
+  background: var(--mid);
   border: 1px solid var(--edge);
   transition:
-    border-color var(--t-base) var(--ease-expressive),
-    box-shadow var(--t-base) var(--ease-expressive),
-    transform var(--t-base) var(--ease-expressive);
+    border-color var(--t-base) var(--ease-out-expo),
+    box-shadow var(--t-base) var(--ease-out-expo),
+    transform var(--t-base) var(--ease-out-expo),
+    background var(--t-base) var(--ease-out-expo);
+  will-change: transform;
 }
 
+/* Corner L-tick marks */
 .sacred-frame .corner-tl,
 .sacred-frame .corner-tr,
 .sacred-frame .corner-bl,
@@ -84,13 +142,14 @@ body {
   border-color: var(--signal-cyan);
   border-style: solid;
   opacity: 0;
-  transition: opacity var(--t-base) var(--ease-expressive);
+  transition: opacity var(--t-base) var(--ease-out-expo);
   pointer-events: none;
+  z-index: 2;
 }
-.sacred-frame .corner-tl { top: -1px; left: -1px;   border-width: 2px 0 0 2px; }
-.sacred-frame .corner-tr { top: -1px; right: -1px;  border-width: 2px 2px 0 0; }
-.sacred-frame .corner-bl { bottom: -1px; left: -1px;  border-width: 0 0 2px 2px; }
-.sacred-frame .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+.sacred-frame .corner-tl { top: -1px;    left: -1px;   border-width: 2px 0 0 2px; }
+.sacred-frame .corner-tr { top: -1px;    right: -1px;  border-width: 2px 2px 0 0; }
+.sacred-frame .corner-bl { bottom: -1px; left: -1px;   border-width: 0 0 2px 2px; }
+.sacred-frame .corner-br { bottom: -1px; right: -1px;  border-width: 0 2px 2px 0; }
 
 .sacred-frame:hover .corner-tl,
 .sacred-frame:hover .corner-tr,
@@ -98,98 +157,298 @@ body {
 .sacred-frame:hover .corner-br { opacity: 1; }
 
 .sacred-frame:hover {
-  border-color: rgba(0, 212, 255, 0.25);
-  box-shadow: 0 8px 40px rgba(0, 212, 255, 0.07), 0 0 0 1px rgba(0, 212, 255, 0.06) inset;
-  transform: translateY(-2px);
+  border-color: rgba(0, 212, 255, 0.22);
+  box-shadow:
+    0 12px 48px rgba(0, 212, 255, 0.06),
+    0 0 0 1px rgba(0, 212, 255, 0.05) inset;
+  transform: translateY(-3px);
+  background: var(--rise);
 }
 
-/* ── SECTION REVEAL DEFAULTS ────────────────────────────── */
+/* Top-edge accent variant */
+.sacred-frame.accent-top::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 212, 255, 0.4) 40%,
+    rgba(0, 212, 255, 0.4) 60%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease-out-expo);
+}
+.sacred-frame.accent-top:hover::before { opacity: 1; }
+
+/* ── SCROLL REVEAL SYSTEM ─────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s var(--ease-entrance), transform 0.6s var(--ease-entrance);
+  transform: translateY(28px);
+  transition:
+    opacity 0.65s var(--ease-out-expo),
+    transform 0.65s var(--ease-out-expo);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ── CUSTOM CURSOR DOT ──────────────────────────────────── */
-.cursor-dot {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--signal-cyan);
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
-  transition: width 200ms, height 200ms, opacity 200ms;
+.reveal-up {
   opacity: 0;
+  transform: translateY(36px) scale(0.97);
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-out-expo);
 }
-.cursor-dot.visible { opacity: 0.7; }
-.cursor-dot.large { width: 18px; height: 18px; opacity: 0.5; }
+.reveal-up.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
 
-/* ── GLOW BUTTON ────────────────────────────────────────── */
+.stagger-child {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.55s var(--ease-out-expo),
+    transform 0.55s var(--ease-out-expo);
+}
+.stagger-child.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── BUTTON SYSTEM ────────────────────────────────────────── */
+/* Primary pill CTA */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 2rem;
-  background: rgba(0, 212, 255, 0.08);
+  padding: 14px 32px;
+  background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(0,212,255,0.02));
   color: var(--signal-cyan);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  border-radius: 2px;
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 9999px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  transition:
+    background var(--t-base) var(--ease-out-expo),
+    border-color var(--t-base) var(--ease-out-expo),
+    box-shadow var(--t-base) var(--ease-out-expo),
+    transform var(--t-quick) var(--ease-out-expo);
+  box-shadow:
+    0 0 0 1px rgba(0, 212, 255, 0.08),
+    0 8px 32px rgba(0, 212, 255, 0.08);
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, rgba(0,212,255,0.14), rgba(0,212,255,0.06));
+  border-color: rgba(0, 212, 255, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(0, 212, 255, 0.5),
+    0 8px 32px rgba(0, 212, 255, 0.25),
+    inset 0 0 20px rgba(0, 212, 255, 0.06);
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+
+/* Arrow inside button — micro-interaction on hover */
+.btn-primary .btn-arrow {
+  transition: transform var(--t-base) var(--ease-out-expo);
+  display: inline-block;
+}
+.btn-primary:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Secondary ghost CTA */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 24px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-decoration: none;
   cursor: pointer;
   transition:
-    background var(--t-base) var(--ease-expressive),
-    border-color var(--t-base) var(--ease-expressive),
-    box-shadow var(--t-base) var(--ease-expressive),
-    transform var(--t-quick) var(--ease-expressive);
-}
-.btn-primary:hover {
-  background: rgba(0, 212, 255, 0.14);
-  border-color: rgba(0, 212, 255, 0.6);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
-  transform: translateY(-1px);
-}
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--edge);
-  border-radius: 2px;
-  font-size: 0.875rem;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color var(--t-base), border-color var(--t-base), transform var(--t-quick);
+    color var(--t-base) var(--ease-out-expo),
+    border-color var(--t-base) var(--ease-out-expo),
+    transform var(--t-quick) var(--ease-out-expo);
+  white-space: nowrap;
 }
 .btn-ghost:hover {
   color: var(--text-primary);
-  border-color: var(--text-ghost);
+  border-color: rgba(0, 212, 255, 0.28);
   transform: translateY(-1px);
 }
+.btn-ghost:active { transform: translateY(0) scale(0.98); }
+.btn-ghost .btn-arrow {
+  transition: transform var(--t-base) var(--ease-out-expo);
+  display: inline-block;
+}
+.btn-ghost:hover .btn-arrow { transform: translateY(2px); }
 
-/* ── BUILDER MODE / ORACLE MODE OVERLAYS ────────────────── */
+/* ── SECTION ANATOMY ─────────────────────────────────────── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.28em;
+  color: var(--signal-cyan);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.section-label::before,
+.section-label::after {
+  content: '';
+  flex: 0 0 28px;
+  height: 1px;
+  background: rgba(0, 212, 255, 0.4);
+}
+
+.section-heading {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--text-pure);
+  line-height: 1.15;
+}
+
+/* ── VERTICAL THREAD LINE ────────────────────────────────── */
+/* Echoes the hero light beam through the manifesto section */
+.thread-line {
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 212, 255, 0.3) 20%,
+    rgba(0, 212, 255, 0.3) 80%,
+    transparent 100%
+  );
+}
+.thread-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: 5px;
+  height: 5px;
+  background: rgba(0, 212, 255, 0.7);
+  transform: rotate(45deg);
+}
+
+/* ── VIEWPORT CORNER TICKS ───────────────────────────────── */
+/* Hero section signature marks */
+.viewport-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(0, 212, 255, 0.4);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 3;
+}
+.viewport-corner.tl { top: 16px;    left: 16px;   border-width: 1px 0 0 1px; }
+.viewport-corner.tr { top: 16px;    right: 16px;  border-width: 1px 1px 0 0; }
+.viewport-corner.bl { bottom: 16px; left: 16px;   border-width: 0 0 1px 1px; }
+.viewport-corner.br { bottom: 16px; right: 16px;  border-width: 0 1px 1px 0; }
+
+/* ── BLOOMBERG STAT ROW ──────────────────────────────────── */
+/* Three-typeface metric display */
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--text-ghost);
+  text-transform: uppercase;
+}
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-pure);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  color: var(--signal-cyan);
+}
+
+/* ── CUSTOM CURSOR ───────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal-cyan);
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  transform: translate(-50%, -50%);
+  transition: width 200ms, height 200ms, opacity 200ms;
+  opacity: 0;
+  mix-blend-mode: difference;
+}
+.cursor-dot.visible { opacity: 0.9; }
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.5);
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 200ms, width 300ms var(--ease-out-expo), height 300ms var(--ease-out-expo);
+}
+.cursor-ring.visible { opacity: 0.6; }
+.cursor-ring.large {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(0, 212, 255, 0.7);
+  opacity: 0.8;
+}
+
+/* ── ORACLE / BUILDER MODE OVERLAYS ─────────────────────── */
 .builder-mode-overlay,
 .oracle-overlay,
 .drakken-flash {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: var(--z-overlay);
   pointer-events: none;
 }
-
 .builder-mode-overlay {
   background: rgba(3, 3, 8, 0.96);
   display: flex;
@@ -197,60 +456,86 @@ body {
   justify-content: center;
   pointer-events: all;
   opacity: 0;
-  transition: opacity 400ms;
+  transition: opacity 400ms var(--ease-out-expo);
 }
 .builder-mode-overlay.active { opacity: 1; }
 .builder-mode-overlay .close-btn {
   position: absolute;
-  top: 2rem;
-  right: 2rem;
+  top: 2rem; right: 2rem;
   background: none;
   border: 1px solid var(--edge);
   color: var(--text-secondary);
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
   transition: border-color var(--t-base), color var(--t-base);
 }
 .builder-mode-overlay .close-btn:hover {
   border-color: var(--signal-cyan);
   color: var(--signal-cyan);
 }
-
 .oracle-overlay {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at center, rgba(3, 3, 8, 0.85) 0%, rgba(3, 3, 8, 0.6) 100%);
+  background: radial-gradient(ellipse at center, rgba(3,3,8,0.8) 0%, rgba(3,3,8,0.5) 100%);
   opacity: 0;
-  animation: oracleReveal 3s var(--ease-entrance) forwards;
+  animation: oracleReveal 3.5s var(--ease-out-expo) forwards;
 }
 @keyframes oracleReveal {
   0%   { opacity: 0; }
-  20%  { opacity: 1; }
+  15%  { opacity: 1; }
   80%  { opacity: 1; }
   100% { opacity: 0; }
 }
-
 .drakken-flash {
-  background: rgba(0, 212, 255, 0.04);
-  animation: drakkFlash 0.8s var(--ease-expressive) forwards;
+  background: rgba(0, 212, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: drakkFlash 0.9s var(--ease-out-expo) forwards;
 }
 @keyframes drakkFlash {
   0%   { opacity: 0; }
-  15%  { opacity: 1; }
-  60%  { opacity: 1; }
+  12%  { opacity: 1; }
+  55%  { opacity: 1; }
   100% { opacity: 0; }
 }
 
-/* ── REDUCED MOTION ─────────────────────────────────────── */
+/* ── LIGHT BEAM SHIMMER ──────────────────────────────────── */
+@keyframes beamShimmer {
+  0%   { transform: translateX(-50%) translateY(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(-50%) translateY(100vh); opacity: 0; }
+}
+
+/* ── PERFORMANCE: REDUCED MOTION ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .reveal, .reveal-up, .stagger-child {
+    opacity: 1;
+    transform: none;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ── HOVER ONLY ON POINTER DEVICES ──────────────────────── */
+@media (hover: none) and (pointer: coarse) {
+  .sacred-frame:hover { transform: none; }
+  .btn-primary:hover { transform: none; }
+  .btn-ghost:hover { transform: none; }
+}
+
+/* ── FOCUS VISIBLE ───────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--signal-cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
 }

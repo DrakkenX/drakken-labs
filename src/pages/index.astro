@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import SentinelCompanion from '../components/SentinelCompanion.astro';
+import SceneCanvas from '../components/SceneCanvas.astro';
+import CustomCursor from '../components/CustomCursor.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import Manifesto from '../components/Manifesto.astro';
@@ -13,9 +14,18 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
-  <SentinelCompanion />
+  <!-- 3D scene sits behind all page content -->
+  <SceneCanvas slot="scene" />
+
+  <!-- Custom cursor -->
+  <CustomCursor slot="cursor" />
+
+  <!-- Skip-to-content accessibility link -->
+  <a href="#main-content" class="skip-link font-inter">Skip to main content</a>
+
   <Nav />
-  <main id="main-content">
+
+  <main id="main-content" style="position:relative;z-index:var(--z-page)">
     <Hero />
     <Manifesto />
     <Capabilities />
@@ -24,5 +34,24 @@ import Footer from '../components/Footer.astro';
     <Investment />
     <Contact />
   </main>
+
   <Footer />
 </Layout>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: var(--signal-cyan);
+    color: var(--void);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 2px;
+    z-index: 99999;
+    transition: top 200ms;
+  }
+  .skip-link:focus { top: 1rem; }
+</style>

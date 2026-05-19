@@ -1,51 +1,111 @@
 ---
 const year = new Date().getFullYear();
+
+const navLinks = [
+  { label: 'Manifesto',    href: '#manifesto' },
+  { label: 'Capabilities', href: '#capabilities' },
+  { label: 'Work',         href: '#showcase' },
+  { label: 'Process',      href: '#process' },
+  { label: 'Contact',      href: '#contact' },
+];
+
+const socials = [
+  { label: 'GitHub',   href: 'https://github.com/DrakkenX', abbr: 'GH' },
+  { label: 'LinkedIn', href: 'https://linkedin.com',         abbr: 'LI' },
+  { label: 'X',        href: 'https://x.com',                abbr: 'X' },
+];
 ---
 
 <footer aria-label="Site footer">
+  <!-- Full-width top accent line -->
+  <div class="footer-line" aria-hidden="true"></div>
+
   <div class="footer-inner">
-    <div class="footer-top">
-      <a href="#hero" class="footer-wordmark font-cinzel">DRAKKEN LABS</a>
-      <div class="footer-links">
-        <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub" class="footer-social font-mono">GH</a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn" class="footer-social font-mono">LI</a>
-        <a href="https://x.com" target="_blank" rel="noopener" aria-label="X / Twitter" class="footer-social font-mono">X</a>
+
+    <!-- Col 1: wordmark -->
+    <div class="footer-brand">
+      <a href="#hero" class="footer-wordmark font-cinzel" aria-label="Drakken Labs — back to top">
+        DRAKKEN LABS
+      </a>
+      <p class="footer-tagline font-mono">AI-NATIVE SOFTWARE STUDIO</p>
+    </div>
+
+    <!-- Col 2: nav links -->
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <ul role="list">
+        {navLinks.map(({ label, href }) => (
+          <li>
+            <a href={href} class="footer-link font-inter">{label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Col 3: socials + legal -->
+    <div class="footer-right">
+      <div class="footer-socials">
+        {socials.map(({ label, href, abbr }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-social font-mono"
+            aria-label={label}
+          >
+            {abbr}
+          </a>
+        ))}
       </div>
-    </div>
-
-    <div class="footer-divider" aria-hidden="true"></div>
-
-    <div class="footer-bottom">
       <p class="footer-copy font-cinzel">
-        &copy; {year} · Built in Malaysia · Han Myo Naing
-      </p>
-      <p class="footer-classify font-mono" aria-hidden="true">
-        CLASSIFIED · ALPHA-3 · CONTAIN THE FUTURE
+        &copy; {year} · Han Myo Naing · Malaysia
       </p>
     </div>
+
+  </div>
+
+  <!-- Bottom micro-text -->
+  <div class="footer-bottom">
+    <span class="footer-classify font-cinzel">
+      OPERATING SINCE MMXXV
+    </span>
+    <div class="footer-bottom-line" aria-hidden="true"></div>
   </div>
 </footer>
 
 <style>
   footer {
-    padding: 3rem 2rem 2.5rem;
     background: var(--void);
     border-top: 1px solid var(--edge);
+    position: relative;
+    z-index: var(--z-page);
+  }
+
+  /* Top accent hairline */
+  .footer-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(0, 212, 255, 0.2) 30%,
+      rgba(0, 212, 255, 0.2) 70%,
+      transparent
+    );
+    margin-top: -1px;
   }
 
   .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    padding: 3.5rem 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
   }
 
-  .footer-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  /* Brand */
+  .footer-brand { display: flex; flex-direction: column; gap: 0.4rem; }
 
   .footer-wordmark {
     font-size: 0.75rem;
@@ -54,51 +114,92 @@ const year = new Date().getFullYear();
     color: var(--text-tertiary);
     text-decoration: none;
     transition: color var(--t-base);
+    display: inline-block;
   }
   .footer-wordmark:hover { color: var(--text-primary); }
 
-  .footer-links {
+  .footer-tagline {
+    font-size: 0.52rem;
+    letter-spacing: 0.22em;
+    color: var(--text-ghost);
+  }
+
+  /* Nav */
+  .footer-nav ul {
+    list-style: none;
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-link {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color var(--t-quick);
+  }
+  .footer-link:hover { color: var(--text-primary); }
+
+  /* Right */
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-end;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 1.25rem;
   }
 
   .footer-social {
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
     color: var(--text-ghost);
     text-decoration: none;
     transition: color var(--t-quick);
   }
   .footer-social:hover { color: var(--signal-cyan); }
 
-  .footer-divider {
-    height: 1px;
-    background: var(--edge);
-  }
-
-  .footer-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
   .footer-copy {
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
     color: var(--text-ghost);
     font-variant: small-caps;
   }
 
-  .footer-classify {
-    font-size: 0.55rem;
-    letter-spacing: 0.22em;
-    color: var(--edge);
+  /* Bottom */
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+    gap: 0.75rem;
   }
 
-  @media (max-width: 520px) {
-    .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .footer-classify {
+    font-size: 0.5rem;
+    letter-spacing: 0.28em;
+    color: var(--edge);
+    font-variant: small-caps;
+  }
+
+  .footer-bottom-line {
+    width: 120px;
+    height: 1px;
+    background: var(--edge);
+    opacity: 0.5;
+  }
+
+  /* ── RESPONSIVE ──────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .footer-right {
+      align-items: flex-start;
+    }
   }
 </style>

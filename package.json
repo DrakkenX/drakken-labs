@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
+    "@gsap/react": "^2.1.2",
     "@tailwindcss/vite": "^4.3.0",
     "@types/three": "^0.184.1",
     "astro": "^6.3.4",
+    "gsap": "^3.15.0",
     "motion": "^12.39.0",
     "tailwindcss": "^4.3.0",
     "three": "^0.184.0",

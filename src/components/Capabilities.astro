@@ -1,36 +1,36 @@
 ---
 const caps = [
   {
-    title: 'AI-NATIVE\nDESKTOP APPS',
-    stack: 'Tauri · Rust · Three.js · AI',
-    for: 'Businesses needing premium native Windows tools with AI intelligence built in.',
-    from: 'From RM 8,000',
+    num: '01',
+    title: 'AI-NATIVE\nENGINEERING',
+    desc: 'Systems where AI isn\'t a feature — it\'s the architecture. Built from first principles, not retrofitted.',
+    stack: 'Claude API · Tauri · Rust · TypeScript',
     signal: 'cyan',
-    icon: '⬡',
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>`,
   },
   {
-    title: 'CUSTOM AI\nAUTOMATION',
-    stack: 'Claude API · Workflow design · Integrations',
-    for: 'Founders scaling operations with intelligent automation systems.',
-    from: 'From RM 5,000',
-    signal: 'violet',
-    icon: '◈',
-  },
-  {
+    num: '02',
     title: 'PREMIUM\nFRONTEND',
-    stack: 'React · Three.js · Astro · Motion',
-    for: 'Brands that need a digital presence worthy of their ambition.',
-    from: 'From RM 4,000',
-    signal: 'mint',
-    icon: '◎',
+    desc: 'Interfaces that feel alive. Spring physics, 60fps Three.js, cinematic scroll choreography.',
+    stack: 'Three.js · Motion · Astro · GSAP',
+    signal: 'violet',
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="14" height="14" rx="1" stroke="currentColor" stroke-width="1"/><path d="M7 10L9 12L13 8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
   {
-    title: 'AI WORKFLOW\nARCHITECTURE',
-    stack: 'Memory systems · Prompt engineering',
-    for: 'Builders who want 10× output without 10× cost.',
-    from: 'Consultation',
-    signal: 'amber',
-    icon: '◇',
+    num: '03',
+    title: 'NATIVE DESKTOP\nAPPLICATIONS',
+    desc: 'Code-signed, installer-ready apps for Windows, macOS, Linux. Performance without compromise.',
+    stack: 'Tauri · Rust · Windows · macOS · Linux',
+    signal: 'cyan',
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><rect x="5" y="3" width="10" height="14" rx="1" stroke="currentColor" stroke-width="1"/></svg>`,
+  },
+  {
+    num: '04',
+    title: 'STRATEGIC\nAUTOMATION',
+    desc: 'Workflows that think. Memory systems, multi-agent pipelines, tools that compound over time.',
+    stack: 'Memory architecture · Multi-agent · Custom APIs',
+    signal: 'mint',
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1"/><path d="M10 3V5M10 15V17M3 10H5M15 10H17M5.5 5.5L7 7M13 13L14.5 14.5M5.5 14.5L7 13M13 7L14.5 5.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>`,
   },
 ];
 ---
@@ -38,25 +38,34 @@ const caps = [
 <section id="capabilities" aria-labelledby="cap-heading">
   <div class="section-inner">
     <div class="section-header reveal">
-      <p class="section-label font-mono">CAPABILITIES</p>
-      <h2 id="cap-heading" class="section-title font-cinzel">
+      <div class="section-label">
+        <span>CAPABILITIES</span>
+      </div>
+      <h2 id="cap-heading" class="section-heading">
         What We Build
       </h2>
     </div>
 
-    <div class="cap-grid" data-stagger>
-      {caps.map(({ title, stack, for: forText, from, signal, icon }) => (
-        <article class="sacred-frame cap-card stagger-child" data-signal={signal}>
+    <div class="cap-grid" data-stagger data-stagger-step="100">
+      {caps.map(({ num, title, desc, stack, signal, icon }) => (
+        <article
+          class={`sacred-frame accent-top cap-card stagger-child`}
+          data-signal={signal}
+        >
           <span class="corner-tl"></span>
           <span class="corner-tr"></span>
           <span class="corner-bl"></span>
           <span class="corner-br"></span>
 
-          <div class="cap-icon font-mono" aria-hidden="true">{icon}</div>
-          <h3 class="cap-title font-cinzel">{title}</h3>
+          <div class="cap-num font-mono">{num}</div>
+
+          <div class="cap-icon" style={`color: var(--signal-${signal})`} aria-hidden="true" set:html={icon} />
+
+          <h3 class="cap-title font-cinzel" style={`white-space: pre-line`}>{title}</h3>
+
+          <p class="cap-desc font-inter">{desc}</p>
+
           <p class="cap-stack font-mono">{stack}</p>
-          <p class="cap-for font-inter">{forText}</p>
-          <div class="cap-price font-inter">{from}</div>
         </article>
       ))}
     </div>
@@ -65,8 +74,10 @@ const caps = [
 
 <style>
   section {
-    padding: 7rem 2rem;
+    padding: 8rem 2rem;
     background: var(--void);
+    z-index: var(--z-page);
+    position: relative;
   }
 
   .section-inner {
@@ -78,21 +89,7 @@ const caps = [
     margin-bottom: 4rem;
   }
 
-  .section-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--text-tertiary);
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    color: var(--text-pure);
-  }
-
-  /* ── GRID ─────────────────────────────────────────── */
+  /* 4-column grid — zero empty cells */
   .cap-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -102,30 +99,29 @@ const caps = [
   }
 
   .cap-card {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem;
     background: var(--mid);
     border: none;
     border-radius: 0;
-    transition:
-      background var(--t-base) var(--ease-expressive),
-      transform var(--t-base) var(--ease-expressive);
+    min-height: 320px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
   }
-  .cap-card:hover { background: var(--rise); transform: translateY(-3px); }
 
-  /* Signal color on hover */
-  .cap-card[data-signal="cyan"]:hover    { box-shadow: 0 -2px 0 var(--signal-cyan) inset; }
-  .cap-card[data-signal="violet"]:hover  { box-shadow: 0 -2px 0 var(--signal-violet) inset; }
-  .cap-card[data-signal="mint"]:hover    { box-shadow: 0 -2px 0 var(--signal-mint) inset; }
-  .cap-card[data-signal="amber"]:hover   { box-shadow: 0 -2px 0 var(--signal-amber) inset; }
+  /* Signal accent — top edge glow on hover (overrides .accent-top) */
+  .cap-card[data-signal="cyan"]::before   { background: rgba(0,212,255,0.45); }
+  .cap-card[data-signal="violet"]::before { background: rgba(167,139,250,0.45); }
+  .cap-card[data-signal="mint"]::before   { background: rgba(74,222,128,0.45); }
 
-  /* Corner ticks color per signal */
+  /* Corner tick signal colors */
   .cap-card[data-signal="cyan"]   .corner-tl,
   .cap-card[data-signal="cyan"]   .corner-tr,
   .cap-card[data-signal="cyan"]   .corner-bl,
-  .cap-card[data-signal="cyan"]   .corner-br { border-color: var(--signal-cyan); }
+  .cap-card[data-signal="cyan"]   .corner-br { border-color: var(--signal-cyan);   }
   .cap-card[data-signal="violet"] .corner-tl,
   .cap-card[data-signal="violet"] .corner-tr,
   .cap-card[data-signal="violet"] .corner-bl,
@@ -133,65 +129,70 @@ const caps = [
   .cap-card[data-signal="mint"]   .corner-tl,
   .cap-card[data-signal="mint"]   .corner-tr,
   .cap-card[data-signal="mint"]   .corner-bl,
-  .cap-card[data-signal="mint"]   .corner-br { border-color: var(--signal-mint); }
-  .cap-card[data-signal="amber"]  .corner-tl,
-  .cap-card[data-signal="amber"]  .corner-tr,
-  .cap-card[data-signal="amber"]  .corner-bl,
-  .cap-card[data-signal="amber"]  .corner-br { border-color: var(--signal-amber); }
+  .cap-card[data-signal="mint"]   .corner-br { border-color: var(--signal-mint);   }
+
+  /* Hover state from .sacred-frame + signal glow */
+  .cap-card[data-signal="cyan"]:hover {
+    box-shadow: 0 -2px 0 var(--signal-cyan) inset,
+                0 12px 48px rgba(0,212,255,0.07);
+  }
+  .cap-card[data-signal="violet"]:hover {
+    box-shadow: 0 -2px 0 var(--signal-violet) inset,
+                0 12px 48px rgba(167,139,250,0.07);
+  }
+  .cap-card[data-signal="mint"]:hover {
+    box-shadow: 0 -2px 0 var(--signal-mint) inset,
+                0 12px 48px rgba(74,222,128,0.07);
+  }
+
+  .cap-num {
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: var(--text-ghost);
+  }
 
   .cap-icon {
-    font-size: 1.2rem;
-    color: var(--text-ghost);
-    line-height: 1;
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    transition: opacity var(--t-base), transform var(--t-deliberate) var(--ease-spring);
+  }
+  .cap-card:hover .cap-icon {
+    opacity: 1;
+    transform: rotate(90deg);
   }
 
   .cap-title {
     font-size: 0.8rem;
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     color: var(--text-pure);
-    white-space: pre-line;
-    line-height: 1.5;
+    line-height: 1.6;
+  }
+
+  .cap-desc {
+    font-size: 0.825rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    flex-grow: 1;
   }
 
   .cap-stack {
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
     color: var(--text-tertiary);
-    line-height: 1.6;
     margin-top: auto;
-  }
-
-  .cap-for {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  .cap-price {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: var(--signal-cyan);
-    margin-top: auto;
-    padding-top: 1rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--edge);
+    line-height: 1.6;
   }
 
-  /* ── STAGGER ──────────────────────────────────────── */
-  .stagger-child {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s var(--ease-entrance), transform 0.5s var(--ease-entrance);
-  }
-  .stagger-child.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── RESPONSIVE ───────────────────────────────────── */
+  /* ── RESPONSIVE ──────────────────────────────────────── */
   @media (max-width: 1024px) {
     .cap-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 520px) {
     .cap-grid { grid-template-columns: 1fr; }
-    .cap-card:hover { transform: none; }
+    .cap-card { min-height: auto; }
   }
 </style>

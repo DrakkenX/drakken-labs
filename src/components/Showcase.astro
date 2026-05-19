@@ -4,19 +4,19 @@
 <section id="showcase" aria-labelledby="showcase-heading">
   <div class="section-inner">
     <div class="section-header reveal">
-      <p class="section-label font-mono">WORK</p>
-      <h2 id="showcase-heading" class="section-title font-cinzel">
-        What's Been Built
-      </h2>
+      <div class="section-label"><span>WORK</span></div>
+      <h2 id="showcase-heading" class="section-heading">What's Been Built</h2>
     </div>
 
     <div class="bento-grid">
-      <!-- Main feature: AEGIS -->
-      <article class="sacred-frame bento-main reveal" data-delay="100">
+
+      <!-- AEGIS — main tile (spans full width on lg) -->
+      <article class="sacred-frame bento-aegis reveal" data-delay="80">
         <span class="corner-tl"></span><span class="corner-tr"></span>
         <span class="corner-bl"></span><span class="corner-br"></span>
 
-        <div class="aegis-visual" aria-hidden="true">
+        <!-- Abstract visualization — NOT the actual AEGIS UI -->
+        <div class="aegis-vis" aria-hidden="true">
           <div class="aegis-orb"></div>
           <div class="aegis-ring ring-1"></div>
           <div class="aegis-ring ring-2"></div>
@@ -24,101 +24,145 @@
           <div class="aegis-scan"></div>
         </div>
 
-        <div class="bento-main-content">
-          <div class="bento-tag font-mono">DEFENSIVE INTELLIGENCE</div>
+        <div class="aegis-content">
+          <div class="bento-tag font-mono">
+            <span class="tag-bracket">[</span>
+            SHIPPED · MAY 2025
+            <span class="tag-bracket">]</span>
+          </div>
           <h3 class="bento-title font-cinzel">AEGIS</h3>
           <p class="bento-desc font-inter">
-            Premium Windows security tool for civilian threat monitoring and evidence collection.
-            Built for families facing targeted cyberattacks.
+            Civilian-grade cyber defense for Windows.
+            Defensive intelligence for families targeted by state-level threat actors.
           </p>
-          <div class="bento-stack font-mono">Tauri · Rust · Three.js · Claude API</div>
-          <div class="bento-status">
-            <span class="status-dot"></span>
-            <span class="font-mono status-text">Private Testing</span>
+
+          <!-- Bloomberg stat strip -->
+          <div class="stat-strip">
+            <div class="stat-row">
+              <span class="stat-label">LINES OF CODE</span>
+              <span class="stat-value" data-count-to="8959" data-count-suffix="">0</span>
+              <span class="stat-sub">PRODUCTION</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-row">
+              <span class="stat-label">BUILD DAYS</span>
+              <span class="stat-value">5</span>
+              <span class="stat-sub">SHIPPED</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-row">
+              <span class="stat-label">STACK</span>
+              <span class="stat-value" style="font-size:0.7rem;letter-spacing:0.04em">Tauri+AI</span>
+              <span class="stat-sub">WINDOWS</span>
+            </div>
           </div>
         </div>
 
-        <div class="bento-classified font-mono">[CONFIDENTIAL · ALPHA-3]</div>
+        <div class="aegis-classified font-mono">[CONFIDENTIAL · ALPHA-3]</div>
       </article>
 
-      <!-- Stats -->
-      <article class="sacred-frame bento-stats reveal" data-delay="160">
+      <!-- Studio stats -->
+      <article class="sacred-frame bento-stats reveal" data-delay="140">
         <span class="corner-tl"></span><span class="corner-tr"></span>
         <span class="corner-bl"></span><span class="corner-br"></span>
 
-        <p class="section-label font-mono">STUDIO STATS</p>
-        <div class="stats-list">
+        <div class="bento-tag font-mono"><span class="tag-bracket">[</span> STUDIO <span class="tag-bracket">]</span></div>
+
+        <div class="stats-grid">
           {[
-            ['Projects shipped', '1'],
-            ['Lines of code', '8,959'],
-            ['Days to ship', '5'],
-            ['Currently accepting', '2 slots'],
-          ].map(([label, value]) => (
+            { label: 'SHIPPED',  value: '1',     sub: 'PROJECTS' },
+            { label: 'VELOCITY', value: '8,959', sub: 'LINES' },
+            { label: 'TO SHIP',  value: '5',     sub: 'DAYS' },
+            { label: 'OPEN',     value: '2',     sub: 'SLOTS' },
+          ].map(({ label, value, sub }) => (
             <div class="stat-row">
-              <span class="stat-label font-inter">{label}</span>
-              <span class="stat-value font-mono">{value}</span>
+              <span class="stat-label">{label}</span>
+              <span class="stat-value">{value}</span>
+              <span class="stat-sub" style="color:var(--signal-mint)">{sub}</span>
             </div>
           ))}
         </div>
-        <div class="availability-badge font-mono">
+
+        <div class="avail-badge font-mono">
           <span class="avail-dot"></span>
           2 slots remaining this month
         </div>
       </article>
 
-      <!-- Methodology -->
-      <article class="sacred-frame bento-method reveal" data-delay="220">
+      <!-- Methodology tile -->
+      <article class="sacred-frame bento-method reveal" data-delay="180">
         <span class="corner-tl"></span><span class="corner-tr"></span>
         <span class="corner-bl"></span><span class="corner-br"></span>
 
-        <div class="bento-tag font-mono">METHODOLOGY</div>
-        <h3 class="bento-sub-title font-cinzel">AI Workflow System</h3>
+        <div class="bento-tag font-mono"><span class="tag-bracket">[</span> METHOD <span class="tag-bracket">]</span></div>
+        <h3 class="bento-sub font-cinzel">AI Workflow System</h3>
         <p class="bento-desc font-inter">
-          Memory-based development enabling 5–10× output velocity. Used to ship AEGIS in 5 days.
+          Memory-based development. 5–10× output velocity. Used to ship AEGIS in 5 days.
         </p>
 
-        <div class="method-diagram" aria-hidden="true">
-          <div class="method-node font-mono">MEMORY</div>
-          <div class="method-arrow">→</div>
-          <div class="method-node font-mono">AI</div>
-          <div class="method-arrow">→</div>
-          <div class="method-node font-mono">BUILD</div>
+        <div class="method-flow font-mono">
+          <span class="method-node">MEMORY</span>
+          <span class="method-arrow">→</span>
+          <span class="method-node">AI</span>
+          <span class="method-arrow">→</span>
+          <span class="method-node">BUILD</span>
+          <span class="method-arrow">→</span>
+          <span class="method-node" style="color:var(--signal-mint)">SHIP</span>
         </div>
       </article>
 
-      <!-- Next frontier: MAVIS -->
-      <article class="sacred-frame bento-next reveal" data-delay="280">
+      <!-- MAVIS — coming -->
+      <article class="sacred-frame bento-mavis reveal" data-delay="220">
         <span class="corner-tl"></span><span class="corner-tr"></span>
         <span class="corner-bl"></span><span class="corner-br"></span>
 
-        <div class="bento-tag font-mono">NEXT FRONTIER</div>
-        <h3 class="bento-sub-title font-cinzel">MAVIS</h3>
-        <p class="bento-desc font-inter">
-          Master AI orchestration ecosystem. Personal Jarvis, built right.
+        <div class="bento-tag font-mono" style="color:var(--signal-amber)">
+          <span class="tag-bracket">[</span> IN ARCHITECTURE <span class="tag-bracket">]</span>
+        </div>
+        <h3 class="bento-sub font-cinzel">MAVIS</h3>
+        <p class="bento-desc font-inter" style="color:var(--text-tertiary)">
+          Master AI companion ecosystem. Personal Jarvis, built right.
         </p>
 
-        <div class="mavis-orb-wrapper" aria-hidden="true">
-          <div class="mavis-orb"></div>
-        </div>
-
-        <div class="bento-stack font-mono">Status: In design · ETA Q3 2025</div>
+        <!-- Floating violet orb -->
+        <div class="mavis-orb" aria-hidden="true"></div>
+        <p class="bento-eta font-mono">ETA Q3 2025</p>
       </article>
+
     </div>
+
+    <!-- Bottom stats bar -->
+    <div class="stats-bar reveal" data-delay="260">
+      {[
+        ['STUDIO BIRTHED',  '2025'],
+        ['PROJECTS SHIPPED', '1'],
+        ['STACK',           'TAURI+AI'],
+        ['LOCATION',        'MALAYSIA'],
+        ['STATUS',          'ACCEPTING'],
+        ['AVAILABILITY',    '2 SLOTS'],
+      ].map(([label, value]) => (
+        <div class="bar-stat">
+          <span class="bar-label font-mono">{label}</span>
+          <span class="bar-value font-mono">{value}</span>
+        </div>
+      ))}
+    </div>
+
   </div>
 </section>
 
 <style>
   section {
-    padding: 7rem 2rem;
+    padding: 8rem 2rem;
     background: var(--deep);
+    z-index: var(--z-page);
+    position: relative;
   }
-
   .section-inner { max-width: 1200px; margin: 0 auto; }
   .section-header { margin-bottom: 3.5rem; }
-  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--text-tertiary); margin-bottom: 0.75rem; }
-  .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600; letter-spacing: 0.12em; color: var(--text-pure); }
 
-  /* ── BENTO ────────────────────────────────────────── */
+  /* ── BENTO GRID ─────────────────────────────────────── */
+  /* 2×2 grid, each tile 50% width */
   .bento-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -126,58 +170,36 @@
     gap: 1px;
     background: var(--edge);
     border: 1px solid var(--edge);
+    margin-bottom: 1px;
   }
 
-  /* AEGIS spans full width */
-  .bento-main {
-    grid-column: 1;
-    grid-row: 1;
+  /* All tiles share base styling */
+  .bento-aegis,
+  .bento-stats,
+  .bento-method,
+  .bento-mavis {
+    background: var(--mid);
     padding: 2.5rem;
+    border: none;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    background: var(--mid);
-    min-height: 360px;
+    gap: 1.25rem;
     position: relative;
     overflow: hidden;
   }
 
-  .bento-stats {
-    grid-column: 2;
-    grid-row: 1;
-    padding: 2rem;
-    background: var(--mid);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+  .bento-aegis { min-height: 380px; }
+  .bento-stats { justify-content: space-between; }
+  .bento-method { }
+  .bento-mavis { }
 
-  .bento-method {
-    grid-column: 1;
-    grid-row: 2;
-    padding: 2rem;
-    background: var(--mid);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .bento-next {
-    grid-column: 2;
-    grid-row: 2;
-    padding: 2rem;
-    background: var(--mid);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* ── AEGIS VISUAL ─────────────────────────────────── */
-  .aegis-visual {
-    position: relative;
-    width: 100%;
+  /* ── AEGIS VISUALIZATION ────────────────────────────── */
+  .aegis-vis {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    width: 100px;
     height: 100px;
     display: flex;
     align-items: center;
@@ -185,185 +207,240 @@
   }
 
   .aegis-orb {
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, #00d4ff, #0047a8);
-    box-shadow: 0 0 20px rgba(0,212,255,0.4), 0 0 40px rgba(0,212,255,0.15);
+    background: radial-gradient(circle at 38% 32%, #00d4ff, #003a5a);
+    box-shadow: 0 0 18px rgba(0,212,255,0.5), 0 0 36px rgba(0,212,255,0.15);
     animation: orbPulse 3s ease-in-out infinite;
-    position: relative;
     z-index: 2;
+    position: relative;
   }
+
   @keyframes orbPulse {
-    0%,100% { transform: scale(1);   box-shadow: 0 0 20px rgba(0,212,255,0.4); }
-    50%     { transform: scale(1.08); box-shadow: 0 0 30px rgba(0,212,255,0.6); }
+    0%,100% { transform: scale(1);    box-shadow: 0 0 18px rgba(0,212,255,0.5); }
+    50%      { transform: scale(1.1); box-shadow: 0 0 28px rgba(0,212,255,0.7); }
   }
 
   .aegis-ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(0,212,255,0.2);
-    animation: ringExpand 3s ease-in-out infinite;
+    border: 1px solid rgba(0,212,255,0.18);
+    animation: ringPulse 3.2s ease-in-out infinite;
   }
-  .ring-1 { width: 56px;  height: 56px;  animation-delay: 0s; }
-  .ring-2 { width: 84px;  height: 84px;  animation-delay: 0.3s; }
-  .ring-3 { width: 112px; height: 112px; animation-delay: 0.6s; }
-  @keyframes ringExpand {
-    0%,100% { opacity: 0.6; transform: scale(1); }
-    50%     { opacity: 0.2; transform: scale(1.05); }
+  .ring-1 { width: 46px;  height: 46px;  animation-delay: 0s;   }
+  .ring-2 { width: 70px;  height: 70px;  animation-delay: 0.25s; }
+  .ring-3 { width: 94px;  height: 94px;  animation-delay: 0.5s; }
+
+  @keyframes ringPulse {
+    0%,100% { opacity: 0.55; transform: scale(1);    }
+    50%      { opacity: 0.18; transform: scale(1.04); }
   }
 
   .aegis-scan {
     position: absolute;
-    left: 50%;
-    top: 0;
     width: 1px;
     height: 100%;
-    background: linear-gradient(to bottom, transparent, rgba(0,212,255,0.5), transparent);
-    transform-origin: center;
-    animation: scanLine 4s linear infinite;
-  }
-  @keyframes scanLine {
-    from { transform: translateX(-50px) rotate(-15deg); opacity: 0; }
-    20%  { opacity: 1; }
-    80%  { opacity: 1; }
-    to   { transform: translateX(50px) rotate(15deg); opacity: 0; }
+    background: linear-gradient(to bottom, transparent, rgba(0,212,255,0.55), transparent);
+    animation: scanLine 4.5s ease-in-out infinite;
   }
 
-  /* ── CONTENT ELEMENTS ─────────────────────────────── */
+  @keyframes scanLine {
+    0%   { transform: translateX(-48px) rotate(-12deg); opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateX(48px) rotate(12deg); opacity: 0; }
+  }
+
+  .aegis-content { display: flex; flex-direction: column; gap: 0.9rem; }
+
+  /* Bracket tags */
   .bento-tag {
     font-size: 0.6rem;
-    letter-spacing: 0.28em;
-    color: var(--text-tertiary);
+    letter-spacing: 0.2em;
+    color: var(--signal-cyan);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
   }
+  .tag-bracket { opacity: 0.5; }
 
   .bento-title {
     font-size: 2rem;
     font-weight: 600;
     letter-spacing: 0.2em;
     color: var(--text-pure);
+    line-height: 1;
   }
 
-  .bento-sub-title {
+  .bento-sub {
     font-size: 1.1rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.14em;
     color: var(--text-pure);
   }
 
   .bento-desc {
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.65;
+    max-width: 400px;
   }
 
-  .bento-stack {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--text-tertiary);
+  /* Bloomberg stat strip */
+  .stat-strip {
+    display: flex;
+    gap: 0;
     margin-top: auto;
+    border: 1px solid var(--edge);
+    background: var(--deep);
   }
 
-  .bento-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--signal-amber);
-    animation: dotBlink 2s ease-in-out infinite;
-  }
-  @keyframes dotBlink {
-    0%,100% { opacity: 1; }
-    50%     { opacity: 0.3; }
-  }
-  .status-text { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--signal-amber); }
-
-  .bento-classified {
-    position: absolute;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--text-ghost);
+  .stat-strip .stat-row {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    gap: 0.15rem;
   }
 
-  /* Stats */
-  .stats-list { display: flex; flex-direction: column; gap: 0.75rem; }
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--edge);
-  }
-  .stat-label { font-size: 0.8rem; color: var(--text-secondary); }
-  .stat-value { font-size: 0.8rem; letter-spacing: 0.08em; color: var(--signal-cyan); }
-
-  .availability-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--signal-mint);
-    margin-top: auto;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid rgba(74,222,128,0.2);
-    background: rgba(74,222,128,0.04);
-  }
-  .avail-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: var(--signal-mint);
+  .stat-divider {
+    width: 1px;
+    background: var(--edge);
     flex-shrink: 0;
   }
 
-  /* Method diagram */
-  .method-diagram {
+  .aegis-classified {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.22em;
+    color: var(--text-ghost);
+  }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--edge);
+    border: 1px solid var(--edge);
+  }
+  .stats-grid .stat-row {
+    background: var(--mid);
+    padding: 0.85rem 1rem;
+    gap: 0.15rem;
+  }
+
+  /* Availability badge */
+  .avail-badge {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--signal-mint);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(74,222,128,0.22);
+    background: rgba(74,222,128,0.04);
     margin-top: auto;
-    padding-top: 1rem;
+  }
+  .avail-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--signal-mint);
+    animation: dotBlink 2.2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes dotBlink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.25; }
+  }
+
+  /* Method flow */
+  .method-flow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    flex-wrap: wrap;
   }
   .method-node {
     font-size: 0.6rem;
     letter-spacing: 0.12em;
     color: var(--signal-cyan);
-    padding: 0.35rem 0.6rem;
-    border: 1px solid rgba(0,212,255,0.25);
+    padding: 0.3rem 0.6rem;
+    border: 1px solid rgba(0,212,255,0.22);
     background: rgba(0,212,255,0.04);
   }
-  .method-arrow { font-size: 0.7rem; color: var(--text-ghost); }
+  .method-arrow {
+    font-size: 0.65rem;
+    color: var(--text-ghost);
+  }
 
   /* MAVIS orb */
-  .mavis-orb-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: auto;
-  }
   .mavis-orb {
-    width: 40px; height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, rgba(167,139,250,0.8), rgba(50,30,120,0.6));
-    box-shadow: 0 0 24px rgba(167,139,250,0.3);
-    animation: mavisFloat 4s ease-in-out infinite;
+    background: radial-gradient(circle at 38% 32%, rgba(167,139,250,0.9), rgba(60,30,130,0.6));
+    box-shadow: 0 0 28px rgba(167,139,250,0.3);
+    animation: mavisFloat 4.5s ease-in-out infinite;
+    margin-top: auto;
+    align-self: flex-end;
   }
   @keyframes mavisFloat {
     0%,100% { transform: translateY(0); }
-    50%     { transform: translateY(-6px); }
+    50%      { transform: translateY(-8px); }
   }
 
-  /* ── RESPONSIVE ───────────────────────────────────── */
+  .bento-eta {
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    color: var(--signal-amber);
+    align-self: flex-end;
+    margin-top: -0.75rem;
+  }
+
+  /* ── STATS BAR ──────────────────────────────────────── */
+  .stats-bar {
+    display: flex;
+    border: 1px solid var(--edge);
+    border-top: none;
+    background: var(--deep);
+    overflow-x: auto;
+  }
+
+  .bar-stat {
+    flex: 1;
+    min-width: 120px;
+    padding: 1rem 1.25rem;
+    border-right: 1px solid var(--edge);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .bar-stat:last-child { border-right: none; }
+
+  .bar-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: var(--text-ghost);
+  }
+  .bar-value {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--signal-cyan);
+    font-weight: 500;
+  }
+
+  /* ── RESPONSIVE ──────────────────────────────────────── */
   @media (max-width: 768px) {
     .bento-grid { grid-template-columns: 1fr; }
-    .bento-main,
-    .bento-stats,
-    .bento-method,
-    .bento-next { grid-column: 1; grid-row: auto; }
+    .aegis-vis  { display: none; }
+    .stat-strip { flex-direction: column; }
+    .stat-divider { height: 1px; width: 100%; }
+    .stats-bar  { flex-wrap: wrap; }
+    .bar-stat   { min-width: 50%; border-right: none; border-bottom: 1px solid var(--edge); }
   }
 </style>

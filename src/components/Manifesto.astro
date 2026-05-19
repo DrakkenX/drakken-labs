@@ -2,28 +2,34 @@
 ---
 
 <section id="manifesto" aria-labelledby="manifesto-heading">
-  <div class="manifesto-inner">
-    <p class="manifesto-label font-mono reveal" data-delay="0">MANIFESTO</p>
+  <!-- Left vertical thread — echoes hero beam -->
+  <div class="thread-line" aria-hidden="true"></div>
 
-    <div class="manifesto-lines" data-stagger>
-      <p class="manifesto-line stagger-child font-serif">
-        We build what shouldn't exist yet.
-      </p>
-      <p class="manifesto-line stagger-child font-serif manifesto-secondary">
-        Software as ceremony. Code as craft.<br />
+  <!-- Violet ambient -->
+  <div class="manifesto-glow" aria-hidden="true"></div>
+
+  <div class="manifesto-inner">
+    <!-- Section label with flanking lines -->
+    <div class="section-label reveal">
+      <span>MANIFESTO</span>
+    </div>
+
+    <!-- Heading -->
+    <h2 id="manifesto-heading" class="manifesto-heading font-serif reveal" data-delay="80">
+      We build what shouldn't exist yet.
+    </h2>
+
+    <!-- Lines stagger in -->
+    <div class="manifesto-lines" data-stagger data-stagger-step="200" data-stagger-delay="200">
+      <p class="manifesto-line stagger-child font-inter">
+        Software as ceremony. Code as craft.
         AI as creative partner, not replacement.
       </p>
-      <p class="manifesto-line stagger-child font-serif manifesto-secondary">
+      <p class="manifesto-line secondary stagger-child font-inter">
         Quality compounds. Speed multiplies.<br />
         The future belongs to those who build with intention.
       </p>
     </div>
-  </div>
-
-  <!-- Ambient particles -->
-  <div class="manifesto-bg" aria-hidden="true">
-    <div class="m-glow-1"></div>
-    <div class="m-glow-2"></div>
   </div>
 </section>
 
@@ -33,77 +39,75 @@
     min-height: 60vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding: 8rem 2rem 8rem 4rem;
     background: var(--deep);
     overflow: hidden;
-    padding: 6rem 2rem;
+    z-index: var(--z-page);
+  }
+
+  /* Ambient violet glow */
+  .manifesto-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    top: -100px;
+    left: 20%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(167, 139, 250, 0.06) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: mGlow 18s ease-in-out infinite;
+  }
+
+  @keyframes mGlow {
+    0%, 100% { transform: scale(1)   translate(0, 0); }
+    50%       { transform: scale(1.1) translate(3%, 5%); }
   }
 
   .manifesto-inner {
     position: relative;
     z-index: 1;
-    max-width: 680px;
-    width: 100%;
+    max-width: 720px;
+    padding-left: 3rem;
   }
 
-  .manifesto-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    color: var(--text-tertiary);
+  /* Heading — Instrument Serif italic for editorial authority */
+  .manifesto-heading {
+    font-style: italic;
+    font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+    line-height: 1.25;
+    color: var(--text-pure);
     margin-bottom: 3rem;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
 
+  /* Paragraph lines */
   .manifesto-lines {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
   .manifesto-line {
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    line-height: 1.5;
-    color: var(--text-primary);
-    font-style: italic;
-    letter-spacing: -0.01em;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.75;
+    color: rgba(232, 237, 245, 0.68);
+    max-width: 560px;
+    text-wrap: pretty;
   }
 
-  .manifesto-secondary {
-    font-size: clamp(1rem, 2.2vw, 1.45rem);
-    color: var(--text-secondary);
-    line-height: 1.7;
+  .manifesto-line.secondary {
+    color: rgba(139, 148, 168, 0.8);
+    font-size: clamp(0.95rem, 1.8vw, 1.15rem);
   }
 
-  /* ── STAGGER SETUP ────────────────────────────────── */
-  .stagger-child {
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.65s var(--ease-entrance),
-      transform 0.65s var(--ease-entrance);
-  }
-  .stagger-child.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── AMBIENT ──────────────────────────────────────── */
-  .manifesto-bg { position: absolute; inset: 0; pointer-events: none; }
-  .m-glow-1 {
-    position: absolute;
-    width: 400px; height: 400px;
-    top: -100px; left: -100px;
-    background: radial-gradient(ellipse, rgba(167,139,250,0.05) 0%, transparent 70%);
-    animation: mGlow 18s ease-in-out infinite;
-  }
-  .m-glow-2 {
-    position: absolute;
-    width: 300px; height: 300px;
-    bottom: -50px; right: -50px;
-    background: radial-gradient(ellipse, rgba(0,212,255,0.04) 0%, transparent 70%);
-    animation: mGlow 22s ease-in-out infinite reverse;
-  }
-  @keyframes mGlow {
-    0%,100% { transform: scale(1) translate(0,0); }
-    50%     { transform: scale(1.15) translate(3%,5%); }
+  /* ── RESPONSIVE ──────────────────────────────────────── */
+  @media (max-width: 768px) {
+    section { padding: 6rem 1.5rem; }
+    .manifesto-inner { padding-left: 1.5rem; }
+    .thread-line { left: 16px; }
   }
 </style>

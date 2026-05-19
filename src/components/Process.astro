@@ -4,31 +4,36 @@ const steps = [
     num: '01',
     name: 'DISCOVERY',
     duration: '1–2 days',
-    desc: 'We map the problem space, define success, and surface the real constraints. No bloated briefs. Just clarity.',
+    desc: 'Map the problem space, define success, surface the real constraints. No bloated briefs.',
+    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>`,
   },
   {
     num: '02',
     name: 'ARCHITECTURE',
     duration: '1–2 days',
-    desc: 'Tech stack chosen for the work, not the resume. Tradeoffs documented. Scope locked.',
+    desc: 'Stack chosen for the work, not the resume. Tradeoffs documented. Scope locked.',
+    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1" stroke="currentColor" stroke-width="1"/><path d="M2 6H14M6 6V14" stroke="currentColor" stroke-width="1"/></svg>`,
   },
   {
     num: '03',
-    name: 'BUILD',
+    name: 'EXECUTION',
     duration: '5–14 days',
-    desc: 'Execution in focused sprints. AI-augmented velocity. Daily progress. No black holes.',
+    desc: 'AI-augmented sprints. Daily builds. No black holes between check-ins.',
+    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
   {
     num: '04',
-    name: 'POLISH',
+    name: 'CRAFT',
     duration: '2–5 days',
-    desc: 'The 20% that determines perception. Micro-interactions, edge cases, performance tuning.',
+    desc: 'The 20% that determines perception. Micro-interactions, edge cases, taste-driven iteration.',
+    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L10 6.5H15L11 9.5L12.5 14L8 11L3.5 14L5 9.5L1 6.5H6L8 2Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>`,
   },
   {
     num: '05',
     name: 'SHIP',
     duration: 'Delivery',
     desc: 'Documented handoff. Deployment-ready. Post-ship support included.',
+    icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2V14M2 8L8 2L14 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
 ];
 ---
@@ -36,26 +41,24 @@ const steps = [
 <section id="process" aria-labelledby="process-heading">
   <div class="section-inner">
     <div class="section-header reveal">
-      <p class="section-label font-mono">PROCESS</p>
-      <h2 id="process-heading" class="section-title font-cinzel">
-        How It Works
-      </h2>
+      <div class="section-label"><span>PROCESS</span></div>
+      <h2 id="process-heading" class="section-heading">How It Works</h2>
     </div>
 
-    <!-- Connector line -->
-    <div class="process-line-track" aria-hidden="true">
+    <!-- Animated connector line -->
+    <div class="process-track" aria-hidden="true">
       <div class="process-line-fill"></div>
     </div>
 
-    <div class="process-steps" data-stagger>
-      {steps.map(({ num, name, duration, desc }) => (
+    <!-- Steps -->
+    <div class="process-steps" data-stagger data-stagger-step="80">
+      {steps.map(({ num, name, duration, desc, icon }) => (
         <article class="process-step stagger-child">
+          <div class="step-icon" aria-hidden="true" set:html={icon} />
           <div class="step-num font-mono">{num}</div>
-          <div class="step-content">
-            <h3 class="step-name font-cinzel">{name}</h3>
-            <p class="step-duration font-mono">{duration}</p>
-            <p class="step-desc font-inter">{desc}</p>
-          </div>
+          <div class="step-name font-cinzel">{name}</div>
+          <div class="step-duration font-mono">{duration}</div>
+          <p class="step-desc font-inter">{desc}</p>
         </article>
       ))}
     </div>
@@ -64,100 +67,111 @@ const steps = [
 
 <style>
   section {
-    padding: 7rem 2rem;
+    padding: 8rem 2rem;
     background: var(--void);
     overflow: hidden;
+    z-index: var(--z-page);
+    position: relative;
   }
 
   .section-inner { max-width: 1200px; margin: 0 auto; }
-  .section-header { margin-bottom: 4rem; }
-  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--text-tertiary); margin-bottom: 0.75rem; }
-  .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600; letter-spacing: 0.12em; color: var(--text-pure); }
+  .section-header { margin-bottom: 3.5rem; }
 
-  /* ── CONNECTOR LINE ───────────────────────────────── */
-  .process-line-track {
+  /* ── CONNECTOR LINE ─────────────────────────────────── */
+  .process-track {
     position: relative;
     height: 1px;
     background: var(--edge);
-    margin-bottom: 0;
     overflow: hidden;
   }
 
   .process-line-fill {
     position: absolute;
+    inset-block: 0;
     left: 0;
-    top: 0;
-    height: 100%;
     width: 100%;
-    background: linear-gradient(to right, var(--signal-cyan), var(--signal-violet), var(--signal-mint));
+    background: linear-gradient(
+      to right,
+      var(--signal-cyan) 0%,
+      var(--signal-violet) 50%,
+      var(--signal-mint) 100%
+    );
     transform: scaleX(0);
     transform-origin: left center;
-    transition: transform 1.2s cubic-bezier(0.4, 0.14, 0.3, 1) 0.3s;
+    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+    box-shadow: 0 0 8px rgba(0,212,255,0.4);
   }
 
-  /* ── STEPS ────────────────────────────────────────── */
+  /* ── STEPS ──────────────────────────────────────────── */
   .process-steps {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 0;
     border: 1px solid var(--edge);
     border-top: none;
+    background: var(--edge);
+    gap: 1px;
   }
 
   .process-step {
     padding: 2rem 1.5rem;
-    border-right: 1px solid var(--edge);
+    background: var(--mid);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
     cursor: default;
-    transition: background var(--t-base) var(--ease-expressive);
+    transition:
+      background var(--t-base) var(--ease-out-expo),
+      box-shadow var(--t-base) var(--ease-out-expo);
   }
-  .process-step:last-child { border-right: none; }
-  .process-step:hover { background: var(--mid); }
+
+  .process-step:hover {
+    background: var(--rise);
+    box-shadow: 0 -2px 0 var(--signal-cyan) inset;
+  }
+
+  .step-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--signal-cyan);
+    opacity: 0.6;
+    transition: opacity var(--t-base);
+  }
+  .process-step:hover .step-icon { opacity: 1; }
 
   .step-num {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
+    font-size: 0.55rem;
+    letter-spacing: 0.22em;
     color: var(--signal-cyan);
   }
 
   .step-name {
     font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     color: var(--text-pure);
+    line-height: 1.3;
   }
 
   .step-duration {
     font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    color: var(--text-tertiary);
+    letter-spacing: 0.1em;
+    color: var(--text-ghost);
   }
 
   .step-desc {
     font-size: 0.8rem;
-    line-height: 1.6;
+    line-height: 1.65;
     color: var(--text-secondary);
     margin-top: auto;
+    flex-grow: 1;
   }
 
-  /* ── STAGGER ──────────────────────────────────────── */
-  .stagger-child {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s var(--ease-entrance), transform 0.5s var(--ease-entrance);
-  }
-  .stagger-child.visible { opacity: 1; transform: translateY(0); }
-
-  /* ── RESPONSIVE ───────────────────────────────────── */
+  /* ── RESPONSIVE ──────────────────────────────────────── */
   @media (max-width: 900px) {
     .process-steps { grid-template-columns: 1fr 1fr; }
-    .process-step:nth-child(2n) { border-right: none; }
-    .process-step { border-bottom: 1px solid var(--edge); }
+    .process-track  { display: none; }
   }
   @media (max-width: 520px) {
     .process-steps { grid-template-columns: 1fr; }
-    .process-step { border-right: none; }
   }
 </style>

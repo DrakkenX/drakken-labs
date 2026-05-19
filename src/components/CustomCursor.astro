@@ -1,0 +1,81 @@
+---
+// Custom cursor: 8px dot + 32px ring with damped lag.
+// Desktop/pointer-fine only. Respects reduced-motion.
+---
+
+<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+<script>
+  (() => {
+  const dot  = document.getElementById('cursor-dot')  as HTMLElement | null;
+  const ring = document.getElementById('cursor-ring') as HTMLElement | null;
+
+  if (!dot || !ring) return;
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let dotX  = 0, dotY  = 0;
+  let ringX = 0, ringY = 0;
+  let mouseX = 0, mouseY = 0;
+  let raf: number;
+  let isOver = false;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.classList.add('visible');
+    ring.classList.add('visible');
+  });
+
+  document.addEventListener('mouseleave', () => {
+    dot.classList.remove('visible');
+    ring.classList.remove('visible');
+  });
+
+  // Large state on interactive elements
+  document.querySelectorAll<HTMLElement>(
+    'a, button, [role="button"], input, textarea, select, label'
+  ).forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      ring.classList.add('large');
+      isOver = true;
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.classList.remove('large');
+      isOver = false;
+    });
+  });
+
+  // Click spring — WAAPI, hardware accelerated
+  document.addEventListener('click', () => {
+    ring.animate(
+      [
+        { transform: 'translate(-50%,-50%) scale(1)',   opacity: '0.9' },
+        { transform: 'translate(-50%,-50%) scale(1.5)', opacity: '0.3' },
+        { transform: 'translate(-50%,-50%) scale(1)',   opacity: '0.6' },
+      ],
+      { duration: 400, easing: 'cubic-bezier(0.34,1.56,0.64,1)', fill: 'forwards' }
+    );
+  });
+
+  function tick() {
+    raf = requestAnimationFrame(tick);
+
+    // Dot — instant
+    dotX = mouseX;
+    dotY = mouseY;
+
+    // Ring — damped lag (Emil Kowalski spring feel)
+    ringX += (mouseX - ringX) * 0.14;
+    ringY += (mouseY - ringY) * 0.14;
+
+    dot.style.left  = dotX  + 'px';
+    dot.style.top   = dotY  + 'px';
+    ring.style.left = ringX + 'px';
+    ring.style.top  = ringY + 'px';
+  }
+
+  tick();
+  })();
+</script>
