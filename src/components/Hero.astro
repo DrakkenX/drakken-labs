@@ -58,36 +58,20 @@
   <!-- ─────────────────────────────────────────────── -->
   <div class="hero-content" data-parallax="8">
 
-    <!-- LAYER 2: CSS STROKE-DRAW WORDMARK
-         Approach: -webkit-text-stroke + clip-path wipe (reliable cross-browser).
-         Each letter's outline is revealed left→right via clip-path animation.
-         White fill cascades in 200ms after each stroke wipe completes.
+    <!-- LAYER 2: WORDMARK — cyan flash then white settle, per letter
+         Each span: ::before = cyan overlay (flashes, then fades)
+                    base     = white letter (fades in at 60% of animation)
+         Approach: content: attr(data-letter) on ::before — no JS needed.
     -->
-    <div class="hero-title-wrap" role="heading" aria-level="1" aria-label="DRAKKEN">
-
-      <!-- Stroke layer: cyan outline, clipped to "draw" left-to-right -->
-      <div class="drakken-stroke font-cinzel" aria-hidden="true">
-        <span class="sl" style="--i:0">D</span><span
-          class="sl" style="--i:1">R</span><span
-          class="sl" style="--i:2">A</span><span
-          class="sl" style="--i:3">K</span><span
-          class="sl" style="--i:4">K</span><span
-          class="sl" style="--i:5">E</span><span
-          class="sl" style="--i:6">N</span>
-      </div>
-
-      <!-- Fill layer: white fill cascades in after each stroke completes -->
-      <div class="drakken-fill font-cinzel" aria-hidden="true">
-        <span class="fl" style="--i:0">D</span><span
-          class="fl" style="--i:1">R</span><span
-          class="fl" style="--i:2">A</span><span
-          class="fl" style="--i:3">K</span><span
-          class="fl" style="--i:4">K</span><span
-          class="fl" style="--i:5">E</span><span
-          class="fl" style="--i:6">N</span>
-      </div>
-
-    </div>
+    <h1 class="drakken-wordmark font-cinzel" aria-label="DRAKKEN">
+      <span data-letter="D" style="--i:0">D</span><span
+        data-letter="R" style="--i:1">R</span><span
+        data-letter="A" style="--i:2">A</span><span
+        data-letter="K" style="--i:3">K</span><span
+        data-letter="K" style="--i:4">K</span><span
+        data-letter="E" style="--i:5">E</span><span
+        data-letter="N" style="--i:6">N</span>
+    </h1>
 
     <p class="hero-name font-inter">Han Myo Naing</p>
 
@@ -336,38 +320,38 @@
   }
 
   /* Blade flash: position:fixed escapes all overflow:hidden clipping.
-     The ::after is viewport-positioned and sweeps the full screen.   */
+     White streak is more visible on dark backgrounds than cyan.      */
   .blade-flash::after {
     content: '';
-    /* Fixed = viewport-relative, ignores hero overflow:hidden        */
     position: fixed;
     top: 0;
     left: 0;
     width: 480px;
     height: 100vh;
-    /* Sharp blade-edge gradient — 0.35 peak, abrupt shoulders        */
+    /* White core + cyan glow wings — high visibility on dark bg */
     background: linear-gradient(
       108deg,
-      transparent              0%,
-      transparent             30%,
-      rgba(0, 212, 255, 0.05) 38%,
-      rgba(0, 212, 255, 0.22) 46%,
-      rgba(0, 212, 255, 0.35) 50%,
-      rgba(0, 212, 255, 0.22) 54%,
-      rgba(0, 212, 255, 0.05) 62%,
-      transparent             70%,
-      transparent            100%
+      transparent               0%,
+      transparent              30%,
+      rgba(0,  212, 255, 0.08) 38%,
+      rgba(255, 255, 255, 0.35) 46%,
+      rgba(255, 255, 255, 0.50) 50%,
+      rgba(255, 255, 255, 0.35) 54%,
+      rgba(0,  212, 255, 0.08) 62%,
+      transparent              70%,
+      transparent             100%
     );
+    box-shadow: 0 0 80px rgba(0, 212, 255, 0.6);
     filter: blur(0.5px) brightness(1.3);
     opacity: 0;
     pointer-events: none;
-    z-index: 5;
+    z-index: 50;
     animation: none; /* gated — no fire until data-animate="true" */
   }
 
   /* Gate: flash only after the hero entrance sequence is complete */
   section[data-animate="true"] .blade-flash::after {
-    animation: bladeFlash 6s cubic-bezier(0.2, 0.6, 0.3, 1) 7.5s infinite;
+    animation: bladeFlash 6s cubic-bezier(0.2, 0.6, 0.3, 1) 5.0s infinite;
   }
 
   @keyframes bladeFlash {
@@ -493,89 +477,69 @@
   }
 
   /* ═══════════════════════════════════════════════════════
-     LAYER 2 — CSS STROKE-DRAW WORDMARK
-     Technique: -webkit-text-stroke + clip-path inset wipe
-     Each letter's cyan outline sweeps in left→right, then
-     white fill cascades in 200ms after each stroke completes.
+     LAYER 2 — DRAKKEN WORDMARK: CYAN FLASH → WHITE SETTLE
+     Per-letter: ::before = cyan overlay (1→0 opacity = flash)
+                 base     = white letter (0→1 opacity = settle)
+     Stagger: 200ms between letters. Total reveal: ~2500ms.
      ═══════════════════════════════════════════════════════ */
-
-  /* Shared font for BOTH layers — must be identical for perfect overlay */
-  .drakken-stroke,
-  .drakken-fill {
-    font-family: 'Cinzel', Georgia, serif;
+  .drakken-wordmark {
     font-size: clamp(3.5rem, 10vw, 8rem);
     font-weight: 400;
     letter-spacing: 0.08em;
     line-height: 1;
     user-select: none;
     white-space: nowrap;
-  }
-
-  /* Stroke layer — cyan outline, drawn via clip-path wipe */
-  .drakken-stroke {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .drakken-stroke .sl {
-    display: inline-block;
-    -webkit-text-stroke: 0.8px rgba(0, 212, 255, 0.9);
-    color: transparent;
-    /* Start fully clipped (invisible) — wipe reveals left→right */
-    clip-path: inset(0 100% 0 0);
-  }
-
-  /* Phase 1: clip-path wipe — 2.2s per letter, 280ms stagger */
-  /* Phase 2: fade stroke out (opacity) as fill appears        */
-  section[data-animate="true"] .drakken-stroke .sl {
-    animation:
-      strokeWipe    2.2s cubic-bezier(0.16, 1, 0.3, 1) calc(0.5s + var(--i) * 0.28s)              both,
-      strokeFadeOut 0.5s ease                           calc(2.9s + var(--i) * 0.28s)              both;
-  }
-
-  @keyframes strokeWipe {
-    from { clip-path: inset(0 100% 0 0); }
-    to   { clip-path: inset(0   0% 0 0); }
-  }
-
-  @keyframes strokeFadeOut {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-  }
-
-  /* Fill layer — absolutely overlays stroke layer */
-  .drakken-fill {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
-
-  .drakken-fill .fl {
-    display: inline-block;
-    color: var(--text-pure);
-    opacity: 0;
+    text-align: center;
+    display: block;
+    margin-bottom: 1.1rem;
     text-shadow:
       0 0 40px rgba(0, 212, 255, 0.15),
       0 0 80px rgba(0, 212, 255, 0.08);
   }
 
-  /* Fill appears 200ms after each letter's stroke wipe ends.
-     delay = stroke_start(0.5 + i*0.28) + stroke_dur(2.2) + hold(0.2)
-           = 2.9 + i*0.28                                              */
-  section[data-animate="true"] .drakken-fill .fl {
-    animation: fillReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) calc(2.9s + var(--i) * 0.28s) both;
+  .drakken-wordmark span {
+    position: relative;
+    display: inline-block;
+    color: var(--text-pure);
+    opacity: 0;
   }
 
-  @keyframes fillReveal {
-    from { opacity: 0; filter: blur(3px); }
-    to   { opacity: 1; filter: blur(0);   }
+  /* Cyan flash overlay — uses the data-letter attribute as content */
+  .drakken-wordmark span::before {
+    content: attr(data-letter);
+    position: absolute;
+    inset: 0;
+    color: #00d4ff;
+    text-shadow:
+      0 0 20px rgba(0, 212, 255, 0.9),
+      0 0 40px rgba(0, 212, 255, 0.5);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Base letter: invisible → white (starts at 60% of 1000ms = 600ms in) */
+  section[data-animate="true"] .drakken-wordmark span {
+    animation: letterBase 1000ms cubic-bezier(0.2, 0.8, 0.2, 1)
+               calc(var(--i) * 200ms + 300ms) both;
+  }
+
+  /* Cyan flash: invisible → cyan → invisible (peaks at 40-60%) */
+  section[data-animate="true"] .drakken-wordmark span::before {
+    animation: letterFlash 1000ms cubic-bezier(0.2, 0.8, 0.2, 1)
+               calc(var(--i) * 200ms + 300ms) both;
+  }
+
+  @keyframes letterBase {
+    0%   { opacity: 0; }
+    60%  { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes letterFlash {
+    0%   { opacity: 0; }
+    40%  { opacity: 1; }
+    60%  { opacity: 1; }
+    100% { opacity: 0; }
   }
 
   /* ── Name — refined caption, not a heading ──────────── */
@@ -591,7 +555,7 @@
   }
 
   section[data-animate="true"] .hero-name {
-    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 5.3s both;
+    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 2.7s both;
   }
 
   /* ── Tagline ─────────────────────────────────────────── */
@@ -609,7 +573,7 @@
   }
 
   section[data-animate="true"] .hero-tagline {
-    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 5.45s both;
+    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 2.9s both;
   }
 
   .tl-dot {
@@ -629,7 +593,7 @@
   }
 
   section[data-animate="true"] .hero-sub {
-    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 5.6s both;
+    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 3.1s both;
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -646,7 +610,7 @@
   }
 
   section[data-animate="true"] .hero-quote {
-    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 5.7s both;
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 3.3s both;
   }
 
   .quote-line {
@@ -658,7 +622,7 @@
   }
 
   section[data-animate="true"] .quote-line {
-    animation: quoteLine 0.4s cubic-bezier(0.16,1,0.3,1) 5.6s both;
+    animation: quoteLine 0.4s cubic-bezier(0.16,1,0.3,1) 3.1s both;
   }
 
   @keyframes quoteLine {
@@ -685,7 +649,7 @@
   }
 
   section[data-animate="true"] .quote-attr {
-    animation: fadeIn 0.4s ease 5.9s both;
+    animation: fadeIn 0.4s ease 3.5s both;
   }
 
   @keyframes fadeIn {
@@ -710,7 +674,7 @@
   }
 
   section[data-animate="true"] .hero-cta {
-    animation: slashIn 0.55s cubic-bezier(0.16,1,0.3,1) calc(6.0s + var(--ci) * 0.15s) both;
+    animation: slashIn 0.55s cubic-bezier(0.16,1,0.3,1) calc(3.7s + var(--ci) * 0.15s) both;
   }
 
   @keyframes slashIn {
@@ -756,7 +720,7 @@
   }
 
   section[data-animate="true"] .hero-scroll-prompt {
-    animation: fadeIn 0.8s ease 6.7s both;
+    animation: fadeIn 0.8s ease 4.2s both;
   }
 
   .scroll-label {
@@ -846,9 +810,9 @@
   @media (prefers-reduced-motion: reduce) {
     .hero-video { display: none; }
     .blade-flash::after { animation: none; }
-    /* Snap stroke to invisible, fill to visible */
-    .drakken-stroke { display: none; }
-    .drakken-fill .fl { opacity: 1 !important; filter: none !important; }
+    /* Snap wordmark spans straight to final white state */
+    .drakken-wordmark span       { opacity: 1 !important; animation: none !important; }
+    .drakken-wordmark span::before { opacity: 0 !important; animation: none !important; }
     section[data-animate="true"] * { animation-duration: 0.01ms !important; }
     .hero-kanji { opacity: 0.10 !important; }
     .hero-name, .hero-tagline, .hero-sub, .hero-quote,

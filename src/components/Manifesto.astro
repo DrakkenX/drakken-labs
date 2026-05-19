@@ -1,18 +1,18 @@
 ---
-// 12 ambient particles — pure CSS, no JS
+// 12 ambient particles — bumped size (3-5px) and opacity (0.30-0.50)
 const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;delay:number;dx:number;dy:number}> = [
-  { x:'8%',  y:'18%', size:2, opacity:0.28, dur:13, delay:0,  dx:12,  dy:-10 },
-  { x:'22%', y:'62%', size:3, opacity:0.18, dur:16, delay:2,  dx:-8,  dy:14  },
-  { x:'42%', y:'12%', size:2, opacity:0.32, dur:11, delay:4,  dx:10,  dy:8   },
-  { x:'68%', y:'38%', size:2, opacity:0.22, dur:14, delay:1,  dx:-14, dy:-8  },
-  { x:'83%', y:'72%', size:3, opacity:0.16, dur:17, delay:3,  dx:8,   dy:-12 },
-  { x:'12%', y:'82%', size:2, opacity:0.26, dur:12, delay:5,  dx:-10, dy:-6  },
-  { x:'55%', y:'52%', size:2, opacity:0.20, dur:15, delay:2,  dx:6,   dy:10  },
-  { x:'88%', y:'22%', size:3, opacity:0.18, dur:10, delay:6,  dx:-8,  dy:14  },
-  { x:'34%', y:'88%', size:2, opacity:0.24, dur:13, delay:1,  dx:14,  dy:-8  },
-  { x:'76%', y:'8%',  size:2, opacity:0.20, dur:16, delay:4,  dx:-6,  dy:12  },
-  { x:'60%', y:'68%', size:3, opacity:0.16, dur:12, delay:3,  dx:10,  dy:-10 },
-  { x:'4%',  y:'44%', size:2, opacity:0.30, dur:14, delay:0,  dx:-12, dy:8   },
+  { x:'8%',  y:'18%', size:4, opacity:0.40, dur:13, delay:0,  dx:12,  dy:-10 },
+  { x:'22%', y:'62%', size:5, opacity:0.32, dur:16, delay:2,  dx:-8,  dy:14  },
+  { x:'42%', y:'12%', size:3, opacity:0.45, dur:11, delay:4,  dx:10,  dy:8   },
+  { x:'68%', y:'38%', size:4, opacity:0.35, dur:14, delay:1,  dx:-14, dy:-8  },
+  { x:'83%', y:'72%', size:5, opacity:0.30, dur:17, delay:3,  dx:8,   dy:-12 },
+  { x:'12%', y:'82%', size:3, opacity:0.38, dur:12, delay:5,  dx:-10, dy:-6  },
+  { x:'55%', y:'52%', size:4, opacity:0.32, dur:15, delay:2,  dx:6,   dy:10  },
+  { x:'88%', y:'22%', size:5, opacity:0.30, dur:10, delay:6,  dx:-8,  dy:14  },
+  { x:'34%', y:'88%', size:3, opacity:0.38, dur:13, delay:1,  dx:14,  dy:-8  },
+  { x:'76%', y:'8%',  size:4, opacity:0.34, dur:16, delay:4,  dx:-6,  dy:12  },
+  { x:'60%', y:'68%', size:5, opacity:0.30, dur:12, delay:3,  dx:10,  dy:-10 },
+  { x:'4%',  y:'44%', size:3, opacity:0.42, dur:14, delay:0,  dx:-12, dy:8   },
 ];
 ---
 
@@ -37,7 +37,7 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     {particles.map((p, i) => (
       <div
         class={`particle particle-${i}`}
-        style={`left:${p.x};top:${p.y};width:${p.size}px;height:${p.size}px;opacity:${p.opacity};animation-duration:${p.dur}s;animation-delay:-${p.delay}s;--dx:${p.dx}px;--dy:${p.dy}px`}
+        style={`left:${p.x};top:${p.y};width:${p.size}px;height:${p.size}px;opacity:${p.opacity};--dur:${p.dur}s;--delay:-${p.delay}s;--dx:${p.dx}px;--dy:${p.dy}px`}
       ></div>
     ))}
   </div>
@@ -77,14 +77,14 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
       <div class="m-label-line"></div>
     </div>
 
-    <!-- L3: Heading with word-by-word reveal -->
-    <h2 id="manifesto-heading" class="m-heading font-serif" aria-label="We build what shouldn't exist yet.">
-      <span class="word" style="--wi:0">We</span>
-      <span class="word" style="--wi:1">build</span>
-      <span class="word" style="--wi:2">what</span>
-      <span class="word italic" style="--wi:3">shouldn't</span>
-      <span class="word" style="--wi:4">exist</span>
-      <span class="word" style="--wi:5">yet.</span>
+    <!-- L3: Heading with word-by-word reveal (CSS-driven stagger via --w) -->
+    <h2 id="manifesto-heading" class="m-heading font-serif">
+      <span class="word" style="--w:0">We</span>
+      <span class="word" style="--w:1">build</span>
+      <span class="word" style="--w:2">what</span>
+      <span class="word italic" style="--w:3">shouldn't</span>
+      <span class="word" style="--w:4">exist</span>
+      <span class="word" style="--w:5">yet.</span>
     </h2>
 
     <!-- L4: Three manifesto lines -->
@@ -121,9 +121,8 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
 
     if (!heading || !words?.length) return;
 
-    const WORD_STAGGER   = 180;  // ms between words
-    const LINE_1_DELAY   = 1600; // ms after heading observer fires
-    const SIGNOFF_DELAY  = 2800; // ms after heading observer fires
+    const LINE_1_DELAY  = 1400; // ms after heading.in-view fires
+    const SIGNOFF_DELAY = 2600; // ms after heading.in-view fires
 
     let fired = false;
     const obs = new IntersectionObserver(
@@ -132,24 +131,22 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
           if (!entry.isIntersecting || fired) return;
           fired = true;
 
-          // Reveal words with stagger
-          words.forEach((word, i) => {
-            setTimeout(() => word.classList.add('revealed'), i * WORD_STAGGER);
-          });
+          // CSS transition-delay (via --w) drives the word stagger
+          // — just add the class once and CSS does the rest
+          heading.classList.add('in-view');
 
-          // Lines fade up after heading completes
+          // Lines fade up after heading words cascade (6 words × 180ms + 600ms ≈ 1680ms)
           lines.forEach((line, i) => {
-            const delay = LINE_1_DELAY + i * 300;
-            setTimeout(() => line.classList.add('revealed'), delay);
+            setTimeout(() => line.classList.add('revealed'), LINE_1_DELAY + i * 300);
           });
 
-          // Signoff last
+          // Signoff appears after all three lines
           setTimeout(() => signoff?.classList.add('revealed'), SIGNOFF_DELAY);
 
           obs.unobserve(entry.target);
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.2, rootMargin: '-30px 0px' }
     );
 
     obs.observe(heading);
@@ -240,7 +237,9 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     position: absolute;
     border-radius: 50%;
     background: var(--signal-cyan);
-    animation: particleDrift var(--dur, 12s) ease-in-out var(--delay, 0s) infinite alternate;
+    box-shadow: 0 0 6px rgba(0, 212, 255, 0.5);
+    /* --dur, --delay, --dx, --dy all set via inline style as CSS custom props */
+    animation: particleDrift var(--dur, 13s) ease-in-out var(--delay, 0s) infinite alternate;
   }
 
   /* Each particle uses CSS custom property offsets for unique drift */
@@ -285,7 +284,7 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     letter-spacing: 0.25em;
-    color: rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.45);   /* bumped from 0.28 */
     text-transform: uppercase;
     white-space: nowrap;
     margin: 10px 0;
@@ -295,6 +294,11 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
 
   .ornament-r .ornament-text {
     transform: rotate(180deg);
+  }
+
+  /* Ensure ornaments are visible above background */
+  .ornament {
+    z-index: 3 !important;  /* above particles (z=1), below inner content (z=3, same is fine) */
   }
 
   /* ══ AMBIENT GLOW ═══════════════════════════════════════════ */
@@ -391,21 +395,25 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     gap: 0.25em 0.3em;
   }
 
-  /* Each word: hidden until IntersectionObserver fires */
+  /* Each word: hidden until .in-view fires on parent <h2> */
   .word {
     display: inline-block;
     opacity: 0;
     transform: translateY(24px);
+    /* transition-delay drives the stagger — purely CSS, no JS setTimeout */
     transition:
-      opacity  0.65s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity   0.65s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--w) * 180ms),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--w) * 180ms);
+    margin-right: 0.1em; /* small gap between words */
   }
 
   .word.italic {
     font-style: italic;
+    margin-right: 0.05em;
   }
 
-  .word.revealed {
+  /* JS adds .in-view to the <h2> — CSS transition-delay creates the stagger */
+  .m-heading.in-view .word {
     opacity: 1;
     transform: translateY(0);
   }
@@ -491,11 +499,12 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
 
   /* ══ REDUCED MOTION ════════════════════════════════════════ */
   @media (prefers-reduced-motion: reduce) {
-    .particle { animation: none; }
-    .m-bg-img { animation: none; }
-    .m-glow   { animation: none; }
-    .word     { opacity: 1; transform: none; transition: none; }
-    .m-line   { opacity: 1; transform: none; transition: none; }
-    .m-signoff { opacity: 1; transform: none; transition: none; }
+    .particle  { animation: none; }
+    .m-bg-img  { animation: none; }
+    .m-glow    { animation: none; }
+    /* Snap everything to final state */
+    .word      { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .m-line    { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .m-signoff { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
 </style>
