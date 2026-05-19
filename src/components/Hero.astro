@@ -1,25 +1,47 @@
 ---
 ---
 
-<section id="hero" aria-label="Drakken Labs">
-  <!-- VIDEO BACKGROUND — deepest layer, below aurora + 3D canvas -->
+<!-- Noto Serif JP for kanji backdrop — async, non-blocking -->
+<style is:global>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap');
+</style>
+
+<section id="hero" aria-label="Drakken Labs" data-animate="false">
+
+  <!-- VIDEO BACKGROUND — deepest layer -->
   <div class="hero-video-bg" aria-hidden="true">
     <video
       class="hero-video"
       src="/media/hero-atmosphere.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
+      autoplay muted loop playsinline preload="metadata"
     ></video>
-    <!-- Radial vignette over video -->
     <div class="hero-video-vignette"></div>
-    <!-- Film grain (Hero-only layer) -->
     <div class="hero-video-grain"></div>
   </div>
 
-  <!-- Viewport corner ticks — cathedral signature -->
+  <!-- ────────────────────────────────────────────────────── -->
+  <!-- LAYER 1: KANJI BACKDROP — 守 (mamoru / "protect")    -->
+  <!-- ────────────────────────────────────────────────────── -->
+  <div class="hero-kanji" aria-hidden="true" data-parallax="20">守</div>
+
+  <!-- LAYER 3: SAMURAI LINES — flanking the wordmark -->
+  <div class="samurai-lines" aria-hidden="true">
+    <div class="samurai-line samurai-line-l">
+      <div class="line-dot"></div>
+      <div class="line-body"></div>
+      <div class="line-bracket"></div>
+    </div>
+    <div class="samurai-line samurai-line-r">
+      <div class="line-dot"></div>
+      <div class="line-body"></div>
+      <div class="line-bracket"></div>
+    </div>
+  </div>
+
+  <!-- LAYER 6: BLADE FLASH — idle sweep every 8s -->
+  <div class="blade-flash" aria-hidden="true"></div>
+
+  <!-- Viewport corner ticks -->
   <div class="viewport-corner tl" aria-hidden="true"></div>
   <div class="viewport-corner tr" aria-hidden="true"></div>
   <div class="viewport-corner bl" aria-hidden="true"></div>
@@ -32,26 +54,57 @@
     <div class="aurora-3"></div>
   </div>
 
-  <!-- Vertical light beam with shimmer -->
+  <!-- Vertical light beam + shimmer -->
   <div class="hero-beam" aria-hidden="true">
     <div class="beam-shimmer"></div>
   </div>
 
-  <!-- Main content -->
-  <div class="hero-content">
-    <h1 class="hero-title font-cinzel" aria-label="DRAKKEN">
-      <span class="letter" style="--i:0">D</span><span
-        class="letter" style="--i:1">R</span><span
-        class="letter" style="--i:2">A</span><span
-        class="letter" style="--i:3">K</span><span
-        class="letter" style="--i:4">K</span><span
-        class="letter" style="--i:5">E</span><span
-        class="letter" style="--i:6">N</span>
-    </h1>
+  <!-- ─────────────────────────────────────────────── -->
+  <!-- MAIN CONTENT — LAYER 2 + 4 + 5 live here       -->
+  <!-- ─────────────────────────────────────────────── -->
+  <div class="hero-content" data-parallax="8">
+
+    <!-- LAYER 2: SVG STROKE-DRAW WORDMARK -->
+    <div class="hero-title-wrap" role="heading" aria-level="1" aria-label="DRAKKEN">
+      <!-- SVG stroke layer — draws the outline of DRAKKEN -->
+      <svg
+        class="drakken-svg"
+        viewBox="0 0 860 160"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <text
+          x="430" y="140"
+          text-anchor="middle"
+          font-family="Cinzel, Georgia, serif"
+          font-size="148"
+          font-weight="400"
+          letter-spacing="12"
+        >
+          <tspan class="drakken-l" style="--li:0">D</tspan><tspan
+            class="drakken-l" style="--li:1">R</tspan><tspan
+            class="drakken-l" style="--li:2">A</tspan><tspan
+            class="drakken-l" style="--li:3">K</tspan><tspan
+            class="drakken-l" style="--li:4">K</tspan><tspan
+            class="drakken-l" style="--li:5">E</tspan><tspan
+            class="drakken-l" style="--li:6">N</tspan>
+        </text>
+      </svg>
+
+      <!-- Fill overlay — letters cascade in after stroke draw -->
+      <div class="drakken-fill font-cinzel" aria-hidden="true">
+        <span class="fl" style="--i:0">D</span><span
+          class="fl" style="--i:1">R</span><span
+          class="fl" style="--i:2">A</span><span
+          class="fl" style="--i:3">K</span><span
+          class="fl" style="--i:4">K</span><span
+          class="fl" style="--i:5">E</span><span
+          class="fl" style="--i:6">N</span>
+      </div>
+    </div>
 
     <p class="hero-name font-cinzel">han myo naing</p>
-
-    <div class="hero-divider" aria-hidden="true"></div>
 
     <p class="hero-tagline font-mono">
       <span class="tl-seg">AI-NATIVE</span>
@@ -65,26 +118,124 @@
       Built in Malaysia&thinsp;·&thinsp;Operating worldwide
     </p>
 
+    <!-- LAYER 4: SIGNATURE QUOTE LINE -->
+    <div class="hero-quote" data-parallax="4" aria-label="Drakken Manifesto">
+      <div class="quote-line" aria-hidden="true"></div>
+      <p class="quote-text font-serif">"We build what defends."</p>
+      <span class="quote-attr font-mono">— DRAKKEN MANIFESTO</span>
+    </div>
+
+    <!-- LAYER 5: SLASH-IN CTAs -->
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary font-inter">
+      <a href="#contact" class="btn-primary font-inter hero-cta" style="--ci:0">
         Start a Project
         <span class="btn-arrow" aria-hidden="true">→</span>
       </a>
-      <a href="#manifesto" class="btn-ghost font-inter">
+      <a href="#manifesto" class="btn-ghost font-inter hero-cta" style="--ci:1">
         Manifesto
         <span class="btn-arrow" aria-hidden="true">↓</span>
       </a>
     </div>
   </div>
 
-  <!-- Scroll indicator -->
-  <div class="hero-scroll-hint" aria-hidden="true">
-    <span class="font-mono">scroll</span>
-    <div class="scroll-bar"></div>
+  <!-- LAYER 8: SCROLL PROMPT — traveling dot -->
+  <div class="hero-scroll-prompt" aria-hidden="true">
+    <span class="scroll-label font-mono">SCROLL</span>
+    <div class="scroll-track">
+      <div class="scroll-dot"></div>
+    </div>
   </div>
+
 </section>
 
+<!-- ──────────────────────────────────────────────────────── -->
+<!--  JS — animation timing + mouse parallax                  -->
+<!-- ──────────────────────────────────────────────────────── -->
+<script>
+  (() => {
+    const hero = document.getElementById('hero') as HTMLElement | null;
+    if (!hero) return;
+
+    // ── Trigger animations after loader exits (or immediately) ──
+    function startAnimations() {
+      hero!.dataset['animate'] = 'true';
+    }
+
+    const loader = document.getElementById('cinematic-loader');
+    if (!loader || loader.style.display === 'none' || !loader.parentElement) {
+      // No loader present or already dismissed
+      setTimeout(startAnimations, 60);
+    } else {
+      // Watch for loader to be removed / hidden
+      const obs = new MutationObserver(() => {
+        if (loader.style.display === 'none') {
+          startAnimations();
+          obs.disconnect();
+        }
+      });
+      obs.observe(loader, { attributes: true, attributeFilter: ['style'] });
+    }
+
+    // ── Mouse parallax ──────────────────────────────────────
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(max-width: 768px)').matches) return;
+
+    const parallaxEls = hero.querySelectorAll<HTMLElement>('[data-parallax]');
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    let rafId: number;
+    let isHovered = false;
+
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      // Normalized -1 to 1 from center
+      targetX = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
+      targetY = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+      isHovered = true;
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      targetX = 0;
+      targetY = 0;
+      isHovered = false;
+    });
+
+    function animateParallax() {
+      rafId = requestAnimationFrame(animateParallax);
+
+      // Damp toward target (Emil Kowalski spring feel)
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+
+      // Skip if movement negligible
+      if (Math.abs(currentX) < 0.0005 && Math.abs(currentY) < 0.0005 && !isHovered) return;
+
+      parallaxEls.forEach((el) => {
+        const strength = parseFloat(el.dataset['parallax'] ?? '8');
+        const tx = currentX * strength;
+        const ty = currentY * strength;
+        el.style.transform = `translate(${tx}px, ${ty}px)`;
+      });
+    }
+
+    animateParallax();
+
+    // ── Scroll prompt fade on scroll ────────────────────────
+    const scrollPrompt = hero.querySelector<HTMLElement>('.hero-scroll-prompt');
+    if (scrollPrompt) {
+      window.addEventListener('scroll', () => {
+        const gone = window.scrollY > 80;
+        scrollPrompt.style.opacity = gone ? '0' : '';
+        scrollPrompt.style.pointerEvents = gone ? 'none' : '';
+      }, { passive: true });
+    }
+  })();
+</script>
+
 <style>
+  /* ═══════════════════════════════════════════════════════
+     BASE SECTION
+     ═══════════════════════════════════════════════════════ */
   section {
     position: relative;
     min-height: 100dvh;
@@ -96,12 +247,11 @@
     z-index: var(--z-page);
   }
 
-  /* ── AURORA ──────────────────────────────────────────── */
-  /* ── VIDEO BG ──────────────────────────────────────── */
+  /* ── VIDEO BG ──────────────────────────────────────────── */
   .hero-video-bg {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
     overflow: hidden;
     pointer-events: none;
   }
@@ -119,11 +269,7 @@
   .hero-video-vignette {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-      ellipse at center,
-      transparent 40%,
-      #030308 90%
-    );
+    background: radial-gradient(ellipse at center, transparent 40%, #030308 90%);
   }
 
   .hero-video-grain {
@@ -135,7 +281,6 @@
     background-size: 200px 200px;
   }
 
-  /* Mobile: disable video, keep gradient fallback */
   @media (max-width: 768px) {
     .hero-video { display: none; }
     .hero-video-bg {
@@ -143,98 +288,224 @@
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-video { display: none; }
+  /* ═══════════════════════════════════════════════════════
+     LAYER 1 — KANJI BACKDROP 守
+     ═══════════════════════════════════════════════════════ */
+  .hero-kanji {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50% + 8vw), -50%);
+    font-family: 'Noto Serif JP', 'Hiragino Mincho Pro', 'Yu Mincho', 'MS PMincho', serif;
+    font-weight: 200;
+    font-size: 70vh;
+    line-height: 1;
+    color: var(--signal-cyan);
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 0 0 80px rgba(0, 212, 255, 0.3);
+    z-index: 1;
+    will-change: transform;
+    /* Breathing animation */
+    animation: kanjiBreath 12s ease-in-out 2s infinite;
   }
 
-  /* ── AURORA ──────────────────────────────────────── */
+  @keyframes kanjiBreath {
+    0%, 100% { transform: translate(calc(-50% + 8vw), -50%) scale(1); }
+    50%       { transform: translate(calc(-50% + 8vw), -50%) scale(1.02); }
+  }
+
+  /* Reveal animation — triggered by data-animate */
+  section[data-animate="true"] .hero-kanji {
+    animation:
+      kanjiFadeIn 1.5s cubic-bezier(0, 0, 0.38, 0.9) 0ms both,
+      kanjiBreath 12s ease-in-out 2s infinite;
+  }
+
+  @keyframes kanjiFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 0.04; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     LAYER 3 — SAMURAI LINES (flank the wordmark)
+     ═══════════════════════════════════════════════════════ */
+  .samurai-lines {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(900px, 90vw);
+    height: 220px;
+    pointer-events: none;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+
+  .samurai-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1px;
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+
+  section[data-animate="true"] .samurai-line {
+    animation: samuraiReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  }
+
+  section[data-animate="true"] .samurai-line-r {
+    animation-delay: 0.36s;
+  }
+
+  @keyframes samuraiReveal {
+    from { opacity: 0; transform: scaleY(0); }
+    to   { opacity: 1; transform: scaleY(1); }
+  }
+
+  .line-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    margin-bottom: -2px;
+    flex-shrink: 0;
+  }
+
+  .line-body {
+    flex: 1;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      var(--signal-cyan) 0%,
+      rgba(0, 212, 255, 0.3) 60%,
+      transparent 100%
+    );
+    min-height: 160px;
+  }
+
+  .line-bracket {
+    width: 8px;
+    height: 8px;
+    border-color: rgba(0, 212, 255, 0.6);
+    border-style: solid;
+    flex-shrink: 0;
+  }
+  .samurai-line-l .line-bracket { border-width: 0 0 1px 1px; }
+  .samurai-line-r .line-bracket { border-width: 0 1px 1px 0; }
+
+  /* ═══════════════════════════════════════════════════════
+     LAYER 6 — BLADE FLASH (idle, pure CSS)
+     ═══════════════════════════════════════════════════════ */
+  .blade-flash {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  .blade-flash::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -60%;
+    width: 200px;
+    height: 200%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(0, 212, 255, 0.06) 40%,
+      rgba(0, 212, 255, 0.08) 50%,
+      rgba(0, 212, 255, 0.06) 60%,
+      transparent 100%
+    );
+    transform: rotate(0deg);
+    animation: bladeFlash 1.2s ease-in-out 5s infinite;
+    animation-delay: 5s;
+    /* Cycles every 8 seconds: 1.2s active, 6.8s waiting */
+    animation-iteration-count: infinite;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+  }
+
+  @keyframes bladeFlash {
+    0%        { transform: translateX(-100%) rotate(0deg); opacity: 0; }
+    5%        { opacity: 1; }
+    14%       { transform: translateX(200vw) rotate(0deg); opacity: 0; }
+    15%, 100% { transform: translateX(200vw); opacity: 0; }
+  }
+
+  /* ─────────────────────────────────────────────────────── */
+  /* AURORA                                                   */
+  /* ─────────────────────────────────────────────────────── */
   .hero-aurora {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
   }
 
-  /* Primary — large cyan behind DRAKKEN */
   .aurora-1 {
     position: absolute;
-    width: 900px;
-    height: 900px;
-    top: -200px;
-    left: 50%;
+    width: 900px; height: 900px;
+    top: -200px; left: 50%;
     transform: translateX(-50%);
-    background: radial-gradient(
-      ellipse at center,
-      rgba(0, 212, 255, 0.13) 0%,
-      rgba(0, 212, 255, 0.04) 40%,
-      transparent 72%
-    );
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.13) 0%, rgba(0,212,255,0.04) 40%, transparent 72%);
     filter: blur(40px);
     animation: auraPulse 8s ease-in-out infinite;
   }
 
-  /* Secondary violet — bottom left */
   .aurora-2 {
     position: absolute;
-    width: 500px;
-    height: 500px;
-    bottom: 10%;
-    left: -5%;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(167, 139, 250, 0.08) 0%,
-      transparent 70%
-    );
+    width: 500px; height: 500px;
+    bottom: 10%; left: -5%;
+    background: radial-gradient(ellipse at center, rgba(167,139,250,0.08) 0%, transparent 70%);
     animation: auraDrift2 17s ease-in-out infinite;
   }
 
-  /* Tertiary cyan — top right asymmetric */
   .aurora-3 {
     position: absolute;
-    width: 400px;
-    height: 400px;
-    top: -5%;
-    right: 5%;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(0, 212, 255, 0.06) 0%,
-      transparent 70%
-    );
+    width: 400px; height: 400px;
+    top: -5%; right: 5%;
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.06) 0%, transparent 70%);
     animation: auraDrift3 21s ease-in-out infinite;
   }
 
   @keyframes auraPulse {
-    0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
-    50%       { opacity: 0.75; transform: translateX(-50%) scale(1.08); }
+    0%,100% { opacity: 1;    transform: translateX(-50%) scale(1);    }
+    50%     { opacity: 0.75; transform: translateX(-50%) scale(1.08); }
   }
   @keyframes auraDrift2 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50%       { transform: translate(4%, 8%) scale(1.1); }
+    0%,100% { transform: translate(0,0) scale(1);   }
+    50%     { transform: translate(4%,8%) scale(1.1); }
   }
   @keyframes auraDrift3 {
-    0%, 100% { transform: translate(0, 0) scale(1.05); }
-    50%       { transform: translate(-5%, 6%) scale(0.95); }
+    0%,100% { transform: translate(0,0) scale(1.05);  }
+    50%     { transform: translate(-5%,6%) scale(0.95); }
   }
 
-  /* ── LIGHT BEAM ──────────────────────────────────────── */
+  /* ─────────────────────────────────────────────────────── */
+  /* LIGHT BEAM + SHIMMER                                     */
+  /* ─────────────────────────────────────────────────────── */
   .hero-beam {
     position: absolute;
-    left: 50%;
-    top: 0;
-    width: 1.5px;
-    height: 60%;
+    left: 50%; top: 0;
+    width: 1.5px; height: 60%;
     transform: translateX(-50%) scaleY(0);
     transform-origin: top center;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 212, 255, 0.7) 0%,
-      rgba(0, 212, 255, 0.12) 80%,
-      transparent 100%
-    );
-    box-shadow: 0 0 8px rgba(0, 212, 255, 0.35);
-    animation: beamDrop 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
-    z-index: 1;
+    background: linear-gradient(to bottom, rgba(0,212,255,0.7) 0%, rgba(0,212,255,0.12) 80%, transparent 100%);
+    box-shadow: 0 0 8px rgba(0,212,255,0.35);
+    z-index: 2;
     overflow: hidden;
+  }
+
+  section[data-animate="true"] .hero-beam {
+    animation: beamDrop 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s both;
   }
 
   @keyframes beamDrop {
@@ -242,90 +513,132 @@
     to   { transform: translateX(-50%) scaleY(1); }
   }
 
-  /* Shimmer traveling down the beam every 12s */
   .beam-shimmer {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 200px;
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(255, 255, 255, 0.6) 50%,
-      transparent 100%
-    );
-    animation: beamShimmer 12s cubic-bezier(0.4, 0, 0.2, 1) 2s infinite;
+    top: 0; left: 0;
+    width: 100%; height: 200px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.6), transparent);
+    animation: beamShimmer 12s cubic-bezier(0.4,0,0.2,1) 2s infinite;
     opacity: 0;
   }
 
-  /* ── HERO CONTENT ────────────────────────────────────── */
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 2rem 1.5rem;
-    max-width: 860px;
-    width: 100%;
+  @keyframes beamShimmer {
+    0%   { transform: translateY(-100%); opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
   }
 
-  /* DRAKKEN — letter by letter */
-  .hero-title {
+  /* ═══════════════════════════════════════════════════════
+     HERO CONTENT WRAPPER (Layer 2, 4, 5)
+     ═══════════════════════════════════════════════════════ */
+  .hero-content {
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    max-width: 900px;
+    width: 100%;
+    will-change: transform;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     LAYER 2 — SVG STROKE-DRAW WORDMARK
+     ═══════════════════════════════════════════════════════ */
+  .hero-title-wrap {
+    position: relative;
+    margin-bottom: 1.1rem;
+    line-height: 1;
+    display: block;
+  }
+
+  /* SVG stroke layer */
+  .drakken-svg {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+    display: block;
+    overflow: visible;
+  }
+
+  /* Each tspan: stroke outline draws in, then disappears */
+  .drakken-l {
+    fill: transparent;
+    stroke: #00d4ff;
+    stroke-width: 0.6;
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    /* Phase 1: draw stroke (starts at 0.6s, 120ms stagger per letter) */
+    /* Phase 2: fade stroke out after fill appears */
+  }
+
+  section[data-animate="true"] .drakken-l {
+    animation:
+      strokeDraw  1.8s cubic-bezier(0.16,1,0.3,1) calc(0.6s + var(--li) * 0.12s) both,
+      strokeFade  0.4s ease                        calc(0.6s + var(--li) * 0.12s + 1.8s) both;
+  }
+
+  @keyframes strokeDraw {
+    from { stroke-dashoffset: 3000; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  @keyframes strokeFade {
+    from { stroke-opacity: 1; }
+    to   { stroke-opacity: 0; }
+  }
+
+  /* Fill overlay — cascades in after stroke draw */
+  .drakken-fill {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .drakken-fill .fl {
+    font-family: 'Cinzel', Georgia, serif;
     font-size: clamp(3.5rem, 10vw, 8rem);
     font-weight: 400;
     letter-spacing: 0.08em;
     color: var(--text-pure);
-    margin-bottom: 1.1rem;
     line-height: 1;
     user-select: none;
-    white-space: nowrap;
-    text-shadow:
-      0 0 40px rgba(0, 212, 255, 0.15),
-      0 0 80px rgba(0, 212, 255, 0.08);
-  }
-
-  .hero-title .letter {
     display: inline-block;
+    /* Start invisible — fill cascades in after stroke draw */
     opacity: 0;
-    transform: translateY(10px);
-    animation: letterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-delay: calc(0.3s + var(--i) * 0.065s);
+    text-shadow:
+      0 0 40px rgba(0,212,255,0.15),
+      0 0 80px rgba(0,212,255,0.08);
   }
 
-  @keyframes letterReveal {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+  section[data-animate="true"] .drakken-fill .fl {
+    animation: fillReveal 0.5s cubic-bezier(0.16,1,0.3,1) calc(0.6s + var(--i) * 0.12s + 1.75s) both;
   }
 
-  /* Name */
+  @keyframes fillReveal {
+    from { opacity: 0; filter: blur(4px); }
+    to   { opacity: 1; filter: blur(0);   }
+  }
+
+  /* ── Name ────────────────────────────────────────────── */
   .hero-name {
     font-size: clamp(0.55rem, 1.1vw, 0.75rem);
     font-weight: 400;
     letter-spacing: 0.4em;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255,255,255,0.55);
     font-variant: small-caps;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.25rem;
     opacity: 0;
-    animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) calc(0.3s + 7 * 0.065s + 0.05s) both;
   }
 
-  /* Divider */
-  .hero-divider {
-    width: 48px;
-    height: 1px;
-    background: var(--edge);
-    margin: 0 auto 1.75rem;
-    transform: scaleX(0);
-    transform-origin: left center;
-    animation: dividerDraw 0.6s cubic-bezier(0.16, 1, 0.3, 1) calc(0.3s + 7 * 0.065s + 0.15s) both;
+  section[data-animate="true"] .hero-name {
+    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 1.1s both;
   }
 
-  @keyframes dividerDraw {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
-  }
-
-  /* Tagline — JetBrains mono with cyan dot separators */
+  /* ── Tagline ─────────────────────────────────────────── */
   .hero-tagline {
     display: flex;
     align-items: center;
@@ -335,14 +648,16 @@
     font-weight: 500;
     letter-spacing: 0.22em;
     color: var(--text-secondary);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
     opacity: 0;
-    animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) calc(0.3s + 7 * 0.065s + 0.35s) both;
+  }
+
+  section[data-animate="true"] .hero-tagline {
+    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 1.3s both;
   }
 
   .tl-dot {
-    width: 4px;
-    height: 4px;
+    width: 4px; height: 4px;
     border-radius: 50%;
     background: var(--signal-cyan);
     opacity: 0.7;
@@ -351,31 +666,124 @@
 
   .hero-sub {
     font-size: clamp(0.65rem, 1vw, 0.75rem);
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255,255,255,0.3);
     letter-spacing: 0.08em;
-    margin-bottom: 2.75rem;
+    margin-bottom: 2rem;
     opacity: 0;
-    animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) calc(0.3s + 7 * 0.065s + 0.45s) both;
   }
 
-  /* CTAs */
+  section[data-animate="true"] .hero-sub {
+    animation: fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) 1.45s both;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     LAYER 4 — SIGNATURE QUOTE LINE
+     ═══════════════════════════════════════════════════════ */
+  .hero-quote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    will-change: transform;
+  }
+
+  section[data-animate="true"] .hero-quote {
+    animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 1.7s both;
+  }
+
+  .quote-line {
+    width: 0;
+    height: 1px;
+    background: var(--signal-cyan);
+    opacity: 0.6;
+    margin-bottom: 0.25rem;
+  }
+
+  section[data-animate="true"] .quote-line {
+    animation: quoteLine 0.4s cubic-bezier(0.16,1,0.3,1) 1.5s both;
+  }
+
+  @keyframes quoteLine {
+    from { width: 0; }
+    to   { width: 60px; }
+  }
+
+  .quote-text {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+  }
+
+  .quote-attr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.28);
+    opacity: 0;
+  }
+
+  section[data-animate="true"] .quote-attr {
+    animation: fadeIn 0.4s ease 1.9s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     LAYER 5 — SLASH-IN CTA ANIMATION
+     ═══════════════════════════════════════════════════════ */
   .hero-actions {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) calc(0.3s + 7 * 0.065s + 0.6s) both;
   }
 
+  .hero-cta {
+    opacity: 0;
+    /* Start off-screen, will be animated by data-animate trigger */
+  }
+
+  section[data-animate="true"] .hero-cta {
+    animation: slashIn 0.55s cubic-bezier(0.16,1,0.3,1) calc(2.1s + var(--ci) * 0.1s) both;
+  }
+
+  @keyframes slashIn {
+    0%   {
+      opacity: 0;
+      transform: translateX(-20px);
+      clip-path: inset(0 100% 0 0);
+    }
+    35%  {
+      opacity: 1;
+      transform: translateX(0);
+      clip-path: inset(42% 0 42% 0); /* thin slash line */
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+      clip-path: inset(0 0 0 0);     /* full reveal */
+    }
+  }
+
+  /* ── shared fadeUp ───────────────────────────────────── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0);    }
   }
 
-  /* ── SCROLL HINT ─────────────────────────────────────── */
-  .hero-scroll-hint {
+  /* ═══════════════════════════════════════════════════════
+     LAYER 8 — SCROLL PROMPT (traveling dot)
+     ═══════════════════════════════════════════════════════ */
+  .hero-scroll-prompt {
     position: absolute;
     bottom: 2.5rem;
     left: 50%;
@@ -384,41 +792,118 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    z-index: 2;
+    z-index: 4;
     opacity: 0;
-    animation: fadeUp 0.6s ease calc(0.3s + 7 * 0.065s + 1.1s) both;
+    transition: opacity 400ms ease;
+    pointer-events: none;
   }
 
-  .hero-scroll-hint span {
-    font-size: 0.55rem;
-    letter-spacing: 0.28em;
-    color: var(--text-ghost);
+  section[data-animate="true"] .hero-scroll-prompt {
+    animation: fadeIn 0.6s ease 2.8s both;
   }
 
-  .scroll-bar {
+  .scroll-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .scroll-track {
+    position: relative;
     width: 1px;
-    height: 36px;
-    background: linear-gradient(to bottom, var(--text-ghost), transparent);
-    animation: scrollPulse 2.2s ease-in-out infinite;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    overflow: hidden;
   }
 
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.35; transform: scaleY(1);    }
-    50%       { opacity: 1;    transform: scaleY(1.15); }
+  .scroll-dot {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    animation: dotTravel 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 
-  /* ── MOBILE ──────────────────────────────────────────── */
+  @keyframes dotTravel {
+    0%   { top: -4px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: 36px; opacity: 0; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     VIEWPORT CORNER TICKS
+     ═══════════════════════════════════════════════════════ */
+  .viewport-corner {
+    position: absolute;
+    width: 16px; height: 16px;
+    border-color: rgba(0,212,255,0);
+    border-style: solid;
+    pointer-events: none;
+    z-index: 3;
+    transition: border-color 300ms ease;
+  }
+  .viewport-corner.tl { top: 16px;    left: 16px;   border-width: 1px 0 0 1px; }
+  .viewport-corner.tr { top: 16px;    right: 16px;  border-width: 1px 1px 0 0; }
+  .viewport-corner.bl { bottom: 16px; left: 16px;   border-width: 0 0 1px 1px; }
+  .viewport-corner.br { bottom: 16px; right: 16px;  border-width: 0 1px 1px 0; }
+
+  section[data-animate="true"] .viewport-corner.tl { animation: cornerIn 0.3s ease 0.4s    both; }
+  section[data-animate="true"] .viewport-corner.tr { animation: cornerIn 0.3s ease 0.46s   both; }
+  section[data-animate="true"] .viewport-corner.bl { animation: cornerIn 0.3s ease 0.52s   both; }
+  section[data-animate="true"] .viewport-corner.br { animation: cornerIn 0.3s ease 0.58s   both; }
+
+  @keyframes cornerIn {
+    from { border-color: rgba(0,212,255,0); }
+    to   { border-color: rgba(0,212,255,0.4); }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     MOBILE
+     ═══════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .hero-kanji {
+      font-size: 50vh;
+      transform: translate(-50%, -50%);
+    }
+    .samurai-lines { display: none; }
+  }
+
   @media (max-width: 480px) {
-    .hero-title {
+    .drakken-fill .fl {
       font-size: clamp(2.5rem, 16vw, 4rem);
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
     }
     .hero-actions {
       flex-direction: column;
       align-items: stretch;
     }
-    .btn-primary, .btn-ghost {
-      justify-content: center;
+    .btn-primary, .btn-ghost { justify-content: center; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     REDUCED MOTION — snap to final state instantly
+     ═══════════════════════════════════════════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video { display: none; }
+    .blade-flash::after { animation: none; }
+    .drakken-l  { stroke-dashoffset: 0; stroke-opacity: 0; }
+    .drakken-fill .fl { opacity: 1; filter: none; }
+    section[data-animate="true"] * { animation-duration: 0.01ms !important; }
+    .hero-kanji { opacity: 0.04 !important; }
+    .hero-name, .hero-tagline, .hero-sub, .hero-quote,
+    .hero-cta, .hero-scroll-prompt, .viewport-corner { opacity: 1 !important; }
+    .viewport-corner {
+      border-color: rgba(0,212,255,0.4) !important;
     }
+    .drakken-fill .fl { opacity: 1 !important; }
+    .hero-beam { animation: none; transform: translateX(-50%) scaleY(1); }
+    .quote-line { width: 60px; }
+    .quote-attr { opacity: 1; }
+    .samurai-line { opacity: 1; transform: scaleY(1); }
   }
 </style>
