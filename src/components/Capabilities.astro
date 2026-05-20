@@ -1,80 +1,247 @@
 ---
+// Signal colors fixed: card 3 = mint, card 4 = amber (was: cyan/mint)
 const caps = [
   {
     num: '01',
+    signal: 'cyan',
+    cardClass: 'card-ai',
     title: 'AI-NATIVE\nENGINEERING',
     desc: 'Systems where AI isn\'t a feature — it\'s the architecture. Built from first principles, not retrofitted.',
     stack: 'Claude API · Tauri · Rust · TypeScript',
-    signal: 'cyan',
-    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>`,
   },
   {
     num: '02',
+    signal: 'violet',
+    cardClass: 'card-frontend',
     title: 'PREMIUM\nFRONTEND',
     desc: 'Interfaces that feel alive. Spring physics, 60fps Three.js, cinematic scroll choreography.',
     stack: 'Three.js · Motion · Astro · GSAP',
-    signal: 'violet',
-    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="14" height="14" rx="1" stroke="currentColor" stroke-width="1"/><path d="M7 10L9 12L13 8" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
   {
     num: '03',
+    signal: 'mint',
+    cardClass: 'card-desktop',
     title: 'NATIVE DESKTOP\nAPPLICATIONS',
     desc: 'Code-signed, installer-ready apps for Windows, macOS, Linux. Performance without compromise.',
     stack: 'Tauri · Rust · Windows · macOS · Linux',
-    signal: 'cyan',
-    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="1" stroke-linecap="round"/><rect x="5" y="3" width="10" height="14" rx="1" stroke="currentColor" stroke-width="1"/></svg>`,
   },
   {
     num: '04',
+    signal: 'amber',
+    cardClass: 'card-automation',
     title: 'STRATEGIC\nAUTOMATION',
     desc: 'Workflows that think. Memory systems, multi-agent pipelines, tools that compound over time.',
     stack: 'Memory architecture · Multi-agent · Custom APIs',
-    signal: 'mint',
-    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1"/><path d="M10 3V5M10 15V17M3 10H5M15 10H17M5.5 5.5L7 7M13 13L14.5 14.5M5.5 14.5L7 13M13 7L14.5 5.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>`,
   },
 ];
 ---
 
 <section id="capabilities" aria-labelledby="cap-heading">
   <div class="section-inner">
-    <div class="section-header reveal">
+
+    <!-- Section heading -->
+    <div class="section-header">
       <div class="section-label">
         <span>CAPABILITIES</span>
       </div>
       <h2 id="cap-heading" class="section-heading">
         What We <em class="heading-accent font-serif">Build</em>
       </h2>
+      <p class="cap-subtitle font-mono">[ FOUR DISCIPLINES · ONE STUDIO ]</p>
     </div>
 
-    <div class="cap-grid" data-stagger data-stagger-step="100">
-      {caps.map(({ num, title, desc, stack, signal, icon }) => (
-        <article
-          class={`sacred-frame accent-top cap-card stagger-child`}
-          data-signal={signal}
-        >
-          <span class="corner-tl"></span>
-          <span class="corner-tr"></span>
-          <span class="corner-bl"></span>
-          <span class="corner-br"></span>
+    <!-- Card grid — stagger reveal via IntersectionObserver below -->
+    <div class="cap-grid" id="cap-grid">
 
-          <div class="cap-num font-mono">{num}</div>
+      <!-- ═══════════════════════════════════════════════
+           CARD 1 — AI-NATIVE ENGINEERING (cyan)
+           Personality: precise, computational, alive
+           ═══════════════════════════════════════════════ -->
+      <article class="sacred-frame accent-top cap-card card-ai" data-signal="cyan" data-card-idx="0">
+        <span class="corner-tl"></span><span class="corner-tr"></span>
+        <span class="corner-bl"></span><span class="corner-br"></span>
 
-          <div class="cap-icon" style={`color: var(--signal-${signal})`} aria-hidden="true" set:html={icon} />
+        <!-- Card number prefix -->
+        <div class="cap-num font-mono" style="color: rgba(0,212,255,0.4)">01</div>
 
-          <h3 class="cap-title font-cinzel" style={`white-space: pre-line`}>{title}</h3>
+        <!-- Glyph: octagonal node with 6 radiating lines -->
+        <div class="cap-icon" aria-hidden="true">
+          <svg class="glyph-ai" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="10,2 18,2 26,10 26,18 18,26 10,26 2,18 2,10"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="14" cy="14" r="2.5" fill="currentColor" opacity="0.8"/>
+            <line class="ray r1" x1="14" y1="9.5" x2="14" y2="5"   stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line class="ray r2" x1="18"  y1="10"  x2="22" y2="6"   stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line class="ray r3" x1="19"  y1="14"  x2="23" y2="14"  stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line class="ray r4" x1="14"  y1="18.5" x2="14" y2="23" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line class="ray r5" x1="10"  y1="18"  x2="6"  y2="22"  stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <line class="ray r6" x1="9"   y1="14"  x2="5"  y2="14"  stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
 
-          <p class="cap-desc font-inter">{desc}</p>
+        <h3 class="cap-title font-cinzel">AI-NATIVE<br/>ENGINEERING</h3>
+        <p class="cap-desc font-inter">Systems where AI isn't a feature — it's the architecture. Built from first principles, not retrofitted.</p>
+        <p class="cap-stack font-mono">Claude API · Tauri · Rust · TypeScript</p>
 
-          <p class="cap-stack font-mono">{stack}</p>
+        <!-- Bottom hover line -->
+        <div class="cap-bottom-line"></div>
+        <span class="cap-bottom-hint font-mono">USED IN: AEGIS · MAVIS</span>
 
-          <!-- Bottom hover line + micro-hint -->
-          <div class="cap-bottom-line"></div>
-          <span class="cap-bottom-hint">USED IN: AEGIS · MAVIS</span>
-        </article>
-      ))}
+        <!-- Card 1 exclusive: data stream waveform bars -->
+        <div class="data-stream" aria-hidden="true">
+          <div class="bar b1"></div>
+          <div class="bar b2"></div>
+          <div class="bar b3"></div>
+          <div class="bar b4"></div>
+          <div class="bar b5"></div>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════════
+           CARD 2 — PREMIUM FRONTEND (violet)
+           Personality: artful, fluid, expressive
+           ═══════════════════════════════════════════════ -->
+      <article class="sacred-frame accent-top cap-card card-frontend" data-signal="violet" data-card-idx="1">
+        <span class="corner-tl"></span><span class="corner-tr"></span>
+        <span class="corner-bl"></span><span class="corner-br"></span>
+
+        <div class="cap-num font-mono" style="color: rgba(167,139,250,0.4)">02</div>
+
+        <!-- Glyph: bezier wave that morphs on hover -->
+        <div class="cap-icon" aria-hidden="true">
+          <svg class="glyph-frontend" width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="wave-path"
+              d="M2 12 C7 12, 10 4, 14 4 C18 4, 21 12, 26 12"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- Second subtle wave below -->
+            <path
+              d="M2 14 C7 14, 10 8, 14 8 C18 8, 21 14, 26 14"
+              stroke="currentColor" stroke-width="0.7" stroke-linecap="round" opacity="0.35"/>
+          </svg>
+        </div>
+
+        <h3 class="cap-title font-cinzel">PREMIUM<br/>FRONTEND</h3>
+        <p class="cap-desc font-inter">Interfaces that feel alive. Spring physics, 60fps Three.js, cinematic scroll choreography.</p>
+        <p class="cap-stack font-mono">Three.js · Motion · Astro · GSAP</p>
+
+        <div class="cap-bottom-line"></div>
+        <span class="cap-bottom-hint font-mono">USED IN: AEGIS · MAVIS</span>
+
+        <!-- Card 2 exclusive: horizontal line draws across card on hover -->
+        <div class="card-hline" aria-hidden="true"></div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════════
+           CARD 3 — NATIVE DESKTOP APPLICATIONS (mint)
+           Personality: solid, foundational, structural
+           ═══════════════════════════════════════════════ -->
+      <article class="sacred-frame accent-top cap-card card-desktop" data-signal="mint" data-card-idx="2">
+        <span class="corner-tl"></span><span class="corner-tr"></span>
+        <span class="corner-bl"></span><span class="corner-br"></span>
+
+        <div class="cap-num font-mono" style="color: rgba(74,222,128,0.4)">03</div>
+
+        <!-- Glyph: stacked layers (3 rects that shift apart on hover) -->
+        <div class="cap-icon" aria-hidden="true">
+          <svg class="glyph-desktop" width="28" height="22" viewBox="0 0 28 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="layer-top" x="4" y="1.5"  width="20" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <rect class="layer-mid" x="4" y="8.5"  width="20" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            <rect class="layer-bot" x="4" y="15.5" width="20" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+
+        <h3 class="cap-title font-cinzel">NATIVE DESKTOP<br/>APPLICATIONS</h3>
+        <p class="cap-desc font-inter">Code-signed, installer-ready apps for Windows, macOS, Linux. Performance without compromise.</p>
+        <p class="cap-stack font-mono">Tauri · Rust · Windows · macOS · Linux</p>
+
+        <div class="cap-bottom-line"></div>
+        <span class="cap-bottom-hint font-mono">USED IN: AEGIS · MAVIS</span>
+
+        <!-- Card 3 exclusive: interior corner accents on hover -->
+        <div class="inner-corners" aria-hidden="true">
+          <span class="ic ic-tl"></span>
+          <span class="ic ic-tr"></span>
+          <span class="ic ic-bl"></span>
+          <span class="ic ic-br"></span>
+        </div>
+      </article>
+
+      <!-- ═══════════════════════════════════════════════
+           CARD 4 — STRATEGIC AUTOMATION (amber)
+           Personality: orchestrated, looping, intentional
+           ═══════════════════════════════════════════════ -->
+      <article class="sacred-frame accent-top cap-card card-automation" data-signal="amber" data-card-idx="3">
+        <span class="corner-tl"></span><span class="corner-tr"></span>
+        <span class="corner-bl"></span><span class="corner-br"></span>
+
+        <div class="cap-num font-mono" style="color: rgba(251,191,36,0.4)">04</div>
+
+        <!-- Glyph: nested circles (gear) with dashed outer ring -->
+        <div class="cap-icon" aria-hidden="true">
+          <svg class="glyph-automation" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle class="ring-outer" cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 2"/>
+            <circle cx="14" cy="14" r="7" stroke="currentColor" stroke-width="1.5"/>
+            <circle class="ring-inner" cx="14" cy="14" r="3" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 1.5"/>
+            <line x1="14" y1="11" x2="14" y2="7" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+          </svg>
+        </div>
+
+        <h3 class="cap-title font-cinzel">STRATEGIC<br/>AUTOMATION</h3>
+        <p class="cap-desc font-inter">Workflows that think. Memory systems, multi-agent pipelines, tools that compound over time.</p>
+        <p class="cap-stack font-mono">Memory architecture · Multi-agent · Custom APIs</p>
+
+        <div class="cap-bottom-line"></div>
+        <span class="cap-bottom-hint font-mono">USED IN: AEGIS · MAVIS</span>
+
+        <!-- Card 4 exclusive: loop indicator (rotating arrows) -->
+        <div class="loop-indicator" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 8 A5.5 5.5 0 1 1 8 13.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M8 13.5 L5.5 11 L10.5 11 Z" fill="currentColor"/>
+          </svg>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
+
+<script>
+  (() => {
+    // ── Card entrance stagger via IntersectionObserver ──────────
+    const cards = document.querySelectorAll<HTMLElement>('.cap-card');
+    if (!cards.length) return;
+
+    // prefers-reduced-motion: snap to final state
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cards.forEach((c) => { c.style.opacity = '1'; c.style.transform = 'none'; });
+      return;
+    }
+
+    // Set initial hidden state
+    cards.forEach((card, i) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = `opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1)`;
+      card.style.transitionDelay = `${i * 120}ms`;
+    });
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const card = entry.target as HTMLElement;
+          card.style.opacity = '1';
+          card.style.transform = 'none';
+          obs.unobserve(card);
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    cards.forEach((c) => obs.observe(c));
+  })();
+</script>
 
 <style>
   section {
@@ -93,7 +260,24 @@ const caps = [
     margin-bottom: 4rem;
   }
 
-  /* 4-column grid — zero empty cells */
+  /* Section subtitle */
+  .cap-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: rgba(0, 212, 255, 0.5);
+    margin-top: 16px;
+  }
+
+  /* Instrument Serif italic accent on "Build" */
+  .heading-accent {
+    font-style: italic;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1em;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     GRID
+     ═══════════════════════════════════════════════════════ */
   .cap-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -102,6 +286,9 @@ const caps = [
     border: 1px solid var(--edge);
   }
 
+  /* ═══════════════════════════════════════════════════════
+     BASE CARD — shared across all four
+     ═══════════════════════════════════════════════════════ */
   .cap-card {
     padding: 2.5rem 2rem;
     display: flex;
@@ -110,127 +297,177 @@ const caps = [
     background: var(--mid);
     border: none;
     border-radius: 0;
-    min-height: 320px;
+    min-height: 340px;
     position: relative;
     overflow: hidden;
     cursor: default;
-    backdrop-filter: blur(8px) saturate(1.1);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    /* Hover lift override — overrides sacred-frame:hover global */
+    transition:
+      transform    0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow   0.28s cubic-bezier(0.16, 1, 0.3, 1),
+      background   0.22s ease,
+      border-color 0.22s ease;
   }
 
-  /* Per-card radial gradient tints */
-  .cap-card[data-signal="cyan"]::after {
+  .cap-card:hover {
+    transform: translateY(-6px) scale(1.005);
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    background: var(--rise);
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     PER-CARD BACKGROUND PATTERNS + GRADIENTS (via ::after)
+     ═══════════════════════════════════════════════════════ */
+
+  /* All cards need ::after for background pattern + color gradient */
+  .cap-card::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 100% 0%, rgba(0,212,255,0.04), transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .cap-card[data-signal="violet"]::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 0% 100%, rgba(167,139,250,0.04), transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .cap-card[data-signal="mint"]::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 0% 0%, rgba(74,222,128,0.03), transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Bottom draw line on hover */
-  .cap-card .cap-bottom-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 3;
-  }
-  .cap-card[data-signal="cyan"]   .cap-bottom-line { background: var(--signal-cyan);   }
-  .cap-card[data-signal="violet"] .cap-bottom-line { background: var(--signal-violet); }
-  .cap-card[data-signal="mint"]   .cap-bottom-line { background: var(--signal-mint);   }
-  .cap-card:hover .cap-bottom-line { transform: scaleX(1); }
-
-  /* Bottom micro-text on hover */
-  .cap-bottom-hint {
-    position: absolute;
-    bottom: 0.85rem;
-    left: 2rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.35);
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 240ms ease, transform 240ms ease;
-    transition-delay: 60ms;
-    z-index: 3;
-    pointer-events: none;
-  }
-  .cap-card:hover .cap-bottom-hint {
-    opacity: 1;
-    transform: translateY(0);
+  /* Card 1 — dot grid (cyan) */
+  .card-ai::after {
+    background:
+      radial-gradient(circle, rgba(0,212,255,0.06) 1.5px, transparent 1.5px),
+      radial-gradient(ellipse at 100% 0%, rgba(0,212,255,0.10), transparent 70%);
+    background-size: 24px 24px, 100% 100%;
   }
 
-  /* Signal accent — top edge glow on hover (overrides .accent-top) */
-  .cap-card[data-signal="cyan"]::before   { background: rgba(0,212,255,0.45); }
-  .cap-card[data-signal="violet"]::before { background: rgba(167,139,250,0.45); }
-  .cap-card[data-signal="mint"]::before   { background: rgba(74,222,128,0.45); }
+  /* Card 2 — diagonal lines (violet) */
+  .card-frontend::after {
+    background:
+      repeating-linear-gradient(
+        45deg,
+        rgba(167,139,250,0.04) 0px,
+        rgba(167,139,250,0.04) 1px,
+        transparent 1px,
+        transparent 32px
+      ),
+      radial-gradient(ellipse at 0% 100%, rgba(167,139,250,0.10), transparent 70%);
+  }
 
-  /* Corner tick signal colors */
-  .cap-card[data-signal="cyan"]   .corner-tl,
-  .cap-card[data-signal="cyan"]   .corner-tr,
-  .cap-card[data-signal="cyan"]   .corner-bl,
-  .cap-card[data-signal="cyan"]   .corner-br { border-color: var(--signal-cyan);   }
-  .cap-card[data-signal="violet"] .corner-tl,
-  .cap-card[data-signal="violet"] .corner-tr,
-  .cap-card[data-signal="violet"] .corner-bl,
-  .cap-card[data-signal="violet"] .corner-br { border-color: var(--signal-violet); }
-  .cap-card[data-signal="mint"]   .corner-tl,
-  .cap-card[data-signal="mint"]   .corner-tr,
-  .cap-card[data-signal="mint"]   .corner-bl,
-  .cap-card[data-signal="mint"]   .corner-br { border-color: var(--signal-mint);   }
+  /* Card 3 — isometric grid (mint) */
+  .card-desktop::after {
+    background:
+      repeating-linear-gradient(
+        60deg,
+        rgba(74,222,128,0.04) 0px,
+        rgba(74,222,128,0.04) 1px,
+        transparent 1px,
+        transparent 24px
+      ),
+      repeating-linear-gradient(
+        -60deg,
+        rgba(74,222,128,0.04) 0px,
+        rgba(74,222,128,0.04) 1px,
+        transparent 1px,
+        transparent 24px
+      ),
+      radial-gradient(ellipse at 0% 0%, rgba(74,222,128,0.08), transparent 70%);
+  }
 
-  /* Hover state from .sacred-frame + signal glow */
+  /* Card 4 — concentric arcs from bottom-right (amber) */
+  .card-automation::after {
+    background:
+      repeating-radial-gradient(
+        circle at 100% 100%,
+        transparent 0px,
+        transparent 48px,
+        rgba(251,191,36,0.05) 50px,
+        transparent 52px,
+        transparent 82px,
+        rgba(251,191,36,0.05) 84px,
+        transparent 86px,
+        transparent 116px,
+        rgba(251,191,36,0.05) 118px,
+        transparent 120px
+      ),
+      radial-gradient(ellipse at 100% 100%, rgba(251,191,36,0.08), transparent 70%);
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     TOP ACCENT LINE (::before — signal color on hover)
+     ═══════════════════════════════════════════════════════ */
+  .cap-card[data-signal="cyan"]::before   { background: rgba(0,212,255,0.50); }
+  .cap-card[data-signal="violet"]::before { background: rgba(167,139,250,0.50); }
+  .cap-card[data-signal="mint"]::before   { background: rgba(74,222,128,0.50); }
+  .cap-card[data-signal="amber"]::before  { background: rgba(251,191,36,0.50); }
+
+  /* ═══════════════════════════════════════════════════════
+     CORNER TICKS — signal colors
+     ═══════════════════════════════════════════════════════ */
+  .cap-card[data-signal="cyan"]   .corner-tl, .cap-card[data-signal="cyan"]   .corner-tr,
+  .cap-card[data-signal="cyan"]   .corner-bl, .cap-card[data-signal="cyan"]   .corner-br
+    { border-color: var(--signal-cyan); }
+
+  .cap-card[data-signal="violet"] .corner-tl, .cap-card[data-signal="violet"] .corner-tr,
+  .cap-card[data-signal="violet"] .corner-bl, .cap-card[data-signal="violet"] .corner-br
+    { border-color: var(--signal-violet); }
+
+  .cap-card[data-signal="mint"]   .corner-tl, .cap-card[data-signal="mint"]   .corner-tr,
+  .cap-card[data-signal="mint"]   .corner-bl, .cap-card[data-signal="mint"]   .corner-br
+    { border-color: var(--signal-mint); }
+
+  .cap-card[data-signal="amber"]  .corner-tl, .cap-card[data-signal="amber"]  .corner-tr,
+  .cap-card[data-signal="amber"]  .corner-bl, .cap-card[data-signal="amber"]  .corner-br
+    { border-color: var(--signal-amber); }
+
+  /* ═══════════════════════════════════════════════════════
+     HOVER BOX SHADOWS — per signal
+     ═══════════════════════════════════════════════════════ */
   .cap-card[data-signal="cyan"]:hover {
-    box-shadow: 0 -2px 0 var(--signal-cyan) inset,
-                0 12px 48px rgba(0,212,255,0.07);
+    box-shadow:
+      0 -2px 0 var(--signal-cyan) inset,
+      0 24px 60px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.08);
   }
   .cap-card[data-signal="violet"]:hover {
-    box-shadow: 0 -2px 0 var(--signal-violet) inset,
-                0 12px 48px rgba(167,139,250,0.07);
+    box-shadow:
+      0 -2px 0 var(--signal-violet) inset,
+      0 24px 60px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.08);
   }
   .cap-card[data-signal="mint"]:hover {
-    box-shadow: 0 -2px 0 var(--signal-mint) inset,
-                0 12px 48px rgba(74,222,128,0.07);
+    box-shadow:
+      0 -2px 0 var(--signal-mint) inset,
+      0 24px 60px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .cap-card[data-signal="amber"]:hover {
+    box-shadow:
+      0 -2px 0 var(--signal-amber) inset,
+      0 24px 60px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.08);
   }
 
+  /* ═══════════════════════════════════════════════════════
+     CARD CONTENT ELEMENTS
+     ═══════════════════════════════════════════════════════ */
   .cap-num {
     font-size: 0.6rem;
     letter-spacing: 0.22em;
-    color: var(--text-ghost);
+    position: relative;
+    z-index: 1;
   }
 
   .cap-icon {
-    width: 20px;
-    height: 20px;
-    opacity: 0.7;
-    transition: opacity var(--t-base), transform var(--t-deliberate) var(--ease-spring);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    /* Override global sacred-frame:hover rotate(90deg) */
+    transition: opacity 0.22s ease;
   }
-  .cap-card:hover .cap-icon {
-    opacity: 1;
-    transform: rotate(90deg);
-  }
+  .cap-icon svg { width: 100%; height: auto; }
+  .cap-card:hover .cap-icon { opacity: 1; }
 
   .cap-title {
     font-size: 0.8rem;
@@ -238,6 +475,8 @@ const caps = [
     letter-spacing: 0.16em;
     color: var(--text-pure);
     line-height: 1.6;
+    position: relative;
+    z-index: 1;
   }
 
   .cap-desc {
@@ -245,6 +484,8 @@ const caps = [
     line-height: 1.7;
     color: var(--text-secondary);
     flex-grow: 1;
+    position: relative;
+    z-index: 1;
   }
 
   .cap-stack {
@@ -255,21 +496,258 @@ const caps = [
     padding-top: 1.25rem;
     border-top: 1px solid var(--edge);
     line-height: 1.6;
+    position: relative;
+    z-index: 1;
   }
 
-  /* Instrument Serif italic accent on "Build" */
-  .heading-accent {
-    font-style: italic;
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: 1em;
+  /* Bottom draw line on hover */
+  .cap-bottom-line {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 1px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 3;
+  }
+  .cap-card[data-signal="cyan"]   .cap-bottom-line { background: var(--signal-cyan);   }
+  .cap-card[data-signal="violet"] .cap-bottom-line { background: var(--signal-violet); }
+  .cap-card[data-signal="mint"]   .cap-bottom-line { background: var(--signal-mint);   }
+  .cap-card[data-signal="amber"]  .cap-bottom-line { background: var(--signal-amber);  }
+  .cap-card:hover .cap-bottom-line { transform: scaleX(1); }
+
+  /* Bottom micro-hint */
+  .cap-bottom-hint {
+    position: absolute;
+    bottom: 0.85rem; left: 2rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.35);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 240ms ease, transform 240ms ease;
+    transition-delay: 60ms;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .cap-card:hover .cap-bottom-hint { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════════════════════════════
+     CARD 1 — AI ENGINEERING — GLYPH + DATA STREAM
+     ═══════════════════════════════════════════════════════ */
+
+  /* Glyph: rotate 45° on hover */
+  .card-ai:hover .glyph-ai {
+    transform: rotate(45deg);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glyph-ai {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--signal-cyan);
   }
 
-  /* ── RESPONSIVE ──────────────────────────────────────── */
+  /* Radiating lines pulse outward with stagger */
+  .ray {
+    transform-origin: 14px 14px;
+    transform-box: fill-box;
+  }
+  .card-ai:hover .ray { animation: rayPulse 0.6s ease-out infinite; }
+  .card-ai:hover .r1 { animation-delay: 0ms;   }
+  .card-ai:hover .r2 { animation-delay: 40ms;  }
+  .card-ai:hover .r3 { animation-delay: 80ms;  }
+  .card-ai:hover .r4 { animation-delay: 120ms; }
+  .card-ai:hover .r5 { animation-delay: 160ms; }
+  .card-ai:hover .r6 { animation-delay: 200ms; }
+
+  @keyframes rayPulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.8); }
+    50%       { opacity: 1.0; transform: scale(1.2); }
+  }
+
+  /* Data stream — waveform bars */
+  .data-stream {
+    position: absolute;
+    bottom: 12px;
+    right: 16px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    opacity: 0;
+    transition: opacity 200ms ease;
+    z-index: 2;
+  }
+  .card-ai:hover .data-stream { opacity: 1; }
+
+  .bar {
+    width: 2px;
+    background: var(--signal-cyan);
+    opacity: 0.55;
+    border-radius: 1px;
+    animation: barOscillate 1.4s ease-in-out infinite alternate;
+  }
+  .b1 { animation-duration: 1.2s; animation-delay: 0s;     height: 8px; }
+  .b2 { animation-duration: 1.7s; animation-delay: -0.25s; height: 12px; }
+  .b3 { animation-duration: 1.4s; animation-delay: -0.5s;  height: 5px; }
+  .b4 { animation-duration: 2.0s; animation-delay: -0.75s; height: 14px; }
+  .b5 { animation-duration: 1.5s; animation-delay: -0.4s;  height: 9px; }
+
+  @keyframes barOscillate {
+    from { height: 4px;  }
+    to   { height: 14px; }
+  }
+
+  /* Mobile: disable data stream animation */
+  @media (max-width: 768px) {
+    .data-stream { display: none; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     CARD 2 — PREMIUM FRONTEND — WAVE + HORIZONTAL LINE
+     ═══════════════════════════════════════════════════════ */
+  .glyph-frontend {
+    color: var(--signal-violet);
+    overflow: visible;
+  }
+
+  /* Bezier wave morph on hover — CSS d: path() animation */
+  .wave-path {
+    transition: d 300ms ease;
+  }
+
+  @supports (d: path("M0 0")) {
+    .card-frontend:hover .wave-path {
+      animation: waveMorph 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+
+    @keyframes waveMorph {
+      0%, 100% { d: path("M2 12 C7 12, 10 4, 14 4 C18 4, 21 12, 26 12"); }
+      50%       { d: path("M2 8 C7 16, 10 2, 14 10 C18 18, 21 2, 26 8"); }
+    }
+  }
+
+  /* Horizontal line draws across card at 60% height on hover */
+  .card-hline {
+    position: absolute;
+    left: 0;
+    top: 60%;
+    width: 100%;
+    height: 1px;
+    background: var(--signal-violet);
+    opacity: 0.5;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 400ms cubic-bezier(0, 0, 0.38, 0.9);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .card-frontend:hover .card-hline { transform: scaleX(1); }
+
+  /* ═══════════════════════════════════════════════════════
+     CARD 3 — NATIVE DESKTOP — LAYERS + INTERIOR CORNERS
+     ═══════════════════════════════════════════════════════ */
+  .glyph-desktop { color: var(--signal-mint); }
+
+  .layer-top, .layer-mid, .layer-bot {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .card-desktop:hover .layer-top { transform: translateY(-3px); }
+  .card-desktop:hover .layer-bot { transform: translateY(3px);  }
+
+  /* Interior corner accents */
+  .inner-corners {
+    position: absolute;
+    inset: 12px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .ic {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-color: var(--signal-mint);
+    border-style: solid;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .ic-tl { top: 0;    left: 0;   border-width: 1px 0 0 1px; }
+  .ic-tr { top: 0;    right: 0;  border-width: 1px 1px 0 0; }
+  .ic-bl { bottom: 0; left: 0;   border-width: 0 0 1px 1px; }
+  .ic-br { bottom: 0; right: 0;  border-width: 0 1px 1px 0; }
+
+  .card-desktop:hover .ic-tl { opacity: 0.5; transition-delay: 0ms;   }
+  .card-desktop:hover .ic-tr { opacity: 0.5; transition-delay: 80ms;  }
+  .card-desktop:hover .ic-bl { opacity: 0.5; transition-delay: 160ms; }
+  .card-desktop:hover .ic-br { opacity: 0.5; transition-delay: 240ms; }
+
+  /* ═══════════════════════════════════════════════════════
+     CARD 4 — STRATEGIC AUTOMATION — GEAR RINGS + LOOP
+     ═══════════════════════════════════════════════════════ */
+  .glyph-automation { color: var(--signal-amber); }
+
+  .ring-outer, .ring-inner {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* Outer ring rotates clockwise, inner counter-clockwise on hover */
+  .card-automation:hover .ring-outer {
+    animation: gearCW  8s linear infinite;
+  }
+  .card-automation:hover .ring-inner {
+    animation: gearCCW 5s linear infinite;
+  }
+
+  @keyframes gearCW  { to { transform: rotate(360deg);  } }
+  @keyframes gearCCW { to { transform: rotate(-360deg); } }
+
+  /* Loop indicator */
+  .loop-indicator {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    color: var(--signal-amber);
+    opacity: 0;
+    transition: opacity 200ms ease;
+    z-index: 2;
+  }
+  .card-automation:hover .loop-indicator { opacity: 0.55; }
+  .card-automation:hover .loop-indicator svg {
+    animation: loopSpin 3s linear infinite;
+  }
+
+  @keyframes loopSpin { to { transform: rotate(360deg); } }
+
+  /* ═══════════════════════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════════════════════ */
   @media (max-width: 1024px) {
     .cap-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 520px) {
     .cap-grid { grid-template-columns: 1fr; }
     .cap-card { min-height: auto; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     HOVER: POINTER-FINE ONLY (no hover states on touch)
+     ═══════════════════════════════════════════════════════ */
+  @media (hover: none) and (pointer: coarse) {
+    .cap-card:hover { transform: none; }
+    .cap-card:active {
+      transform: scale(0.98);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     REDUCED MOTION
+     ═══════════════════════════════════════════════════════ */
+  @media (prefers-reduced-motion: reduce) {
+    .cap-card { transition: none !important; transform: none !important; opacity: 1 !important; }
+    .glyph-ai, .ring-outer, .ring-inner,
+    .wave-path, .layer-top, .layer-bot { animation: none !important; transition: none !important; }
+    .bar { animation: none !important; }
+    .loop-indicator svg { animation: none !important; }
   }
 </style>
