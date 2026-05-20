@@ -2,211 +2,272 @@
 ---
 
 <section id="showcase" aria-labelledby="showcase-heading">
-  <!-- Full-bleed photographic background -->
+
+  <!-- Background -->
   <div class="section-bg showcase-bg" aria-hidden="true">
-    <img
-      src="/media/texture-2.jpg"
-      alt=""
-      class="section-bg-img"
-      loading="lazy"
-      decoding="async"
-      width="1920"
-      height="1080"
-    />
+    <img src="/media/texture-2.jpg" alt="" class="section-bg-img" loading="lazy" decoding="async" width="1920" height="1080"/>
     <div class="section-bg-vignette"></div>
-    <!-- Cyan tint overlay -->
     <div class="section-bg-tint"></div>
   </div>
 
   <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label"><span>WORK</span></div>
-      <h2 id="showcase-heading" class="section-heading">What's Been Built</h2>
-      <p class="showcase-sub font-mono">[ FIELD-TESTED · PRODUCTION-GRADE ]</p>
+
+    <!-- ─── TIER 1: HEADING ─────────────────────────────── -->
+    <div class="sc-header reveal">
+      <span class="sc-frame-label font-mono">[ SHOWCASE · FIELD-TESTED ]</span>
+      <h2 id="showcase-heading" class="sc-heading">
+        What's Been <em class="sc-italic">Built</em>
+      </h2>
+      <span class="sc-sub-label font-mono">[ ONE SHIPPED · ONE LIVE · ONE IN ARCHITECTURE ]</span>
     </div>
 
-    <div class="bento-grid">
+    <!-- ─── TIER 2: AEGIS HERO TILE ──────────────────────── -->
+    <article class="aegis-hero sacred-frame" id="aegis-hero-tile" aria-label="AEGIS — Shipped Project">
+      <span class="corner-tl"></span><span class="corner-tr"></span>
+      <span class="corner-bl"></span><span class="corner-br"></span>
 
-      <!-- AEGIS — main tile (spans full width on lg) -->
-      <article class="sacred-frame bento-aegis reveal" data-delay="80">
+      <!-- LEFT: Content 58% -->
+      <div class="aegis-left">
+
+        <div class="status-pill font-mono">
+          <span class="status-dot" aria-hidden="true"></span>
+          LIVE · DEPLOYED
+        </div>
+
+        <div class="aegis-nameblock">
+          <h3 class="aegis-name font-cinzel">AEGIS</h3>
+          <p class="aegis-tagline sc-italic">Sentinel Defense Grid</p>
+        </div>
+
+        <p class="aegis-desc">
+          Civilian-grade cyber defense for Windows. Three-layer honeypot,
+          attacker fingerprinting, evidence-grade forensics. Built in 5 days
+          for families targeted by state-level threat actors.
+        </p>
+
+        <div class="aegis-stat-strip">
+          <div class="aegis-stat">
+            <span class="as-label font-mono">LINES OF CODE</span>
+            <span class="as-value" data-count-to="8959">0</span>
+            <span class="as-sub font-mono">PRODUCTION READY</span>
+          </div>
+          <div class="as-sep" aria-hidden="true"></div>
+          <div class="aegis-stat">
+            <span class="as-label font-mono">BUILD WINDOW</span>
+            <span class="as-value">5 DAYS</span>
+            <span class="as-sub font-mono">MAY 14–18, 2025</span>
+          </div>
+          <div class="as-sep" aria-hidden="true"></div>
+          <div class="aegis-stat">
+            <span class="as-label font-mono">STATUS</span>
+            <span class="as-value">v1.0</span>
+            <span class="as-sub font-mono">SHIPPED &amp; INSTALLED</span>
+          </div>
+        </div>
+
+        <div class="aegis-ctas">
+          <a href="#aegis-detail" class="cta-primary font-mono">VIEW CASE STUDY →</a>
+          <a href="#contact" class="cta-secondary font-mono">REQUEST DEMO</a>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Shield Visualization 42% -->
+      <div class="aegis-right" aria-hidden="true">
+        <div class="shield-viz" id="shield-viz">
+
+          <!-- L5: Pulse pings (rendered behind SVG) -->
+          <div class="pulse-ping pp1"></div>
+          <div class="pulse-ping pp2"></div>
+          <div class="pulse-ping pp3"></div>
+
+          <!-- Main SVG: rings, octagon, scan line -->
+          <svg class="shield-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="scanGradH" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00d4ff" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#00d4ff" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/>
+              </linearGradient>
+              <clipPath id="outerRingClip">
+                <circle cx="150" cy="150" r="138"/>
+              </clipPath>
+              <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <filter id="octGlow" x="-25%" y="-25%" width="150%" height="150%">
+                <feGaussianBlur stdDeviation="4" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- L1: Outer rotating ring (dashed, tick marks at N/S/E/W) -->
+            <g class="ring-outer-g">
+              <circle cx="150" cy="150" r="136" fill="none" stroke="#00d4ff"
+                stroke-width="1" stroke-dasharray="3 11" opacity="0.65"/>
+              <line x1="150" y1="14"  x2="150" y2="26"  stroke="#00d4ff" stroke-width="1.5" opacity="0.7"/>
+              <line x1="150" y1="274" x2="150" y2="286" stroke="#00d4ff" stroke-width="1.5" opacity="0.7"/>
+              <line x1="14"  y1="150" x2="26"  y2="150" stroke="#00d4ff" stroke-width="1.5" opacity="0.7"/>
+              <line x1="274" y1="150" x2="286" y2="150" stroke="#00d4ff" stroke-width="1.5" opacity="0.7"/>
+            </g>
+
+            <!-- L2: Middle counter-rotating ring -->
+            <circle cx="150" cy="150" r="108" fill="none" stroke="#a78bfa"
+              stroke-width="1" opacity="0.5" class="ring-mid-el"/>
+
+            <!-- L3: Inner octagon (static) — radius 68 from center -->
+            <polygon
+              points="150,82 198,102 218,150 198,198 150,218 102,198 82,150 102,102"
+              fill="rgba(0,212,255,0.04)"
+              stroke="#00d4ff"
+              stroke-width="2"
+              filter="url(#octGlow)"/>
+            <!-- Top triangle -->
+            <polygon points="150,100 159,117 141,117"
+              fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.85"/>
+            <!-- Center A -->
+            <text x="150" y="170" text-anchor="middle"
+              font-family="Cinzel, Georgia, serif"
+              font-size="40" font-weight="400"
+              fill="#00d4ff" opacity="0.92"
+              filter="url(#softGlow)">A</text>
+            <!-- Bottom inverted triangle -->
+            <polygon points="150,197 159,180 141,180"
+              fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.85"/>
+
+            <!-- L4: Scan line — horizontal, sweeps top→bottom, clipped to outer ring -->
+            <rect x="12" y="-1" width="276" height="2"
+              fill="url(#scanGradH)"
+              clip-path="url(#outerRingClip)"
+              class="scan-line-el"
+              filter="url(#softGlow)"/>
+          </svg>
+
+          <!-- L6: Orbital dots (CSS positioned, counter-rotate to keep labels upright) -->
+          <div class="orbit-spinner os1">
+            <div class="orbit-counter oc1">
+              <div class="orbit-dot-el"></div>
+              <span class="orbit-label font-mono">HONEYPOT · ACTIVE</span>
+            </div>
+          </div>
+          <div class="orbit-spinner os2">
+            <div class="orbit-counter oc2">
+              <div class="orbit-dot-el"></div>
+              <span class="orbit-label font-mono">EVIDENCE · LOGGING</span>
+            </div>
+          </div>
+          <div class="orbit-spinner os3">
+            <div class="orbit-counter oc3">
+              <div class="orbit-dot-el"></div>
+              <span class="orbit-label font-mono">BSOD · MONITORING</span>
+            </div>
+          </div>
+
+          <!-- L7: Data strip (CSS-cycled telemetry) -->
+          <div class="shield-data-strip font-mono" aria-live="polite" aria-atomic="true">
+            <span class="data-line dl1">PORT_2222: LISTENING | PORT_2323: LISTENING | DECOY_FILES: 47</span>
+            <span class="data-line dl2">ARP_SCAN: 12 NODES | SHA-256 CHAIN: VALID</span>
+            <span class="data-line dl3">UPTIME: 99.97% | LAST EVENT: T-00:00:14</span>
+          </div>
+
+        </div>
+      </div>
+
+    </article>
+
+    <!-- ─── TIER 3: SUPPORTING CARDS ─────────────────────── -->
+    <div class="support-row">
+
+      <!-- Card A: Drakken Labs Site -->
+      <article class="support-card card-drakken sacred-frame reveal" data-delay="140"
+        aria-label="Drakken Labs — Live Site">
         <span class="corner-tl"></span><span class="corner-tr"></span>
         <span class="corner-bl"></span><span class="corner-br"></span>
 
-        <!-- Abstract visualization — NOT the actual AEGIS UI -->
-        <div class="aegis-vis" aria-hidden="true">
-          <div class="aegis-orb"></div>
-          <div class="aegis-ring ring-1"></div>
-          <div class="aegis-ring ring-2"></div>
-          <div class="aegis-ring ring-3"></div>
-          <div class="aegis-scan"></div>
-        </div>
-
-        <div class="aegis-content">
-          <div class="bento-tag font-mono">
-            <span class="tag-bracket">[</span>
-            SHIPPED · MAY 2025
-            <span class="tag-bracket">]</span>
+        <div class="card-inner">
+          <div class="support-tag font-mono" style="color:var(--signal-cyan)">
+            <span class="tag-bracket">[</span>&nbsp;LIVE&nbsp;<span class="tag-bracket">]</span>
           </div>
-          <h3 class="bento-title font-cinzel">AEGIS</h3>
-          <p class="bento-desc font-inter">
-            Civilian-grade cyber defense for Windows.
-            Defensive intelligence for families targeted by state-level threat actors.
+          <h3 class="support-title font-cinzel">DRAKKEN LABS</h3>
+          <p class="support-sub">This site you're reading</p>
+          <p class="support-desc">
+            Built in 1 day. Astro + Three.js + Motion One.<br/>
+            AI-leveraged frontend craft.
           </p>
-
-          <!-- Bloomberg stat strip -->
-          <div class="stat-strip">
-            <div class="stat-row">
-              <span class="stat-label">LINES OF CODE</span>
-              <span class="stat-value" data-count-to="8959" data-count-suffix="">0</span>
-              <span class="stat-sub">PRODUCTION</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-row">
-              <span class="stat-label">BUILD DAYS</span>
-              <span class="stat-value">5</span>
-              <span class="stat-sub">SHIPPED</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-row">
-              <span class="stat-label">STACK</span>
-              <span class="stat-value" style="font-size:0.7rem;letter-spacing:0.04em">Tauri+AI</span>
-              <span class="stat-sub">WINDOWS</span>
-            </div>
-          </div>
+          <p class="support-stats font-mono">1,400+ LOC · 60 FPS · ASTRO 4</p>
         </div>
 
-        <!-- Iridescent ambient rings (abstract glow, behind content) -->
-        <div class="aegis-iridescent-rings" aria-hidden="true">
-          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" class="aegis-rings-svg">
-            <circle cx="150" cy="150" r="100"
-              fill="none"
-              stroke="url(#rg1)"
-              stroke-width="1"
-              opacity="0.4"
-              class="iridescent-ring-outer"
-            />
-            <circle cx="150" cy="150" r="65"
-              fill="none"
-              stroke="url(#rg2)"
-              stroke-width="1"
-              opacity="0.35"
-              class="iridescent-ring-inner"
-            />
-            <defs>
-              <linearGradient id="rg1" gradientUnits="userSpaceOnUse" x1="50" y1="50" x2="250" y2="250">
-                <stop offset="0%" stop-color="#00d4ff"/>
-                <stop offset="50%" stop-color="#a78bfa"/>
-                <stop offset="100%" stop-color="#00d4ff"/>
-              </linearGradient>
-              <linearGradient id="rg2" gradientUnits="userSpaceOnUse" x1="250" y1="50" x2="50" y2="250">
-                <stop offset="0%" stop-color="#a78bfa"/>
-                <stop offset="50%" stop-color="#00d4ff"/>
-                <stop offset="100%" stop-color="#a78bfa"/>
-              </linearGradient>
-            </defs>
+        <div class="kanji-mark font-cinzel" aria-hidden="true">守</div>
+      </article>
+
+      <!-- Card B: MAVIS -->
+      <article class="support-card card-mavis sacred-frame reveal" data-delay="200"
+        aria-label="MAVIS — In Architecture">
+        <span class="corner-tl"></span><span class="corner-tr"></span>
+        <span class="corner-bl"></span><span class="corner-br"></span>
+
+        <div class="mavis-construction" aria-hidden="true"></div>
+
+        <div class="card-inner">
+          <div class="support-tag font-mono" style="color:var(--signal-amber)">
+            <span class="tag-bracket">[</span>&nbsp;IN ARCHITECTURE&nbsp;<span class="tag-bracket">]</span>
+          </div>
+          <h3 class="support-title font-cinzel mavis-dim">MAVIS</h3>
+          <p class="support-sub">Personal AI Companion</p>
+          <p class="support-desc">
+            The orchestrator. Memory-first. Voice-driven.<br/>
+            Currently in architecture phase.
+          </p>
+          <p class="support-stats font-mono" style="color:var(--signal-amber)">
+            DESIGN PHASE · Q3 2025 TARGET
+          </p>
+        </div>
+
+        <div class="mavis-lock" aria-hidden="true">
+          <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
+            <rect x="1" y="7" width="12" height="8" rx="1.5"
+              stroke="rgba(251,191,36,0.45)" stroke-width="1.2"/>
+            <path d="M4 7V5a3 3 0 016 0v2"
+              stroke="rgba(251,191,36,0.45)" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
         </div>
-
-        <!-- Live stat ticker -->
-        <div class="aegis-ticker" aria-live="polite">
-          <span class="ticker-live font-mono">
-            <span class="ticker-dot"></span>
-            LIVE
-          </span>
-          <span class="ticker-text font-mono" id="aegis-ticker-text">DAYS DEPLOYED: 1</span>
-        </div>
-
-        <!-- Case study CTA -->
-        <a href="#aegis-detail" class="aegis-cta font-mono">VIEW CASE STUDY →</a>
-
-        <div class="aegis-classified font-mono">[CONFIDENTIAL · ALPHA-3]</div>
-      </article>
-
-      <!-- Studio stats -->
-      <article class="sacred-frame bento-stats reveal" data-delay="140">
-        <span class="corner-tl"></span><span class="corner-tr"></span>
-        <span class="corner-bl"></span><span class="corner-br"></span>
-
-        <div class="bento-tag font-mono"><span class="tag-bracket">[</span> STUDIO <span class="tag-bracket">]</span></div>
-
-        <div class="stats-grid">
-          {[
-            { label: 'SHIPPED',  value: '1',     sub: 'PROJECTS' },
-            { label: 'VELOCITY', value: '8,959', sub: 'LINES' },
-            { label: 'TO SHIP',  value: '5',     sub: 'DAYS' },
-            { label: 'OPEN',     value: '2',     sub: 'SLOTS' },
-          ].map(({ label, value, sub }) => (
-            <div class="stat-row">
-              <span class="stat-label">{label}</span>
-              <span class="stat-value">{value}</span>
-              <span class="stat-sub" style="color:var(--signal-mint)">{sub}</span>
-            </div>
-          ))}
-        </div>
-
-        <div class="avail-badge font-mono">
-          <span class="avail-dot"></span>
-          2 slots remaining this month
-        </div>
-      </article>
-
-      <!-- Methodology tile -->
-      <article class="sacred-frame bento-method reveal" data-delay="180">
-        <span class="corner-tl"></span><span class="corner-tr"></span>
-        <span class="corner-bl"></span><span class="corner-br"></span>
-
-        <div class="bento-tag font-mono"><span class="tag-bracket">[</span> METHOD <span class="tag-bracket">]</span></div>
-        <h3 class="bento-sub font-cinzel">AI Workflow System</h3>
-        <p class="bento-desc font-inter">
-          Memory-based development. 5–10× output velocity. Used to ship AEGIS in 5 days.
-        </p>
-
-        <div class="method-flow font-mono">
-          <span class="method-node">MEMORY</span>
-          <span class="method-arrow">→</span>
-          <span class="method-node">AI</span>
-          <span class="method-arrow">→</span>
-          <span class="method-node">BUILD</span>
-          <span class="method-arrow">→</span>
-          <span class="method-node" style="color:var(--signal-mint)">SHIP</span>
-        </div>
-      </article>
-
-      <!-- MAVIS — coming -->
-      <article class="sacred-frame bento-mavis reveal" data-delay="220">
-        <span class="corner-tl"></span><span class="corner-tr"></span>
-        <span class="corner-bl"></span><span class="corner-br"></span>
-
-        <div class="bento-tag font-mono" style="color:var(--signal-amber)">
-          <span class="tag-bracket">[</span> IN ARCHITECTURE <span class="tag-bracket">]</span>
-        </div>
-        <h3 class="bento-sub font-cinzel">MAVIS</h3>
-        <p class="bento-desc font-inter" style="color:var(--text-tertiary)">
-          Master AI companion ecosystem. Personal Jarvis, built right.
-        </p>
-
-        <!-- Floating violet orb -->
-        <div class="mavis-orb" aria-hidden="true"></div>
-        <p class="bento-eta font-mono">ETA Q3 2025</p>
       </article>
 
     </div>
 
-    <!-- Bottom stats bar -->
-    <div class="stats-bar reveal" data-delay="260">
-      {[
-        ['STUDIO BIRTHED',  '2025'],
-        ['PROJECTS SHIPPED', '1'],
-        ['STACK',           'TAURI+AI'],
-        ['LOCATION',        'MALAYSIA'],
-        ['STATUS',          'ACCEPTING'],
-        ['AVAILABILITY',    '2 SLOTS'],
-      ].map(([label, value]) => (
-        <div class="bar-stat">
-          <span class="bar-label font-mono">{label}</span>
-          <span class="bar-value font-mono">{value}</span>
-        </div>
-      ))}
+    <!-- ─── STUDIO STATS STRIP ────────────────────────────── -->
+    <div class="studio-strip reveal" data-delay="260">
+      <div class="ss-metric">
+        <span class="ss-label font-mono">PROJECTS SHIPPED</span>
+        <span class="ss-value">1</span>
+      </div>
+      <div class="ss-sep" aria-hidden="true"></div>
+      <div class="ss-metric">
+        <span class="ss-label font-mono">LINES THIS YEAR</span>
+        <span class="ss-value">8,959</span>
+      </div>
+      <div class="ss-sep" aria-hidden="true"></div>
+      <div class="ss-metric">
+        <span class="ss-label font-mono">STACK PRIMARY</span>
+        <span class="ss-value">TAURI · RUST · AI</span>
+      </div>
+      <div class="ss-sep" aria-hidden="true"></div>
+      <div class="ss-metric">
+        <span class="ss-label font-mono">STUDIO BIRTHED</span>
+        <span class="ss-value">MMXXV</span>
+      </div>
+      <div class="ss-sep" aria-hidden="true"></div>
+      <div class="ss-metric">
+        <span class="ss-label font-mono">STATUS</span>
+        <span class="ss-value" style="color:var(--signal-mint)">ACCEPTING WORK</span>
+      </div>
     </div>
 
   </div>
@@ -214,85 +275,118 @@
 
 <script>
   (() => {
-    // AEGIS stat ticker
-    const tickerEl = document.getElementById('aegis-ticker-text') as HTMLElement | null;
-    if (!tickerEl) return;
-    const ticker = tickerEl;
+    const section = document.getElementById('showcase');
+    const heroTile = document.getElementById('aegis-hero-tile');
+    const shieldViz = document.getElementById('shield-viz');
+    if (!section) return;
 
-    const STATS = [
-      'DAYS DEPLOYED: 1',
-      'BUILD VELOCITY: 1,791 LOC/DAY',
-      'STACK: TAURI + RUST + AI',
-      'STATUS: SHIPPED',
-    ];
-    let idx = 0;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function nextStat() {
-      ticker.style.opacity = '0';
-      ticker.style.transform = 'translateY(-4px)';
-      setTimeout(() => {
-        idx = (idx + 1) % STATS.length;
-        ticker.textContent = STATS[idx] ?? '';
-        ticker.style.opacity = '1';
-        ticker.style.transform = 'translateY(0)';
-      }, 180);
+    function easeOutExpo(t: number): number {
+      return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t);
     }
 
-    setInterval(nextStat, 2500);
-    ticker.style.transition = 'opacity 180ms ease, transform 180ms ease';
+    function countUp(el: HTMLElement, target: number, duration: number, delay: number) {
+      setTimeout(() => {
+        const start = performance.now();
+        const tick = (now: number) => {
+          const t = Math.min((now - start) / duration, 1);
+          el.textContent = Math.round(easeOutExpo(t) * target).toLocaleString();
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = target.toLocaleString();
+        };
+        requestAnimationFrame(tick);
+      }, delay);
+    }
 
-    // Showcase background parallax
-    const bg = document.querySelector<HTMLElement>('.showcase-bg .section-bg-img');
-    if (!bg) return;
-    if (window.matchMedia('(max-width: 768px)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let activated = false;
 
-    const loadParallax = async () => {
-      const { gsap } = await import('gsap');
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
+    function activate() {
+      if (activated) return;
+      activated = true;
 
-      gsap.to(bg, {
-        yPercent: -40,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#showcase',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    };
+      // Stagger in AEGIS hero
+      if (heroTile) {
+        heroTile.classList.add('hero-visible');
+      }
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadParallax, { timeout: 3000 });
-    } else {
-      setTimeout(loadParallax, 600);
+      // Start shield animations after 600ms
+      if (shieldViz && !prefersReduced) {
+        setTimeout(() => shieldViz.classList.add('shield-active'), 600);
+      } else if (shieldViz) {
+        shieldViz.classList.add('shield-active');
+      }
+
+      // Count up AEGIS stat
+      const countEl = section.querySelector<HTMLElement>('[data-count-to="8959"]');
+      if (countEl && !prefersReduced) {
+        countUp(countEl, 8959, 600, 1500);
+      } else if (countEl) {
+        countEl.textContent = '8,959';
+      }
+    }
+
+    if (prefersReduced) {
+      // Snap to final state immediately
+      activate();
+      return;
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          activate();
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(section);
+
+    // Background parallax
+    const bgImg = document.querySelector<HTMLElement>('.showcase-bg .section-bg-img');
+    if (bgImg && !window.matchMedia('(max-width: 768px)').matches) {
+      const loadParallax = async () => {
+        const { gsap } = await import('gsap');
+        const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.to(bgImg, {
+          yPercent: -40,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#showcase',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      };
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(loadParallax, { timeout: 3000 });
+      } else {
+        setTimeout(loadParallax, 600);
+      }
     }
   })();
 </script>
 
-
 <style>
+  /* ── SECTION BASE ─────────────────────────────────────── */
   section {
     padding: 8rem 2rem;
     background: var(--deep);
-    z-index: var(--z-page);
     position: relative;
+    z-index: var(--z-page);
     overflow: hidden;
   }
-  .section-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
-  .section-header { margin-bottom: 3.5rem; }
-
-  /* Showcase subtitle */
-  .showcase-sub {
-    font-size: 0.6rem;
-    letter-spacing: 0.22em;
-    color: rgba(0, 212, 255, 0.55);
-    margin-top: 0.5rem;
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
-  /* ── SECTION BG ─────────────────────────────────────── */
+  /* ── SECTION BACKGROUND ───────────────────────────────── */
   .section-bg {
     position: absolute;
     inset: 0;
@@ -300,7 +394,6 @@
     pointer-events: none;
     overflow: hidden;
   }
-
   .section-bg-img {
     position: absolute;
     inset: 0;
@@ -310,420 +403,744 @@
     filter: brightness(0.3) saturate(0.7);
     will-change: transform;
   }
-
   .section-bg-vignette {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-      ellipse at 50% 40%,
-      transparent 30%,
-      #07080d 85%
-    );
+    background: radial-gradient(ellipse at 50% 40%, transparent 30%, #07080d 85%);
   }
-
   .section-bg-tint {
     position: absolute;
     inset: 0;
-    background: rgba(0, 212, 255, 0.04);
+    background: rgba(0,212,255,0.04);
   }
 
-  /* ── IRIDESCENT RINGS ───────────────────────────────── */
-  .aegis-iridescent-rings {
-    position: absolute;
-    top: 50%;
-    right: 1.5rem;
-    transform: translateY(-50%);
-    width: 180px;
-    height: 180px;
-    pointer-events: none;
-    filter: blur(12px);
-    opacity: 0.4;
-  }
-
-  .aegis-rings-svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  .iridescent-ring-outer {
-    animation: ringRotateOuter 30s linear infinite;
-    transform-origin: 150px 150px;
-  }
-
-  .iridescent-ring-inner {
-    animation: ringRotateInner 18s linear infinite;
-    transform-origin: 150px 150px;
-  }
-
-  @keyframes ringRotateOuter {
-    from { transform: rotate(0deg);   }
-    to   { transform: rotate(360deg); }
-  }
-
-  @keyframes ringRotateInner {
-    from { transform: rotate(0deg);    }
-    to   { transform: rotate(-360deg); }
-  }
-
-  /* Faster on AEGIS tile hover */
-  .bento-aegis:hover .iridescent-ring-outer {
-    animation-duration: 15s;
-  }
-  .bento-aegis:hover .iridescent-ring-inner {
-    animation-duration: 9s;
-  }
-  .bento-aegis:hover {
-    transform: translateY(-6px);
-  }
-
-  /* ── AEGIS TICKER ───────────────────────────────────── */
-  .aegis-ticker {
+  /* ── TIER 1: HEADING ──────────────────────────────────── */
+  .sc-header {
+    margin-bottom: 3.5rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.45rem 0.75rem;
-    background: rgba(0, 212, 255, 0.04);
-    border: 1px solid rgba(0, 212, 255, 0.15);
-    width: fit-content;
-    max-width: 280px;
+    text-align: center;
+  }
+  .sc-frame-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.32em;
+    color: var(--signal-cyan);
+    opacity: 0.9;
+  }
+  .sc-heading {
+    font-size: clamp(2.5rem, 7vw, 5.25rem);
+    line-height: 1;
+    color: var(--text-pure);
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+  .sc-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .sc-sub-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.25rem;
   }
 
-  .ticker-live {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.55rem;
-    letter-spacing: 0.18em;
-    color: var(--signal-mint);
-    white-space: nowrap;
-  }
-
-  .ticker-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--signal-mint);
-    animation: dotPulse 1.5s ease-in-out infinite;
-  }
-
-  @keyframes dotPulse {
-    0%,100% { opacity: 1;   transform: scale(1);    }
-    50%      { opacity: 0.3; transform: scale(0.85); }
-  }
-
-  .ticker-text {
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    color: rgba(0, 212, 255, 0.7);
-    white-space: nowrap;
+  /* ── TIER 2: AEGIS HERO TILE ──────────────────────────── */
+  .aegis-hero {
+    display: grid;
+    grid-template-columns: 58% 42%;
+    min-height: 480px;
+    background: var(--mid);
+    border: 1px solid var(--edge);
+    position: relative;
     overflow: hidden;
+    margin-bottom: 1px;
+
+    /* Entrance: starts hidden, transitions in via hero-visible class */
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 800ms cubic-bezier(0.23, 1, 0.32, 1) 200ms,
+      transform 800ms cubic-bezier(0.23, 1, 0.32, 1) 200ms;
+  }
+  .aegis-hero.hero-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  /* ── AEGIS CTA ──────────────────────────────────────── */
-  .aegis-cta {
+  /* ── LEFT SIDE ────────────────────────────────────────── */
+  .aegis-left {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-right: 1px solid var(--edge);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Status pill */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.3);
+    border-radius: 9999px;
+    padding: 0.375rem 1rem;
+    width: fit-content;
+    font-size: 0.625rem;
+    letter-spacing: 0.3em;
+    color: var(--signal-cyan);
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 400ms ease 900ms, transform 400ms ease 900ms;
+  }
+  .aegis-hero.hero-visible .status-pill {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    flex-shrink: 0;
+    animation: statusPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes statusPulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.35; transform: scale(0.8); }
+  }
+
+  /* Name block */
+  .aegis-nameblock {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 500ms ease 1020ms, transform 500ms ease 1020ms;
+  }
+  .aegis-hero.hero-visible .aegis-nameblock {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .aegis-name {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--text-pure);
+    line-height: 1;
+    text-shadow: 0 0 50px rgba(0,212,255,0.2);
+  }
+  .aegis-tagline {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 1.375rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.3;
+  }
+
+  /* Description */
+  .aegis-desc {
+    font-size: 0.9375rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    max-width: 460px;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 500ms ease 1140ms, transform 500ms ease 1140ms;
+  }
+  .aegis-hero.hero-visible .aegis-desc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stat strip */
+  .aegis-stat-strip {
+    display: flex;
+    border: 1px solid var(--edge);
+    background: var(--deep);
+    flex-shrink: 0;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 500ms ease 1260ms, transform 500ms ease 1260ms;
+  }
+  .aegis-hero.hero-visible .aegis-stat-strip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .aegis-stat {
+    flex: 1;
+    padding: 0.875rem 1.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .as-sep {
+    width: 1px;
+    background: var(--edge);
+    flex-shrink: 0;
+  }
+  .as-label {
+    font-size: 0.5625rem;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+  }
+  .as-value {
+    font-family: 'Outfit', 'Helvetica Neue', sans-serif;
+    font-size: 1.75rem;
+    color: var(--text-pure);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .as-sub {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: var(--signal-cyan);
+    opacity: 0.6;
+  }
+
+  /* CTAs */
+  .aegis-ctas {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 500ms ease 1800ms, transform 500ms ease 1800ms;
+  }
+  .aegis-hero.hero-visible .aegis-ctas {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cta-primary {
     display: inline-flex;
     align-items: center;
     font-size: 0.6rem;
-    letter-spacing: 0.14em;
-    color: rgba(0, 212, 255, 0.7);
-    text-decoration: none;
-    padding: 0.35rem 0.75rem;
-    border: 1px solid rgba(0, 212, 255, 0.2);
-    border-radius: 9999px;
-    width: fit-content;
-    transition: color var(--t-base), border-color var(--t-base), transform var(--t-quick);
-  }
-  .aegis-cta:hover {
+    letter-spacing: 0.16em;
     color: var(--signal-cyan);
-    border-color: rgba(0, 212, 255, 0.5);
+    text-decoration: none;
+    padding: 0.5rem 1.125rem;
+    border: 1px solid rgba(0,212,255,0.35);
+    border-radius: 9999px;
+    background: rgba(0,212,255,0.06);
+    transition:
+      color 200ms ease,
+      border-color 200ms ease,
+      background 200ms ease,
+      transform 160ms ease;
+  }
+  .cta-primary:hover {
+    color: #fff;
+    border-color: rgba(0,212,255,0.7);
+    background: rgba(0,212,255,0.12);
     transform: translateX(2px);
   }
+  .cta-primary:active { transform: scale(0.97); }
 
-  @media (max-width: 768px) {
-    .section-bg-img { filter: brightness(0.25) saturate(0.6); }
-    .aegis-iridescent-rings { display: none; }
-  }
-
-  /* ── BENTO GRID ─────────────────────────────────────── */
-  /* 2×2 grid, each tile 50% width */
-  .bento-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1px;
-    background: var(--edge);
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    padding: 0.5rem 1.125rem;
     border: 1px solid var(--edge);
-    margin-bottom: 1px;
+    border-radius: 9999px;
+    transition:
+      color 200ms ease,
+      border-color 200ms ease,
+      transform 160ms ease;
   }
+  .cta-secondary:hover {
+    color: rgba(255,255,255,0.85);
+    border-color: rgba(255,255,255,0.3);
+    transform: translateX(2px);
+  }
+  .cta-secondary:active { transform: scale(0.97); }
 
-  /* All tiles share base styling */
-  .bento-aegis,
-  .bento-stats,
-  .bento-method,
-  .bento-mavis {
-    background: var(--mid);
-    padding: 2.5rem;
-    border: none;
-    border-radius: 0;
+  /* ── RIGHT SIDE / SHIELD VIZ ──────────────────────────── */
+  .aegis-right {
     display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
     position: relative;
     overflow: hidden;
   }
 
-  .bento-aegis { min-height: 380px; }
-  .bento-stats { justify-content: space-between; }
-  .bento-method { }
-  .bento-mavis { }
-
-  /* ── AEGIS VISUALIZATION ────────────────────────────── */
-  .aegis-vis {
-    position: absolute;
-    top: 1.5rem;
-    right: 2rem;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .aegis-orb {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 38% 32%, #00d4ff, #003a5a);
-    box-shadow: 0 0 18px rgba(0,212,255,0.5), 0 0 36px rgba(0,212,255,0.15);
-    animation: orbPulse 3s ease-in-out infinite;
-    z-index: 2;
+  .shield-viz {
     position: relative;
-  }
-
-  @keyframes orbPulse {
-    0%,100% { transform: scale(1);    box-shadow: 0 0 18px rgba(0,212,255,0.5); }
-    50%      { transform: scale(1.1); box-shadow: 0 0 28px rgba(0,212,255,0.7); }
-  }
-
-  .aegis-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(0,212,255,0.18);
-    animation: ringPulse 3.2s ease-in-out infinite;
-  }
-  .ring-1 { width: 46px;  height: 46px;  animation-delay: 0s;   }
-  .ring-2 { width: 70px;  height: 70px;  animation-delay: 0.25s; }
-  .ring-3 { width: 94px;  height: 94px;  animation-delay: 0.5s; }
-
-  @keyframes ringPulse {
-    0%,100% { opacity: 0.55; transform: scale(1);    }
-    50%      { opacity: 0.18; transform: scale(1.04); }
-  }
-
-  .aegis-scan {
-    position: absolute;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, rgba(0,212,255,0.55), transparent);
-    animation: scanLine 4.5s ease-in-out infinite;
-  }
-
-  @keyframes scanLine {
-    0%   { transform: translateX(-48px) rotate(-12deg); opacity: 0; }
-    15%  { opacity: 1; }
-    85%  { opacity: 1; }
-    100% { transform: translateX(48px) rotate(12deg); opacity: 0; }
-  }
-
-  .aegis-content { display: flex; flex-direction: column; gap: 0.9rem; }
-
-  /* Bracket tags */
-  .bento-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--signal-cyan);
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-  .tag-bracket { opacity: 0.5; }
-
-  .bento-title {
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    color: var(--text-pure);
-    line-height: 1;
-  }
-
-  .bento-sub {
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    color: var(--text-pure);
-  }
-
-  .bento-desc {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.65;
-    max-width: 400px;
-  }
-
-  /* Bloomberg stat strip */
-  .stat-strip {
-    display: flex;
-    gap: 0;
-    margin-top: auto;
-    border: 1px solid var(--edge);
-    background: var(--deep);
-  }
-
-  .stat-strip .stat-row {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    gap: 0.15rem;
-  }
-
-  .stat-divider {
-    width: 1px;
-    background: var(--edge);
+    width: 300px;
+    height: 360px;
     flex-shrink: 0;
   }
 
-  .aegis-classified {
+  /* SVG fills top 300px of the container */
+  .shield-svg {
     position: absolute;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    font-size: 0.5rem;
-    letter-spacing: 0.22em;
-    color: var(--text-ghost);
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    overflow: visible;
   }
 
-  /* Stats grid */
-  .stats-grid {
+  /* ── LAYER 1: Outer ring rotation ─────────────────────── */
+  .ring-outer-g {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+  }
+  /* Starts paused, activated by .shield-active */
+  .shield-viz:not(.shield-active) .ring-outer-g { animation: none; }
+  .shield-viz.shield-active .ring-outer-g {
+    animation: ringCW 30s linear infinite;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .aegis-hero:hover .ring-outer-g {
+      animation-duration: 15s !important;
+    }
+  }
+
+  /* ── LAYER 2: Middle ring counter-rotation ────────────── */
+  .ring-mid-el {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+  }
+  .shield-viz:not(.shield-active) .ring-mid-el { animation: none; }
+  .shield-viz.shield-active .ring-mid-el {
+    animation: ringCCW 24s linear infinite;
+  }
+
+  /* ── LAYER 4: Scan line ───────────────────────────────── */
+  .scan-line-el {
+    transform-box: fill-box;
+  }
+  .shield-viz:not(.shield-active) .scan-line-el { animation: none; opacity: 0; }
+  .shield-viz.shield-active .scan-line-el {
+    animation: scanSweep 4s linear infinite;
+  }
+
+  /* ── LAYER 5: Pulse pings ─────────────────────────────── */
+  .pulse-ping {
+    position: absolute;
+    top: 150px; /* center of 300px SVG area */
+    left: 150px;
+    width: 280px;
+    height: 280px;
+    margin-top: -140px;
+    margin-left: -140px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,212,255,0.4);
+    pointer-events: none;
+  }
+  .shield-viz:not(.shield-active) .pulse-ping { animation: none; opacity: 0; }
+  .shield-viz.shield-active .pp1 { animation: pulsePing 3s ease-out infinite 0s; }
+  .shield-viz.shield-active .pp2 { animation: pulsePing 3s ease-out infinite -1s; }
+  .shield-viz.shield-active .pp3 { animation: pulsePing 3s ease-out infinite -2s; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .aegis-hero:hover .pp1 { animation-duration: 1.5s !important; }
+    .aegis-hero:hover .pp2 { animation-duration: 1.5s !important; }
+    .aegis-hero:hover .pp3 { animation-duration: 1.5s !important; }
+  }
+
+  /* ── LAYER 6: Orbital dots ────────────────────────────── */
+  .orbit-spinner {
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+  .orbit-counter {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .orbit-dot-el {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(0,212,255,0.8);
+  }
+  .orbit-label {
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: rgba(0,212,255,0.5);
+    white-space: nowrap;
+  }
+
+  /* Paused until shield-active */
+  .shield-viz:not(.shield-active) .orbit-spinner { opacity: 0; }
+  .shield-viz.shield-active .orbit-spinner { opacity: 1; }
+
+  .shield-viz.shield-active .os1 { animation: orbitCW  10s linear infinite 0s; }
+  .shield-viz.shield-active .os2 { animation: orbitCW  14s linear infinite -4.67s; }
+  .shield-viz.shield-active .os3 { animation: orbitCW  18s linear infinite -9.33s; }
+
+  .shield-viz.shield-active .oc1 {
+    animation: orbitCCW 10s linear infinite 0s;
+  }
+  .shield-viz.shield-active .oc2 {
+    animation: orbitCCW 14s linear infinite -4.67s;
+  }
+  .shield-viz.shield-active .oc3 {
+    animation: orbitCCW 18s linear infinite -9.33s;
+  }
+
+  /* ── LAYER 7: Data strip ──────────────────────────────── */
+  .shield-data-strip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .data-line {
+    position: absolute;
+    text-align: center;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: rgba(0,212,255,0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    padding: 0 0.5rem;
+    opacity: 0;
+  }
+  .shield-viz.shield-active .dl1 { animation: dataShow 9s linear infinite 0s; }
+  .shield-viz.shield-active .dl2 { animation: dataShow 9s linear infinite -6s; }
+  .shield-viz.shield-active .dl3 { animation: dataShow 9s linear infinite -3s; }
+
+  /* ── KEYFRAMES ────────────────────────────────────────── */
+  @keyframes ringCW {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes ringCCW {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(-360deg); }
+  }
+  /* Scan line: rect at y=-1 sweeps from ring top (y=12) to ring bottom (y=288) */
+  @keyframes scanSweep {
+    0%   { transform: translateY(13px); opacity: 0; }
+    8%   { opacity: 0.9; }
+    92%  { opacity: 0.9; }
+    100% { transform: translateY(289px); opacity: 0; }
+  }
+  @keyframes pulsePing {
+    from { transform: scale(0); opacity: 0.45; }
+    to   { transform: scale(1.6); opacity: 0; }
+  }
+  @keyframes orbitCW {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes orbitCCW {
+    from { transform: translateX(143px) rotate(0deg); }
+    to   { transform: translateX(143px) rotate(-360deg); }
+  }
+  @keyframes dataShow {
+    0%   { opacity: 0; }
+    5%   { opacity: 0.5; }
+    28%  { opacity: 0.5; }
+    33%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* Octagon hover glow intensify */
+  @media (hover: hover) and (pointer: fine) {
+    .aegis-hero:hover .shield-svg polygon:first-of-type {
+      filter: drop-shadow(0 0 12px rgba(0,212,255,0.7));
+      transition: filter 300ms ease;
+    }
+  }
+
+  /* ── TIER 3: SUPPORT ROW ──────────────────────────────── */
+  .support-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1px;
     background: var(--edge);
     border: 1px solid var(--edge);
+    border-top: none;
+    margin-bottom: 1px;
   }
-  .stats-grid .stat-row {
+
+  .support-card {
     background: var(--mid);
-    padding: 0.85rem 1rem;
-    gap: 0.15rem;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 280px;
+    transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .support-card:hover {
+      transform: translateY(-6px);
+    }
+  }
+  .card-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
   }
 
-  /* Availability badge */
-  .avail-badge {
+  /* Shared tag / title / desc styles */
+  .support-tag {
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    color: var(--signal-mint);
-    padding: 0.5rem 0.75rem;
-    border: 1px solid rgba(74,222,128,0.22);
-    background: rgba(74,222,128,0.04);
+    gap: 0.25rem;
+  }
+  .tag-bracket { opacity: 0.5; }
+  .support-title {
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: var(--text-pure);
+    line-height: 1;
+  }
+  .support-sub {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+    font-family: 'Instrument Serif', Georgia, serif;
+  }
+  .support-desc {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
     margin-top: auto;
+    padding-top: 0.5rem;
   }
-  .avail-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--signal-mint);
-    animation: dotBlink 2.2s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-  @keyframes dotBlink {
-    0%,100% { opacity: 1; }
-    50%      { opacity: 0.25; }
-  }
-
-  /* Method flow */
-  .method-flow {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: auto;
-    flex-wrap: wrap;
-  }
-  .method-node {
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    color: var(--signal-cyan);
-    padding: 0.3rem 0.6rem;
-    border: 1px solid rgba(0,212,255,0.22);
-    background: rgba(0,212,255,0.04);
-  }
-  .method-arrow {
-    font-size: 0.65rem;
-    color: var(--text-ghost);
-  }
-
-  /* MAVIS orb */
-  .mavis-orb {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 38% 32%, rgba(167,139,250,0.9), rgba(60,30,130,0.6));
-    box-shadow: 0 0 28px rgba(167,139,250,0.3);
-    animation: mavisFloat 4.5s ease-in-out infinite;
-    margin-top: auto;
-    align-self: flex-end;
-  }
-  @keyframes mavisFloat {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-8px); }
-  }
-
-  .bento-eta {
-    font-size: 0.55rem;
+  .support-stats {
+    font-size: 0.5625rem;
     letter-spacing: 0.18em;
-    color: var(--signal-amber);
-    align-self: flex-end;
-    margin-top: -0.75rem;
+    color: var(--signal-cyan);
+    opacity: 0.7;
+    margin-top: 0.5rem;
   }
 
-  /* ── STATS BAR ──────────────────────────────────────── */
-  .stats-bar {
+  /* Drakken Labs specific */
+  .kanji-mark {
+    position: absolute;
+    bottom: 1.25rem;
+    right: 1.5rem;
+    font-size: 3.75rem;
+    color: rgba(0,212,255,0.06);
+    line-height: 1;
+    pointer-events: none;
+    transition: color 300ms ease;
+    user-select: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card-drakken:hover .kanji-mark {
+      color: rgba(0,212,255,0.13);
+    }
+    /* Live pill pulse on hover */
+    .card-drakken:hover .support-tag {
+      animation: tagPulse 1.2s ease-in-out infinite;
+    }
+  }
+  @keyframes tagPulse {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.55; }
+  }
+
+  /* MAVIS specific */
+  .mavis-dim { opacity: 0.7; }
+
+  .mavis-construction {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 12px,
+      rgba(251,191,36,0.025) 12px,
+      rgba(251,191,36,0.025) 14px
+    );
+    pointer-events: none;
+  }
+
+  .mavis-lock {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card-mavis:hover .mavis-lock {
+      transform: rotate(10deg);
+    }
+    .card-mavis:hover .mavis-construction {
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 12px,
+        rgba(251,191,36,0.05) 12px,
+        rgba(251,191,36,0.05) 14px
+      );
+    }
+  }
+
+  /* ── STUDIO STATS STRIP ───────────────────────────────── */
+  .studio-strip {
     display: flex;
     border: 1px solid var(--edge);
     border-top: none;
     background: var(--deep);
     overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
+  .studio-strip::-webkit-scrollbar { display: none; }
 
-  .bar-stat {
+  .ss-metric {
     flex: 1;
-    min-width: 120px;
-    padding: 1rem 1.25rem;
-    border-right: 1px solid var(--edge);
+    min-width: 140px;
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.35rem;
   }
-  .bar-stat:last-child { border-right: none; }
-
-  .bar-label {
+  .ss-sep {
+    width: 1px;
+    background: rgba(0,212,255,0.2);
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 1.5rem 0;
+  }
+  .ss-label {
     font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    color: var(--text-ghost);
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
   }
-  .bar-value {
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    color: var(--signal-cyan);
-    font-weight: 500;
+  .ss-value {
+    font-family: 'Outfit', 'Helvetica Neue', sans-serif;
+    font-size: 1.125rem;
+    color: var(--text-pure);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
   }
 
-  /* ── RESPONSIVE ──────────────────────────────────────── */
+  /* ── REDUCED MOTION ───────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .aegis-hero,
+    .status-pill,
+    .aegis-nameblock,
+    .aegis-desc,
+    .aegis-stat-strip,
+    .aegis-ctas {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .shield-viz .ring-outer-g,
+    .shield-viz .ring-mid-el,
+    .shield-viz .scan-line-el,
+    .shield-viz .pulse-ping,
+    .shield-viz .orbit-spinner,
+    .shield-viz .data-line {
+      animation: none !important;
+    }
+    .shield-viz .orbit-spinner { opacity: 0.5; }
+    .shield-viz .dl1 { opacity: 0.5 !important; }
+    .status-dot { animation: none !important; }
+    .aegis-hero:hover { transform: none; }
+  }
+
+  /* ── MOBILE ───────────────────────────────────────────── */
   @media (max-width: 768px) {
-    .bento-grid { grid-template-columns: 1fr; }
-    .aegis-vis  { display: none; }
-    .stat-strip { flex-direction: column; }
-    .stat-divider { height: 1px; width: 100%; }
-    .stats-bar  { flex-wrap: wrap; }
-    .bar-stat   { min-width: 50%; border-right: none; border-bottom: 1px solid var(--edge); }
+    section { padding: 5rem 1.25rem; }
+
+    .sc-heading { font-size: clamp(2rem, 9vw, 3rem); }
+    .sc-sub-label { display: none; }
+
+    /* Stack AEGIS tile: content on top, visual below */
+    .aegis-hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      min-height: unset;
+    }
+    .aegis-left {
+      border-right: none;
+      border-bottom: 1px solid var(--edge);
+      padding: 2rem 1.5rem;
+      gap: 1.25rem;
+    }
+    .aegis-name { font-size: clamp(2.5rem, 12vw, 4rem); }
+    .aegis-tagline { font-size: 1.125rem; }
+    .aegis-stat-strip { flex-direction: column; }
+    .as-sep { width: 100%; height: 1px; }
+    .aegis-ctas { flex-direction: column; }
+    .cta-primary, .cta-secondary { width: 100%; justify-content: center; }
+
+    /* Shield viz on mobile: show rings scaled to 200px, hide orbitals + strip */
+    .aegis-right { padding: 2rem 1rem; min-height: 220px; }
+    .shield-viz {
+      width: 200px;
+      height: 240px;
+    }
+    .shield-svg { width: 200px; height: 200px; }
+    .pulse-ping {
+      top: 100px;
+      left: 100px;
+      width: 190px;
+      height: 190px;
+      margin-top: -95px;
+      margin-left: -95px;
+    }
+    .orbit-spinner, .shield-data-strip { display: none; }
+
+    /* Support row stacks */
+    .support-row {
+      grid-template-columns: 1fr;
+    }
+    .card-drakken { border-bottom: 1px solid var(--edge); }
+
+    /* Studio strip wraps */
+    .studio-strip { flex-wrap: wrap; }
+    .ss-metric { min-width: 45%; }
+    .ss-sep { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .aegis-left { padding: 1.5rem; }
+    .support-card { padding: 1.75rem; }
   }
 </style>
