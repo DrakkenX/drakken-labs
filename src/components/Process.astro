@@ -1,184 +1,247 @@
 ---
-// Geometric glyphs: triangle, square, hexagon, octagon, circle
-const glyphs = [
-  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-0"><polygon points="12,3 22,20 2,20" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
-  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-1"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="1.5"/></svg>`,
-  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-2"><polygon points="12,2 20,7 20,17 12,22 4,17 4,7" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
-  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-3"><polygon points="8,2 16,2 22,8 22,16 16,22 8,22 2,16 2,8" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
-  `<svg viewBox="0 0 24 24" fill="none" class="glyph-svg glyph-4"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/></svg>`,
-];
-
 const steps = [
   {
     num: '01',
-    name: 'DISCOVERY',
-    duration: '1–2 days',
-    desc: 'Map the problem space, define success, surface the real constraints. No bloated briefs.',
+    stageName: 'Discovery',
+    tagline: 'We listen before we build.',
+    desc: 'Every project starts with a brief, an audit, and a hard look at what you\'re actually trying to solve. We map constraints, surface assumptions, and write down the success criteria you\'ll measure against.',
+    duration: 'TYPICAL DURATION: 3–5 DAYS',
   },
   {
     num: '02',
-    name: 'ARCHITECTURE',
-    duration: '1–2 days',
-    desc: 'Stack chosen for the work, not the resume. Tradeoffs documented. Scope locked.',
+    stageName: 'Architecture',
+    tagline: 'Choose the stack like it matters.',
+    desc: 'Stack selection isn\'t religion — it\'s leverage. We pick frameworks that compound (Tauri, Rust, modern frontend), define data flow, lock scope, and ship a technical plan you can read in one sitting.',
+    duration: 'TYPICAL DURATION: 2–4 DAYS',
   },
   {
     num: '03',
-    name: 'EXECUTION',
-    duration: '5–14 days',
-    desc: 'AI-augmented sprints. Daily builds. No black holes between check-ins.',
+    stageName: 'Execution',
+    tagline: 'AI-leveraged, human-directed.',
+    desc: 'Daily builds, AI as co-pilot, human in the driver\'s seat. Claude writes the boilerplate. We write the architecture decisions, the taste calls, the error states that matter. Output velocity: 5–10× traditional.',
+    duration: 'VELOCITY: 1,500–2,000 LOC/DAY',
   },
   {
     num: '04',
-    name: 'CRAFT',
-    duration: '2–5 days',
-    desc: 'The 20% that determines perception. Micro-interactions, edge cases, taste-driven iteration.',
+    stageName: 'Craft',
+    tagline: 'The last 20% is where reputation lives.',
+    desc: 'Spring physics, sacred frames, surgical iteration. Most builds stop at \'works.\' We push to \'feels inevitable.\' Every transition deliberate, every typeface chosen, every empty state designed.',
+    duration: 'QUALITY GATE: SCREENSHOT-WORTHY OR REBUILD',
   },
   {
     num: '05',
-    name: 'SHIP',
-    duration: 'Delivery',
-    desc: 'Documented handoff. Deployment-ready. Post-ship support included.',
+    stageName: 'Ship',
+    tagline: 'Done means deployed.',
+    desc: 'Code-signed installers. Production deployments. Handoff documentation that respects your future self. We ship what we said we\'d ship, on the date we said we\'d ship it. AEGIS shipped in 5 days. So can yours.',
+    duration: 'DELIVERY: BINARIES + DOCS + LIVE WALKTHROUGH',
   },
+];
+
+// Custom SVG glyphs per step (viewBox="0 0 24 24", no fill, stroke="currentColor")
+// Step 01: circle intersected by 3 horizontal scan lines
+// Step 02: triangle + rect + mini-octagon stacked
+// Step 03: three parallel vertical lines of varying lengths
+// Step 04: hexagon with inner offset hexagon
+// Step 05: octagon with small diagonal exit arrow
+const glyphs = [
+  `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="step-glyph-svg gs0">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="3.5" y1="9"  x2="20.5" y2="9"  stroke="currentColor" stroke-width="1.2" opacity="0.65"/>
+    <line x1="3.5" y1="12" x2="20.5" y2="12" stroke="currentColor" stroke-width="1.2" opacity="0.65"/>
+    <line x1="3.5" y1="15" x2="20.5" y2="15" stroke="currentColor" stroke-width="1.2" opacity="0.65"/>
+  </svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="step-glyph-svg gs1">
+    <polygon points="12,2 19,7.5 5,7.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <rect x="5.5" y="10" width="13" height="5.5" stroke="currentColor" stroke-width="1.5"/>
+    <polygon points="9,17.5 15,17.5 18,20 18,21.5 15,23 9,23 6,21.5 6,20" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="step-glyph-svg gs2">
+    <line x1="7"  y1="5"  x2="7"  y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="12" y1="2"  x2="12" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="17" y1="8"  x2="17" y2="22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="step-glyph-svg gs3">
+    <polygon points="12,2 20,7 20,17 12,22 4,17 4,7" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <polygon points="12,7.5 16,10 16,15.5 12,18 8,15.5 8,10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>`,
+  `<svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="step-glyph-svg gs4">
+    <polygon points="8,2 16,2 20,6 20,14 16,18 8,18 4,14 4,6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <line x1="17" y1="5" x2="25" y2="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <polyline points="21,1 25,1 25,5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>`,
 ];
 ---
 
 <section id="process" aria-labelledby="process-heading">
-  <!-- Full-bleed photographic background -->
+
+  <!-- Background -->
   <div class="section-bg process-bg" aria-hidden="true">
-    <img
-      src="/media/texture-3.jpg"
-      alt=""
-      class="section-bg-img"
-      loading="lazy"
-      decoding="async"
-      width="1920"
-      height="1080"
-    />
+    <img src="/media/texture-3.jpg" alt="" class="section-bg-img"
+      loading="lazy" decoding="async" width="1920" height="1080"/>
     <div class="section-bg-vignette"></div>
+    <!-- 8 ambient floating dots -->
+    <div class="float-dot fd1"></div>
+    <div class="float-dot fd2"></div>
+    <div class="float-dot fd3"></div>
+    <div class="float-dot fd4"></div>
+    <div class="float-dot fd5"></div>
+    <div class="float-dot fd6"></div>
+    <div class="float-dot fd7"></div>
+    <div class="float-dot fd8"></div>
   </div>
 
   <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label"><span>PROCESS</span></div>
-      <h2 id="process-heading" class="section-heading">
-        How It <em class="heading-accent font-serif">Works</em>
+
+    <!-- ─── TIER 1: HEADING ──────────────────────────────── -->
+    <div class="proc-header reveal">
+      <span class="proc-frame-label font-cinzel">[ METHODOLOGY · FIVE STAGES ]</span>
+      <h2 id="process-heading" class="proc-heading">
+        How We <em class="proc-italic">Work</em>
       </h2>
+      <span class="proc-sub-label font-mono">[ FROM DISCOVERY TO SHIP ]</span>
     </div>
 
-    <!-- Animated SVG connector line (replaces plain div) -->
-    <div class="process-track" aria-hidden="true">
-      <svg class="process-svg-line" viewBox="0 0 1200 2" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%"   stop-color="#00d4ff"/>
-            <stop offset="50%"  stop-color="#a78bfa"/>
-            <stop offset="100%" stop-color="#00d4ff"/>
-          </linearGradient>
-        </defs>
-        <!-- Static base line -->
-        <line x1="0" y1="1" x2="1200" y2="1" stroke="#1f2330" stroke-width="1"/>
-        <!-- Animated gradient dash that draws on scroll-trigger -->
-        <line
-          class="process-line-draw"
-          x1="0" y1="1" x2="1200" y2="1"
-          stroke="url(#lineGrad)"
-          stroke-width="1.5"
-          stroke-dasharray="1200"
-          stroke-dashoffset="1200"
-        />
-        <!-- Continuous flowing dash on top -->
-        <line
-          class="process-line-flow"
-          x1="0" y1="1" x2="1200" y2="1"
-          stroke="url(#lineGrad)"
-          stroke-width="1"
-          stroke-dasharray="60 40"
-          stroke-dashoffset="0"
-          opacity="0.5"
-        />
-      </svg>
-    </div>
+    <!-- ─── TIER 2: STEPS ────────────────────────────────── -->
+    <div class="proc-steps" id="proc-steps">
 
-    <!-- Steps -->
-    <div class="process-steps" data-stagger data-stagger-step="80">
-      {steps.map(({ num, name, duration, desc }, i) => (
-        <article class="process-step stagger-child" data-step={i}>
-          <div class="step-glyph" aria-hidden="true" set:html={glyphs[i]} />
-          <div class="step-num font-mono">{num}</div>
-          <div class="step-name font-cinzel">{name}</div>
-          <div class="step-duration font-mono">{duration}</div>
-          <p class="step-desc font-inter">{desc}</p>
+      <!-- Continuous vertical connector line (drawn on scroll) -->
+      <div class="proc-line-base"   aria-hidden="true"></div>
+      <div class="proc-line-draw-el" aria-hidden="true" id="proc-line-draw"></div>
+
+      {steps.map(({ num, stageName, tagline, desc, duration }, i) => (
+        <article class="proc-step" id={`proc-step-${i}`} data-step-index={i}>
+
+          <!-- Zone A: Ghost chapter number -->
+          <div class="step-zone-a">
+            <span class="step-num">{num}</span>
+          </div>
+
+          <!-- Zone B: Glyph on connector line -->
+          <div class="step-zone-b">
+            <div class="step-glyph-wrap">
+              <div set:html={glyphs[i]} />
+            </div>
+          </div>
+
+          <!-- Zone C: Editorial content -->
+          <div class="step-zone-c">
+            <span class="step-stage-label font-cinzel">[ STAGE {num} ]</span>
+            <h3 class="step-name font-cinzel">{stageName}</h3>
+            <p class="step-tagline proc-italic">{tagline}</p>
+            <p class="step-desc">{desc}</p>
+            <span class="step-duration font-mono">{duration}</span>
+          </div>
+
         </article>
       ))}
+
     </div>
   </div>
 </section>
 
 <script>
   (() => {
-    // Active step pulse on viewport intersection
-    const steps = document.querySelectorAll<HTMLElement>('.process-step');
-    const obs = new IntersectionObserver(
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const steps = document.querySelectorAll<HTMLElement>('.proc-step');
+    const stepsContainer = document.getElementById('proc-steps');
+    const lineDrawEl = document.getElementById('proc-line-draw') as HTMLElement | null;
+
+    // ── Snap to final state if reduced motion ──────────────
+    if (prefersReduced) {
+      steps.forEach(s => s.classList.add('step-entered'));
+      if (lineDrawEl && stepsContainer) {
+        lineDrawEl.style.height = stepsContainer.offsetHeight + 'px';
+      }
+      return;
+    }
+
+    // ── Step entrance observer (threshold 0.25) ────────────
+    const entranceObs = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle('step-active', entry.isIntersecting);
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('step-entered');
+            entranceObs.unobserve(e.target);
+          }
         });
       },
-      { threshold: 0.6, rootMargin: '-20% 0px -20% 0px' }
+      { threshold: 0.25 }
     );
-    steps.forEach((s) => obs.observe(s));
+    steps.forEach(s => entranceObs.observe(s));
 
-    // Process background parallax
-    const bg = document.querySelector<HTMLElement>('.process-bg .section-bg-img');
-    if (!bg) return;
-    if (window.matchMedia('(max-width: 768px)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // ── Active step observer (viewport center detection) ───
+    const activeObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          e.target.classList.toggle('step-active', e.isIntersecting);
+        });
+      },
+      { rootMargin: '-20% 0px -20% 0px', threshold: 0 }
+    );
+    steps.forEach(s => activeObs.observe(s));
 
-    const loadParallax = async () => {
+    // ── Scroll-driven line draw + parallax via GSAP ────────
+    const loadGSAP = async () => {
       const { gsap } = await import('gsap');
       const { ScrollTrigger } = await import('gsap/ScrollTrigger');
       gsap.registerPlugin(ScrollTrigger);
 
-      gsap.to(bg, {
-        yPercent: -30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#process',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
+      // Line draw: animate height from 0 to full steps height
+      if (lineDrawEl && stepsContainer) {
+        const totalH = stepsContainer.offsetHeight;
+        gsap.to(lineDrawEl, {
+          height: totalH,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#proc-steps',
+            start: 'top 65%',
+            end: 'bottom 35%',
+            scrub: 0.6,
+          },
+        });
+      }
+
+      // Background parallax (desktop only)
+      const bgImg = document.querySelector<HTMLElement>('.process-bg .section-bg-img');
+      if (bgImg && !window.matchMedia('(max-width: 768px)').matches) {
+        gsap.to(bgImg, {
+          yPercent: -30,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#process',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
     };
 
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadParallax, { timeout: 3000 });
+      (window as any).requestIdleCallback(loadGSAP, { timeout: 3000 });
     } else {
-      setTimeout(loadParallax, 600);
+      setTimeout(loadGSAP, 600);
     }
   })();
 </script>
 
 <style>
+  /* ── SECTION BASE ──────────────────────────────────────── */
   section {
     padding: 8rem 2rem;
     background: var(--void);
-    overflow: hidden;
-    z-index: var(--z-page);
     position: relative;
+    z-index: var(--z-page);
+    overflow: hidden;
+  }
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
-  .section-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
-  .section-header { margin-bottom: 3.5rem; }
-
-  /* Instrument Serif italic accent */
-  .heading-accent {
-    font-style: italic;
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: 1em;
-  }
-
-  /* ── SECTION BG ─────────────────────────────────────── */
+  /* ── SECTION BACKGROUND ────────────────────────────────── */
   .section-bg {
     position: absolute;
     inset: 0;
@@ -186,155 +249,359 @@ const steps = [
     pointer-events: none;
     overflow: hidden;
   }
-
   .section-bg-img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 120%;
     object-fit: cover;
-    filter: brightness(0.2) blur(3px);
+    filter: brightness(0.25) blur(2px);
     will-change: transform;
   }
-
   .section-bg-vignette {
     position: absolute;
     inset: 0;
-    background: radial-gradient(
-      ellipse at 60% 50%,
-      transparent 20%,
-      #030308 80%
-    );
+    background: radial-gradient(ellipse at 60% 50%, transparent 20%, #030308 80%);
   }
 
-  /* ── SVG CONNECTOR LINE ─────────────────────────────── */
-  .process-track {
-    width: 100%;
-    height: 2px;
-    overflow: visible;
+  /* ── AMBIENT FLOATING DOTS ─────────────────────────────── */
+  .float-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: #00d4ff;
+    pointer-events: none;
+  }
+  .fd1 { width: 2px; height: 2px; top: 11%;  left: 7%;   opacity: 0.2;  animation: drift1 13s ease-in-out infinite 0s; }
+  .fd2 { width: 3px; height: 3px; top: 27%;  left: 91%;  opacity: 0.15; animation: drift2 15s ease-in-out infinite -3s; }
+  .fd3 { width: 2px; height: 2px; top: 44%;  left: 5%;   opacity: 0.25; animation: drift1 11s ease-in-out infinite -6s; }
+  .fd4 { width: 3px; height: 3px; top: 61%;  left: 87%;  opacity: 0.18; animation: drift2 14s ease-in-out infinite -2s; }
+  .fd5 { width: 2px; height: 2px; top: 77%;  left: 14%;  opacity: 0.22; animation: drift1 12s ease-in-out infinite -8s; }
+  .fd6 { width: 2px; height: 2px; top: 19%;  left: 71%;  opacity: 0.15; animation: drift2 16s ease-in-out infinite -4s; }
+  .fd7 { width: 3px; height: 3px; top: 54%;  left: 34%;  opacity: 0.12; animation: drift1 10s ease-in-out infinite -1s; }
+  .fd8 { width: 2px; height: 2px; top: 88%;  left: 59%;  opacity: 0.2;  animation: drift2 13s ease-in-out infinite -7s; }
+
+  @keyframes drift1 {
+    0%, 100% { transform: translate(0, 0); }
+    33%       { transform: translate(6px, -8px); }
+    66%       { transform: translate(-4px, 5px); }
+  }
+  @keyframes drift2 {
+    0%, 100% { transform: translate(0, 0); }
+    40%       { transform: translate(-7px, 6px); }
+    70%       { transform: translate(5px, -5px); }
   }
 
-  .process-svg-line {
-    width: 100%;
-    height: 2px;
-    overflow: visible;
-    display: block;
-  }
-
-  /* Draw-on reveal (triggered by transitions.ts observer) */
-  .process-line-draw {
-    transition: stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-  }
-
-  /* Continuous flowing dash — 8s loop */
-  .process-line-flow {
-    animation: dashFlow 8s linear infinite;
-  }
-
-  @keyframes dashFlow {
-    to { stroke-dashoffset: -200; }
-  }
-
-  /* ── STEPS ──────────────────────────────────────────── */
-  .process-steps {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    border: 1px solid var(--edge);
-    border-top: none;
-    background: var(--edge);
-    gap: 1px;
-  }
-
-  .process-step {
-    padding: 2rem 1.5rem;
-    background: var(--mid);
+  /* ── TIER 1: HEADING ───────────────────────────────────── */
+  .proc-header {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.75rem;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .proc-frame-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.32em;
+    color: var(--signal-cyan);
+    opacity: 0.9;
+    font-variant: small-caps;
+  }
+  .proc-heading {
+    font-size: clamp(2.5rem, 7vw, 5.25rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-shadow: 0 0 60px rgba(0, 212, 255, 0.15);
+  }
+  .proc-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .proc-sub-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.32em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* ── TIER 2: STEPS CONTAINER ───────────────────────────── */
+  .proc-steps {
+    position: relative;
+    border: 1px solid var(--edge);
+    border-bottom: none;
+  }
+
+  /* ── CONNECTOR LINE ────────────────────────────────────── */
+  /* Center of Zone B: Zone A is 20% wide, Zone B is 80px wide, so line is at 20% + 40px */
+  .proc-line-base,
+  .proc-line-draw-el {
+    position: absolute;
+    top: 0;
+    left: calc(20% + 40px);
+    width: 1px;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+  .proc-line-base {
+    bottom: 0;
+    background: rgba(0, 212, 255, 0.18);
+    z-index: 0;
+  }
+  .proc-line-draw-el {
+    height: 0; /* animated by GSAP */
+    background: linear-gradient(to bottom, rgba(0,212,255,0.8), rgba(0,212,255,0.35));
+    z-index: 1;
+  }
+
+  /* ── STEP ROW ──────────────────────────────────────────── */
+  .proc-step {
+    display: grid;
+    grid-template-columns: 20% 80px 1fr;
+    align-items: center;
+    min-height: 220px;
+    border-bottom: 1px solid var(--edge);
+    padding: 3.5rem 0;
+    position: relative;
     cursor: default;
+    transition: background 300ms ease;
+  }
+  .proc-step:last-child { border-bottom: none; }
+  .proc-step.step-active { background: rgba(0, 212, 255, 0.02); }
+
+  /* ── ZONE A: Ghost number ──────────────────────────────── */
+  .step-zone-a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1.5rem;
+  }
+  .step-num {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(5rem, 12vw, 10rem);
+    color: rgba(255, 255, 255, 0.06);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    user-select: none;
+    /* entrance */
+    opacity: 0;
+    transition: opacity 1000ms ease;
+  }
+  .proc-step.step-entered .step-num { opacity: 0.06; }
+
+  /* ── ZONE B: Glyph on line ─────────────────────────────── */
+  .step-zone-b {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .step-glyph-wrap {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--void);
+    border: 1px solid rgba(0, 212, 255, 0.28);
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    color: var(--signal-cyan);
+    /* entrance: rotate in */
+    opacity: 0;
+    transform: rotate(-90deg);
     transition:
-      background var(--t-base) var(--ease-out-expo),
-      box-shadow var(--t-base) var(--ease-out-expo);
+      opacity 600ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 600ms cubic-bezier(0.23, 1, 0.32, 1),
+      border-color 300ms ease,
+      box-shadow 300ms ease;
+  }
+  .proc-step.step-entered .step-glyph-wrap {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+  .proc-step.step-active .step-glyph-wrap {
+    border-color: rgba(0, 212, 255, 0.6);
+    box-shadow: 0 0 18px rgba(0, 212, 255, 0.22);
   }
 
-  .process-step:hover,
-  .process-step.step-active {
-    background: var(--rise);
-    box-shadow: 0 -2px 0 var(--signal-cyan) inset;
-  }
-
-  /* Geometric glyph */
-  .step-glyph {
+  /* Glyph SVGs */
+  .step-glyph-svg {
     width: 20px;
     height: 20px;
-    color: var(--signal-cyan);
-    opacity: 0.55;
-    transition:
-      opacity var(--t-base),
-      transform var(--t-deliberate) var(--ease-spring);
+    display: block;
   }
+  .gs4 { width: 22px; height: 20px; } /* step 05 has wider viewBox */
 
-  /* Each glyph rotates at its own speed */
-  .glyph-svg { width: 100%; height: 100%; }
+  /* Individual glyph rotation speeds */
+  .gs0 { animation: glyphSpin 16s linear infinite; }
+  .gs1 { animation: glyphSpin 20s linear infinite reverse; }
+  .gs2 { animation: glyphSpin 14s linear infinite; }
+  .gs3 { animation: glyphSpin 22s linear infinite reverse; }
+  .gs4 { animation: glyphSpin 12s linear infinite; }
 
-  .glyph-0 { animation: glyphSpin 14s linear infinite; }
-  .glyph-1 { animation: glyphSpin 18s linear infinite reverse; }
-  .glyph-2 { animation: glyphSpin 12s linear infinite; }
-  .glyph-3 { animation: glyphSpin 22s linear infinite reverse; }
-  .glyph-4 { animation: glyphSpin 10s linear infinite; }
+  /* Double speed when active */
+  .proc-step.step-active .gs0 { animation-duration: 8s; }
+  .proc-step.step-active .gs1 { animation-duration: 10s; }
+  .proc-step.step-active .gs2 { animation-duration: 7s; }
+  .proc-step.step-active .gs3 { animation-duration: 11s; }
+  .proc-step.step-active .gs4 { animation-duration: 6s; }
 
   @keyframes glyphSpin {
-    to { transform: rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
   }
 
-  /* Active step: pulse cyan + scale */
-  .process-step.step-active .step-glyph,
-  .process-step:hover .step-glyph {
-    opacity: 1;
-    transform: scale(1.15);
+  /* ── ZONE C: Editorial content ─────────────────────────── */
+  .step-zone-c {
+    padding-left: 2.5rem;
+    padding-right: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
   }
 
-  .step-num {
-    font-size: 0.55rem;
-    letter-spacing: 0.22em;
-    color: var(--signal-cyan);
-  }
-
-  .step-name {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    color: var(--text-pure);
-    line-height: 1.3;
-  }
-
+  /* All content elements start hidden, stagger in */
+  .step-stage-label,
+  .step-name,
+  .step-tagline,
+  .step-desc,
   .step-duration {
-    font-size: 0.6rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+
+  .proc-step.step-entered .step-stage-label {
+    opacity: 1; transform: none; transition-delay: 0ms;
+  }
+  .proc-step.step-entered .step-name {
+    opacity: 0.95; transform: none; transition-delay: 100ms;
+  }
+  .proc-step.step-entered .step-tagline {
+    opacity: 1; transform: none; transition-delay: 200ms;
+  }
+  .proc-step.step-entered .step-desc {
+    opacity: 1; transform: none; transition-delay: 300ms;
+  }
+  .proc-step.step-entered .step-duration {
+    opacity: 1; transform: none; transition-delay: 400ms;
+  }
+
+  /* Label */
+  .step-stage-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.32em;
+    color: rgba(0, 212, 255, 0.55);
+  }
+
+  /* Step name */
+  .step-name {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 400;
     letter-spacing: 0.1em;
-    color: var(--text-ghost);
+    color: var(--text-pure);
+    line-height: 1;
+    transition: text-shadow 300ms ease;
+  }
+  .proc-step.step-active .step-name {
+    text-shadow: 0 0 32px rgba(0, 212, 255, 0.28);
   }
 
+  /* Tagline */
+  .step-tagline {
+    font-size: 1.1875rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+  }
+
+  /* Description */
   .step-desc {
-    font-size: 0.8rem;
-    line-height: 1.65;
-    color: var(--text-secondary);
-    margin-top: auto;
-    flex-grow: 1;
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    max-width: 560px;
   }
 
-  /* ── RESPONSIVE ──────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .process-steps { grid-template-columns: 1fr 1fr; }
-    .process-track  { display: none; }
+  /* Duration strip */
+  .step-duration {
+    font-size: 0.625rem;
+    letter-spacing: 0.22em;
+    color: rgba(255, 255, 255, 0.38);
+    margin-top: 0.25rem;
   }
-  @media (max-width: 520px) {
-    .process-steps { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 768px) {
-    .section-bg-img { filter: brightness(0.15) blur(4px); }
-  }
+
+  /* ── REDUCED MOTION ────────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
-    .glyph-0, .glyph-1, .glyph-2, .glyph-3, .glyph-4 { animation: none; }
-    .process-line-flow { animation: none; }
+    .gs0, .gs1, .gs2, .gs3, .gs4 { animation: none !important; }
+    .float-dot { animation: none !important; }
+    .proc-step,
+    .step-num,
+    .step-glyph-wrap,
+    .step-stage-label,
+    .step-name,
+    .step-tagline,
+    .step-desc,
+    .step-duration {
+      transition: none !important;
+      animation: none !important;
+    }
+    .proc-step.step-entered .step-glyph-wrap {
+      transform: none !important;
+    }
+  }
+
+  /* ── MOBILE ────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    section { padding: 5rem 1.25rem; }
+    .section-bg-img { filter: brightness(0.2) blur(3px); }
+
+    /* Tighten grid: fixed Zone A + smaller Zone B */
+    .proc-step {
+      grid-template-columns: 68px 48px 1fr;
+      min-height: 180px;
+      padding: 2.5rem 0;
+    }
+
+    /* Reposition line for mobile grid */
+    .proc-line-base,
+    .proc-line-draw-el {
+      left: calc(68px + 24px); /* Zone A + half of Zone B */
+    }
+
+    .step-zone-a { padding-right: 0.75rem; }
+    .step-num { font-size: clamp(3.5rem, 12vw, 5rem); }
+
+    .step-zone-c {
+      padding-left: 1.25rem;
+      padding-right: 1rem;
+      gap: 0.5rem;
+    }
+    .step-name { font-size: clamp(1.25rem, 5vw, 1.5rem); }
+    .step-tagline { font-size: 1rem; }
+    .step-desc { font-size: 0.875rem; }
+
+    /* Reduce floating dots to 4 visible */
+    .fd5, .fd6, .fd7, .fd8 { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .proc-step {
+      grid-template-columns: 52px 44px 1fr;
+      padding: 2rem 0;
+    }
+    .proc-line-base,
+    .proc-line-draw-el {
+      left: calc(52px + 22px);
+    }
+    .step-zone-c {
+      padding-left: 1rem;
+      padding-right: 0.75rem;
+    }
+    .step-desc { max-width: 100%; }
   }
 </style>
