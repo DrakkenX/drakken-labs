@@ -1,99 +1,108 @@
 ---
-const year = new Date().getFullYear();
-
 const navLinks = [
   { label: 'Manifesto',    href: '#manifesto' },
   { label: 'Capabilities', href: '#capabilities' },
-  { label: 'Work',         href: '#showcase' },
+  { label: 'Showcase',     href: '#showcase' },
   { label: 'Process',      href: '#process' },
   { label: 'Contact',      href: '#contact' },
 ];
 
-const socials = [
-  { label: 'GitHub',   href: 'https://github.com/DrakkenX', abbr: 'GH' },
-  { label: 'LinkedIn', href: 'https://linkedin.com',         abbr: 'LI' },
-  { label: 'X',        href: 'https://x.com',                abbr: 'X' },
+const channels = [
+  { label: 'X / TWITTER', href: 'https://x.com' },
+  { label: 'LINKEDIN',     href: 'https://linkedin.com' },
+  { label: 'GITHUB',       href: 'https://github.com/DrakkenX' },
 ];
 ---
 
 <footer aria-label="Site footer">
-  <!-- Full-width top accent line -->
-  <div class="footer-line" aria-hidden="true"></div>
 
-  <div class="footer-inner">
+  <!-- ROW 1: Top gradient divider -->
+  <div class="footer-divider" aria-hidden="true"></div>
 
-    <!-- Col 1: wordmark -->
+  <!-- ROW 2: Main footer — 3 columns -->
+  <div class="footer-inner reveal">
+
+    <!-- Identity -->
     <div class="footer-brand">
       <a href="#hero" class="footer-wordmark font-cinzel" aria-label="Drakken Labs — back to top">
-        DRAKKEN LABS
+        DRAKKEN
       </a>
-      <p class="footer-tagline font-mono">AI-NATIVE SOFTWARE STUDIO</p>
+      <p class="footer-studio font-mono">AI-NATIVE SOFTWARE STUDIO</p>
+      <p class="footer-founder footer-italic">Han Myo Naing, Founder</p>
     </div>
 
-    <!-- Col 2: nav links -->
+    <!-- Navigation -->
     <nav class="footer-nav" aria-label="Footer navigation">
       <ul role="list">
         {navLinks.map(({ label, href }) => (
           <li>
-            <a href={href} class="footer-link font-inter">{label}</a>
+            <a href={href} class="footer-nav-link font-cinzel">{label}</a>
           </li>
         ))}
       </ul>
     </nav>
 
-    <!-- Col 3: socials + legal -->
-    <div class="footer-right">
-      <div class="footer-socials">
-        {socials.map(({ label, href, abbr }) => (
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-social font-mono"
-            aria-label={label}
-          >
-            {abbr}
-          </a>
+    <!-- Channels -->
+    <div class="footer-channels">
+      <span class="footer-channels-label font-mono">[ CHANNELS ]</span>
+      <ul role="list">
+        {channels.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer-channel-link"
+            >
+              {label}
+            </a>
+          </li>
         ))}
-      </div>
-      <p class="footer-copy font-cinzel">
-        &copy; {year} · Han Myo Naing · Malaysia
-      </p>
+      </ul>
     </div>
 
   </div>
 
-  <!-- Bottom micro-text -->
+  <!-- ROW 3: Bottom sign-off -->
   <div class="footer-bottom">
-    <span class="footer-classify font-cinzel">
-      OPERATING SINCE MMXXV
+    <span class="footer-copy font-mono">
+      &copy; 2025 DRAKKEN LABS · OPERATING SINCE MMXXV
     </span>
-    <div class="footer-bottom-line" aria-hidden="true"></div>
+
+    <div class="footer-location">
+      <div class="location-mark" aria-hidden="true">
+        <span class="mark-dot"></span>
+        <span class="mark-line"></span>
+        <span class="mark-dot"></span>
+      </div>
+      <span class="footer-built font-mono">BUILT IN MALAYSIA</span>
+    </div>
   </div>
+
 </footer>
 
 <style>
   footer {
     background: var(--void);
-    border-top: 1px solid var(--edge);
     position: relative;
     z-index: var(--z-page);
   }
 
-  /* Top accent hairline */
-  .footer-line {
+  /* ── ROW 1: Divider ────────────────────────────────────── */
+  .footer-divider {
     width: 100%;
     height: 1px;
     background: linear-gradient(
       to right,
       transparent,
-      rgba(0, 212, 255, 0.2) 30%,
-      rgba(0, 212, 255, 0.2) 70%,
+      rgba(0,212,255,0.3) 30%,
+      rgba(0,212,255,0.3) 70%,
       transparent
     );
-    margin-top: -1px;
+    margin-top: 0;
   }
 
+  /* ── ROW 2: Main footer ────────────────────────────────── */
   .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -104,102 +113,157 @@ const socials = [
     align-items: start;
   }
 
-  /* Brand */
-  .footer-brand { display: flex; flex-direction: column; gap: 0.4rem; }
+  /* Identity */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
 
   .footer-wordmark {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.28em;
-    color: var(--text-tertiary);
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--text-pure);
     text-decoration: none;
-    transition: color var(--t-base);
+    transition: color 200ms ease;
     display: inline-block;
+    line-height: 1;
   }
-  .footer-wordmark:hover { color: var(--text-primary); }
+  .footer-wordmark:hover { color: var(--signal-cyan); }
 
-  .footer-tagline {
-    font-size: 0.52rem;
-    letter-spacing: 0.22em;
-    color: var(--text-ghost);
+  .footer-studio {
+    font-size: 0.5625rem;
+    letter-spacing: 0.32em;
+    color: rgba(0,212,255,0.6);
+    margin-top: 0.1rem;
   }
 
-  /* Nav */
+  .footer-founder {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.25rem;
+  }
+  .footer-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+  }
+
+  /* Navigation */
   .footer-nav ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
   }
 
-  .footer-link {
-    font-size: 0.8rem;
-    color: var(--text-tertiary);
+  .footer-nav-link {
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.5);
     text-decoration: none;
-    transition: color var(--t-quick);
-  }
-  .footer-link:hover { color: var(--text-primary); }
-
-  /* Right */
-  .footer-right {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    align-items: flex-end;
-  }
-
-  .footer-socials {
-    display: flex;
-    gap: 1.25rem;
-  }
-
-  .footer-social {
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    color: var(--text-ghost);
-    text-decoration: none;
-    transition: color var(--t-quick);
-  }
-  .footer-social:hover { color: var(--signal-cyan); }
-
-  .footer-copy {
-    font-size: 0.58rem;
-    letter-spacing: 0.16em;
-    color: var(--text-ghost);
     font-variant: small-caps;
+    transition: color 180ms ease;
   }
+  .footer-nav-link:hover { color: var(--signal-cyan); }
 
-  /* Bottom */
-  .footer-bottom {
+  /* Channels */
+  .footer-channels {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-bottom: 2rem;
     gap: 0.75rem;
   }
 
-  .footer-classify {
-    font-size: 0.5rem;
-    letter-spacing: 0.28em;
-    color: var(--edge);
-    font-variant: small-caps;
+  .footer-channels-label {
+    font-size: 0.5625rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.35);
   }
 
-  .footer-bottom-line {
-    width: 120px;
+  .footer-channels ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-channel-link {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 180ms ease;
+    font-family: 'Geist', 'Helvetica Neue', sans-serif;
+  }
+  .footer-channel-link:hover { color: var(--signal-cyan); }
+
+  /* ── ROW 3: Bottom sign-off ────────────────────────────── */
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-copy {
+    font-size: 0.5625rem;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .footer-location {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Dot-line-dot mark */
+  .location-mark {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .mark-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    opacity: 0.55;
+    flex-shrink: 0;
+  }
+  .mark-line {
+    width: 20px;
     height: 1px;
-    background: var(--edge);
-    opacity: 0.5;
+    background: var(--signal-cyan);
+    opacity: 0.35;
+    flex-shrink: 0;
   }
 
-  /* ── RESPONSIVE ──────────────────────────────────────── */
+  .footer-built {
+    font-size: 0.5625rem;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ── RESPONSIVE ────────────────────────────────────────── */
   @media (max-width: 768px) {
     .footer-inner {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 2.5rem;
+      padding-top: 2.5rem;
     }
-    .footer-right {
+    .footer-bottom {
+      flex-direction: column;
       align-items: flex-start;
+      gap: 0.75rem;
     }
   }
 </style>

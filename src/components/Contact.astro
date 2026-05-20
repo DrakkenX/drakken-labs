@@ -2,190 +2,300 @@
 ---
 
 <section id="contact" aria-labelledby="contact-heading">
-  <!-- Violet ambient glow — Sentinel is central here -->
+
+  <!-- Ambient glow -->
   <div class="contact-glow" aria-hidden="true"></div>
 
-  <div class="section-inner">
+  <div class="section-inner" id="contact-inner">
 
-    <!-- Left — identity -->
-    <div class="contact-left reveal">
-      <div class="section-label"><span>ESTABLISH CONTACT</span></div>
+    <!-- ─── LEFT: EDITORIAL INVITATION ──────────────────── -->
+    <div class="ct-left">
+      <span class="ct-frame-label font-cinzel">[ ESTABLISH CONTACT ]</span>
 
-      <h2 id="contact-heading" class="contact-heading font-cinzel">
-        Begin the work.
+      <h2 id="contact-heading" class="ct-heading">
+        Begin the <em class="ct-italic">Work.</em>
       </h2>
 
-      <p class="contact-sub font-inter">
-        Initial contact within 24 hours.<br />
-        Replies are personal, written by Han.
+      <p class="ct-para">
+        Initial contact within 24 hours. Replies are personal, written
+        by Han Myo Naing. No agencies, no junior pipeline. The same
+        person who shipped AEGIS reads your message.
       </p>
 
-      <div class="contact-meta">
-        <div class="meta-row">
-          <span class="meta-label font-mono">DIRECT</span>
-          <a href="mailto:drakken.diablo@gmail.com" class="meta-value font-mono">
-            drakken.diablo@gmail.com
-          </a>
+      <div class="ct-blocks">
+        <div class="ct-block">
+          <div class="ct-accent" aria-hidden="true"></div>
+          <div class="ct-block-inner">
+            <span class="ct-block-label font-mono">DIRECT EMAIL</span>
+            <a href="mailto:hello@drakkenlabs.com" class="ct-block-value">
+              hello@drakkenlabs.com
+            </a>
+          </div>
         </div>
-        <div class="meta-row">
-          <span class="meta-label font-mono">HOURS</span>
-          <span class="meta-value font-mono">GMT+8 · 09:00–22:00 Mon–Sat</span>
+
+        <div class="ct-block">
+          <div class="ct-accent" aria-hidden="true"></div>
+          <div class="ct-block-inner">
+            <span class="ct-block-label font-mono">OPERATING HOURS</span>
+            <span class="ct-block-value ct-block-text">GMT+8 · 09:00 — 22:00 · MON–SAT</span>
+          </div>
         </div>
-        <div class="meta-row">
-          <span class="meta-label font-mono">LOCATION</span>
-          <span class="meta-value font-mono">Putra Heights, Malaysia</span>
-        </div>
-        <div class="meta-row">
-          <span class="meta-label font-mono">STATUS</span>
-          <span class="meta-value font-mono" style="color:var(--signal-mint)">
-            <span class="status-dot"></span>
-            Available — 2 slots open
-          </span>
+
+        <div class="ct-block">
+          <div class="ct-accent" aria-hidden="true"></div>
+          <div class="ct-block-inner">
+            <span class="ct-block-label font-mono">RESPONSE TIME</span>
+            <span class="ct-block-value ct-block-text">≤ 24 HOURS · TYPICALLY &lt; 4</span>
+          </div>
         </div>
       </div>
+
+      <p class="ct-location font-mono">Built in Malaysia · Operating worldwide</p>
     </div>
 
-    <!-- Right — form -->
-    <div class="contact-right reveal" data-delay="120">
-      <form id="contact-form" class="contact-form" novalidate>
+    <!-- ─── RIGHT: THE FORM ──────────────────────────────── -->
+    <div class="ct-right">
+      <div class="form-frame" id="form-frame">
+        <span class="fcorner fcorner-tl" aria-hidden="true"></span>
+        <span class="fcorner fcorner-tr" aria-hidden="true"></span>
+        <span class="fcorner fcorner-bl" aria-hidden="true"></span>
+        <span class="fcorner fcorner-br" aria-hidden="true"></span>
 
-        <div class="form-row">
-          <div class="form-field">
-            <label for="cf-name" class="form-label font-mono">NAME</label>
-            <input
-              type="text"
-              id="cf-name"
-              name="name"
-              class="form-input font-inter"
-              placeholder="Han Myo Naing"
-              required
-              autocomplete="name"
-            />
+        <!-- Form inner content (hidden on success) -->
+        <div id="form-inner">
+          <div class="form-intro">
+            <span class="form-intro-label font-cinzel">[ INITIATE BRIEF ]</span>
+            <p class="form-intro-sub ct-italic">
+              A few details so we can respond with substance, not platitudes.
+            </p>
           </div>
-          <div class="form-field">
-            <label for="cf-email" class="form-label font-mono">EMAIL</label>
-            <input
-              type="email"
-              id="cf-email"
-              name="email"
-              class="form-input font-inter"
-              placeholder="you@company.com"
-              required
-              autocomplete="email"
-            />
-          </div>
-        </div>
 
-        <div class="form-row">
-          <div class="form-field">
-            <label for="cf-type" class="form-label font-mono">PROJECT TYPE</label>
-            <div class="form-select-wrap">
-              <select id="cf-type" name="type" class="form-select font-inter" required>
-                <option value="" disabled selected>Select a tier…</option>
-                <option value="exploration">Exploration — RM 1,500–3,000</option>
-                <option value="execution">Execution — RM 5,000–15,000</option>
-                <option value="command">Command — RM 8,000+ / mo</option>
-                <option value="exploring">Just exploring</option>
-              </select>
-              <span class="select-chevron" aria-hidden="true">↓</span>
+          <form id="contact-form" novalidate>
+
+            <div class="form-row">
+              <div class="form-field ff1">
+                <label for="cf-name" class="form-label font-cinzel">YOUR NAME</label>
+                <input
+                  type="text"
+                  id="cf-name"
+                  name="name"
+                  class="form-input"
+                  placeholder="Han Myo Naing"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+              <div class="form-field ff2">
+                <label for="cf-email" class="form-label font-cinzel">EMAIL ADDRESS</label>
+                <input
+                  type="email"
+                  id="cf-email"
+                  name="email"
+                  class="form-input"
+                  placeholder="you@company.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
             </div>
-          </div>
-          <div class="form-field">
-            <label for="cf-budget" class="form-label font-mono">BUDGET RANGE</label>
-            <div class="form-select-wrap">
-              <select id="cf-budget" name="budget" class="form-select font-inter">
-                <option value="" disabled selected>Approximate budget…</option>
-                <option value="lt3k">Under RM 3,000</option>
-                <option value="3-8k">RM 3,000 – 8,000</option>
-                <option value="8-20k">RM 8,000 – 20,000</option>
-                <option value="gt20k">RM 20,000+</option>
-              </select>
-              <span class="select-chevron" aria-hidden="true">↓</span>
+
+            <div class="form-row">
+              <div class="form-field ff3">
+                <label for="cf-type" class="form-label font-cinzel">PROJECT TYPE</label>
+                <div class="form-select-wrap">
+                  <select id="cf-type" name="type" class="form-select" required>
+                    <option value="" disabled selected>Select type…</option>
+                    <option value="desktop">Custom desktop app</option>
+                    <option value="ai">AI integration / automation</option>
+                    <option value="frontend">Frontend craft / interface design</option>
+                    <option value="strategy">Strategic consultation</option>
+                    <option value="other">Something else</option>
+                  </select>
+                  <span class="select-chevron" aria-hidden="true">↓</span>
+                </div>
+              </div>
+              <div class="form-field ff4">
+                <label for="cf-budget" class="form-label font-cinzel">BUDGET RANGE</label>
+                <div class="form-select-wrap">
+                  <select id="cf-budget" name="budget" class="form-select">
+                    <option value="" disabled selected>Approximate budget…</option>
+                    <option value="lt3k">Under USD 3K</option>
+                    <option value="3-10k">USD 3K — 10K</option>
+                    <option value="10-30k">USD 10K — 30K</option>
+                    <option value="gt30k">USD 30K+</option>
+                    <option value="open">Open to discussion</option>
+                  </select>
+                  <span class="select-chevron" aria-hidden="true">↓</span>
+                </div>
+              </div>
             </div>
+
+            <div class="form-field ff5">
+              <label for="cf-message" class="form-label font-cinzel">YOUR BRIEF</label>
+              <textarea
+                id="cf-message"
+                name="message"
+                class="form-textarea"
+                placeholder="Describe your project, the problem it solves, and your timeline…"
+                rows="4"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-sep" aria-hidden="true">
+              <div class="form-sep-line"></div>
+              <span class="form-privacy font-mono">Form encrypted via TLS · Replies from a real human</span>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" id="cf-submit" class="submit-btn font-mono">
+                <span id="btn-label">SEND BRIEF →</span>
+                <span id="btn-sending" class="btn-sending" hidden>
+                  <span></span><span></span><span></span>
+                </span>
+              </button>
+            </div>
+
+            <div id="form-error" class="form-error font-mono" hidden>
+              Signal interrupted. Try again or email directly:
+              <a href="mailto:hello@drakkenlabs.com">hello@drakkenlabs.com</a>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Success block (shown after submit) -->
+        <div id="form-success-block" class="form-success-block" hidden>
+          <div class="success-icon" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="29" stroke="#00d4ff" stroke-width="1.5" opacity="0.3"/>
+              <circle cx="32" cy="32" r="21" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
+              <polyline points="19,33 27,41 45,23"
+                stroke="#00d4ff" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
+          <h3 class="success-heading font-cinzel">Brief received.</h3>
+          <p class="success-sub">Reply within 24 hours.</p>
+          <span id="success-timer" class="success-timer font-mono">
+            [ SIGNAL CONFIRMED · T-00:00:00 ]
+          </span>
         </div>
 
-        <div class="form-field">
-          <label for="cf-message" class="form-label font-mono">TELL ME ABOUT IT</label>
-          <textarea
-            id="cf-message"
-            name="message"
-            class="form-textarea font-inter"
-            placeholder="Describe your project, the problem it solves, and your timeline…"
-            rows="5"
-            required
-          ></textarea>
-        </div>
-
-        <div class="form-footer">
-          <button type="submit" id="cf-submit" class="btn-primary font-inter submit-btn">
-            <span id="btn-text">Send transmission</span>
-            <span class="btn-arrow" aria-hidden="true" id="btn-arrow">→</span>
-          </button>
-          <p class="form-note font-mono">No spam. Direct reply, not a template.</p>
-        </div>
-
-        <!-- States -->
-        <div id="form-success" class="form-success font-inter" hidden>
-          <span class="success-glyph" aria-hidden="true">◆</span>
-          Transmission received. Expect a reply within 24 hours.
-        </div>
-        <div id="form-error" class="form-error font-inter" hidden>
-          Something failed. Email directly: drakken.diablo@gmail.com
-        </div>
-
-      </form>
+      </div>
     </div>
 
   </div>
 </section>
 
 <script>
-  const form     = document.getElementById('contact-form') as HTMLFormElement | null;
-  const btnText  = document.getElementById('btn-text') as HTMLElement | null;
-  const btnArrow = document.getElementById('btn-arrow') as HTMLElement | null;
-  const submitBtn = document.getElementById('cf-submit') as HTMLButtonElement | null;
-  const successEl = document.getElementById('form-success') as HTMLElement | null;
-  const errorEl   = document.getElementById('form-error') as HTMLElement | null;
+  (() => {
+    // ── Form submission ────────────────────────────────────
+    const form       = document.getElementById('contact-form') as HTMLFormElement | null;
+    const submitBtn  = document.getElementById('cf-submit')   as HTMLButtonElement | null;
+    const btnLabel   = document.getElementById('btn-label')   as HTMLElement | null;
+    const btnSending = document.getElementById('btn-sending') as HTMLElement | null;
+    const formInner  = document.getElementById('form-inner')  as HTMLElement | null;
+    const successBlock = document.getElementById('form-success-block') as HTMLElement | null;
+    const errorEl    = document.getElementById('form-error')  as HTMLElement | null;
+    const timerEl    = document.getElementById('success-timer') as HTMLElement | null;
 
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!submitBtn || !btnText || !form.checkValidity()) {
-      form?.reportValidity();
+    let timerInterval: ReturnType<typeof setInterval> | null = null;
+
+    function startTimer() {
+      if (!timerEl) return;
+      let seconds = 0;
+      timerInterval = setInterval(() => {
+        seconds++;
+        const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+        const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        timerEl.textContent = `[ SIGNAL CONFIRMED · T-${h}:${m}:${s} ]`;
+      }, 1000);
+    }
+
+    function showSuccess() {
+      if (!formInner || !successBlock) return;
+      // Fade form out
+      formInner.style.transition = 'opacity 400ms ease, transform 400ms ease';
+      formInner.style.opacity = '0';
+      formInner.style.transform = 'translateY(-8px)';
+
+      setTimeout(() => {
+        formInner.hidden = true;
+        successBlock.hidden = false;
+        // Trigger fade-in (needs a frame to register initial state)
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            successBlock.classList.add('success-visible');
+          });
+        });
+        startTimer();
+      }, 420);
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      if (!submitBtn || !btnLabel || !btnSending) return;
+
+      // Loading state
+      submitBtn.disabled = true;
+      btnLabel.hidden = true;
+      btnSending.hidden = false;
+      if (errorEl) errorEl.hidden = true;
+
+      try {
+        const res = await fetch('https://formspree.io/f/xwvzpeny', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (res.ok) {
+          form.reset();
+          showSuccess();
+          document.dispatchEvent(new CustomEvent('sentinel:success'));
+        } else {
+          throw new Error('non-ok');
+        }
+      } catch {
+        if (errorEl) errorEl.hidden = false;
+        // Reset button
+        btnLabel.hidden = false;
+        btnSending.hidden = true;
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ── Entrance animation ─────────────────────────────────
+    const section = document.getElementById('contact');
+    if (!section) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      section.classList.add('ct-visible');
       return;
     }
 
-    submitBtn.disabled = true;
-    btnText.textContent = 'Sending…';
-    if (btnArrow) btnArrow.style.opacity = '0.3';
-
-    try {
-      const res = await fetch('https://formspree.io/f/xwvzpeny', {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' },
-      });
-
-      if (res.ok) {
-        form.reset();
-        if (successEl) successEl.hidden = false;
-        if (errorEl) errorEl.hidden = true;
-        if (btnText) btnText.textContent = 'Sent ✓';
-        document.dispatchEvent(new CustomEvent('sentinel:success'));
-      } else {
-        throw new Error('non-ok');
-      }
-    } catch {
-      if (errorEl) errorEl.hidden = false;
-      if (successEl) successEl.hidden = true;
-      if (btnText) btnText.textContent = 'Send transmission';
-      if (btnArrow) btnArrow.style.opacity = '1';
-      if (submitBtn) submitBtn.disabled = false;
-    }
-  });
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          section.classList.add('ct-visible');
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(section);
+  })();
 </script>
 
 <style>
+  /* ── SECTION BASE ──────────────────────────────────────── */
   section {
     padding: 8rem 2rem;
     background: var(--void);
@@ -194,97 +304,206 @@
     z-index: var(--z-page);
   }
 
+  /* Ambient glow */
   .contact-glow {
     position: absolute;
     width: 700px;
     height: 700px;
-    top: -100px;
-    right: -100px;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(167, 139, 250, 0.07) 0%,
-      transparent 70%
-    );
+    top: -120px;
+    right: -80px;
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.05) 0%, transparent 70%);
     pointer-events: none;
-    animation: cGlow 20s ease-in-out infinite;
+    animation: cGlow 22s ease-in-out infinite;
   }
-
   @keyframes cGlow {
     0%,100% { transform: scale(1) translate(0,0); }
     50%      { transform: scale(1.08) translate(-3%,5%); }
   }
 
+  /* ── LAYOUT ────────────────────────────────────────────── */
   .section-inner {
     max-width: 1100px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 5fr 7fr;
+    grid-template-columns: 2fr 3fr;
     gap: 5rem;
     align-items: start;
+    position: relative;
+    z-index: 1;
   }
 
-  /* ── LEFT ────────────────────────────────────────────── */
-  .contact-left { display: flex; flex-direction: column; gap: 2rem; }
-
-  .contact-heading {
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    color: var(--text-pure);
-    font-style: italic;
-    line-height: 1.2;
-  }
-
-  .contact-sub {
-    font-size: 0.9rem;
-    line-height: 1.75;
-    color: var(--text-secondary);
-  }
-
-  .contact-meta { display: flex; flex-direction: column; gap: 0; }
-
-  .meta-row {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 1rem;
-    align-items: center;
-    padding: 0.65rem 0;
-    border-bottom: 1px solid var(--edge);
-  }
-
-  .meta-label {
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--text-ghost);
-  }
-
-  .meta-value {
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color var(--t-quick);
+  /* ── LEFT COLUMN ───────────────────────────────────────── */
+  .ct-left {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 0.5rem;
   }
-  a.meta-value:hover { color: var(--signal-cyan); }
 
-  .status-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--signal-mint);
-    animation: dotBlink 2s ease-in-out infinite;
+  /* Frame label */
+  .ct-frame-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.32em;
+    color: var(--signal-cyan);
+    font-variant: small-caps;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease 0ms, transform 500ms ease 0ms;
+  }
+  .ct-visible .ct-frame-label { opacity: 0.9; transform: none; }
+
+  /* Heading */
+  .ct-heading {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    color: rgba(255,255,255,0.95);
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 50px rgba(0,212,255,0.15);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 600ms ease 100ms, transform 600ms ease 100ms;
+  }
+  .ct-visible .ct-heading { opacity: 1; transform: none; }
+  .ct-italic {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Editorial paragraph */
+  .ct-para {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    max-width: 380px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 500ms ease 400ms, transform 500ms ease 400ms;
+  }
+  .ct-visible .ct-para { opacity: 1; transform: none; }
+
+  /* Contact blocks */
+  .ct-blocks { display: flex; flex-direction: column; gap: 0; }
+
+  .ct-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+  .ct-block:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+
+  .ct-visible .ct-block:nth-child(1) { opacity: 1; transform: none; transition-delay: 600ms; }
+  .ct-visible .ct-block:nth-child(2) { opacity: 1; transform: none; transition-delay: 700ms; }
+  .ct-visible .ct-block:nth-child(3) { opacity: 1; transform: none; transition-delay: 800ms; }
+
+  .ct-accent {
+    width: 2px;
+    height: 34px;
+    background: rgba(0,212,255,0.5);
     flex-shrink: 0;
-  }
-  @keyframes dotBlink {
-    0%,100% { opacity: 1; }
-    50%      { opacity: 0.2; }
+    margin-top: 3px;
+    border-radius: 1px;
   }
 
-  /* ── FORM ────────────────────────────────────────────── */
-  .contact-form { display: flex; flex-direction: column; gap: 1.75rem; }
+  .ct-block-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .ct-block-label {
+    font-size: 0.5625rem;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.38);
+  }
+
+  .ct-block-value {
+    font-size: 1rem;
+    color: var(--signal-cyan);
+    text-decoration: none;
+    transition: opacity 180ms ease;
+  }
+  a.ct-block-value:hover { opacity: 0.75; text-decoration: underline; }
+  .ct-block-text { color: rgba(255,255,255,0.8); }
+
+  /* Location footer */
+  .ct-location {
+    font-size: 0.625rem;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.35);
+    opacity: 0;
+    transition: opacity 500ms ease 900ms;
+  }
+  .ct-visible .ct-location { opacity: 1; }
+
+  /* ── RIGHT COLUMN / FORM FRAME ─────────────────────────── */
+  .ct-right {
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 700ms cubic-bezier(0.23,1,0.32,1) 800ms,
+                transform 700ms cubic-bezier(0.23,1,0.32,1) 800ms;
+  }
+  .ct-visible .ct-right { opacity: 1; transform: scale(1); }
+
+  .form-frame {
+    background: rgba(12,14,21,0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0,212,255,0.2);
+    clip-path: polygon(
+      14px 0%, calc(100% - 14px) 0%,
+      100% 14px, 100% calc(100% - 14px),
+      calc(100% - 14px) 100%, 14px 100%,
+      0% calc(100% - 14px), 0% 14px
+    );
+    padding: 2.5rem;
+    position: relative;
+  }
+
+  /* Corner ticks */
+  .fcorner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+  }
+  .fcorner-tl { top: 7px;  left: 7px;  border-top: 1px solid var(--signal-cyan); border-left: 1px solid var(--signal-cyan); }
+  .fcorner-tr { top: 7px;  right: 7px; border-top: 1px solid var(--signal-cyan); border-right: 1px solid var(--signal-cyan); }
+  .fcorner-bl { bottom: 7px; left: 7px;  border-bottom: 1px solid var(--signal-cyan); border-left: 1px solid var(--signal-cyan); }
+  .fcorner-br { bottom: 7px; right: 7px; border-bottom: 1px solid var(--signal-cyan); border-right: 1px solid var(--signal-cyan); }
+
+  /* ── FORM INTRO ────────────────────────────────────────── */
+  .form-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .form-intro-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.32em;
+    color: rgba(0,212,255,0.65);
+    font-variant: small-caps;
+  }
+  .form-intro-sub {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+  }
+
+  /* ── FORM STRUCTURE ────────────────────────────────────── */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
   .form-row {
     display: grid;
@@ -292,13 +511,26 @@
     gap: 1.5rem;
   }
 
-  .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 400ms ease, transform 400ms ease;
+  }
+  .ct-visible .ff1 { opacity: 1; transform: none; transition-delay: 1000ms; }
+  .ct-visible .ff2 { opacity: 1; transform: none; transition-delay: 1080ms; }
+  .ct-visible .ff3 { opacity: 1; transform: none; transition-delay: 1160ms; }
+  .ct-visible .ff4 { opacity: 1; transform: none; transition-delay: 1240ms; }
+  .ct-visible .ff5 { opacity: 1; transform: none; transition-delay: 1320ms; }
 
+  /* ── FORM INPUTS ───────────────────────────────────────── */
   .form-label {
-    font-size: 0.55rem;
-    letter-spacing: 0.22em;
-    color: var(--text-ghost);
-    text-transform: uppercase;
+    font-size: 0.5625rem;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.4);
+    font-variant: small-caps;
   }
 
   .form-input,
@@ -306,88 +538,208 @@
   .form-select {
     background: transparent;
     border: none;
-    border-bottom: 1px solid var(--edge);
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    color: var(--text-pure);
+    font-size: 1rem;
+    font-family: 'Geist', 'Helvetica Neue', sans-serif;
+    padding: 0.875rem 0;
     width: 100%;
     outline: none;
-    transition: border-color var(--t-base) var(--ease-out-expo);
+    transition: border-color 200ms ease;
     -webkit-appearance: none;
     border-radius: 0;
   }
-
   .form-input::placeholder,
-  .form-textarea::placeholder { color: var(--text-ghost); }
-
+  .form-textarea::placeholder {
+    color: rgba(255,255,255,0.2);
+    font-size: 0.9rem;
+  }
   .form-input:focus,
   .form-textarea:focus,
   .form-select:focus {
-    border-bottom: 2px solid var(--signal-cyan);
-    padding-bottom: calc(0.6rem - 1px);
+    border-bottom-color: rgba(0,212,255,0.6);
   }
-
-  .form-select-wrap {
-    position: relative;
+  .form-select {
+    cursor: pointer;
+    color: rgba(255,255,255,0.8);
   }
+  .form-select option { background: #0c0e15; color: #fff; }
 
+  .form-select-wrap { position: relative; }
   .select-chevron {
     position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-ghost);
+    color: rgba(255,255,255,0.3);
     font-size: 0.7rem;
     pointer-events: none;
   }
 
-  .form-select option { background: var(--mid); color: var(--text-primary); }
-
   .form-textarea { resize: vertical; min-height: 100px; line-height: 1.65; }
 
-  .form-footer {
+  /* ── FORM SEPARATOR ────────────────────────────────────── */
+  .form-sep {
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.875rem;
+    opacity: 0;
+    transition: opacity 400ms ease 1400ms;
+  }
+  .ct-visible .form-sep { opacity: 1; }
+  .form-sep-line {
+    width: 60px;
+    height: 1px;
+    background: rgba(0,212,255,0.4);
+  }
+  .form-privacy {
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.35);
   }
 
-  .submit-btn { flex-shrink: 0; }
-
-  .form-note {
-    font-size: 0.55rem;
-    letter-spacing: 0.14em;
-    color: var(--text-ghost);
-  }
-
-  /* States */
-  .form-success {
+  /* ── SUBMIT BUTTON ─────────────────────────────────────── */
+  .form-actions {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    background: rgba(74,222,128,0.06);
-    border: 1px solid rgba(74,222,128,0.2);
-    color: var(--signal-mint);
-    font-size: 0.875rem;
+    justify-content: flex-end;
+    opacity: 0;
+    transition: opacity 400ms ease 1480ms;
   }
-  .success-glyph { font-size: 0.5rem; flex-shrink: 0; }
+  .ct-visible .form-actions { opacity: 1; }
 
+  .submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    color: var(--signal-cyan);
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.4);
+    border-radius: 9999px;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    transition:
+      background 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      transform 160ms ease,
+      box-shadow 200ms ease;
+    min-width: 160px;
+  }
+  .submit-btn:hover:not(:disabled) {
+    background: rgba(0,212,255,0.14);
+    border-color: rgba(0,212,255,0.7);
+    color: #fff;
+    box-shadow: 0 0 24px rgba(0,212,255,0.18);
+    transform: translateY(-1px);
+  }
+  .submit-btn:active:not(:disabled) { transform: scale(0.97); }
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Pulsing dots for loading state */
+  .btn-sending {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .btn-sending span {
+    width: 4px;
+    height: 4px;
+    background: currentColor;
+    border-radius: 50%;
+    animation: btnDot 1s ease-in-out infinite;
+  }
+  .btn-sending span:nth-child(2) { animation-delay: 0.2s; }
+  .btn-sending span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes btnDot {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.3; transform: scale(0.65); }
+  }
+
+  /* ── ERROR STATE ───────────────────────────────────────── */
   .form-error {
-    padding: 1rem;
+    padding: 0.875rem 1rem;
     background: rgba(239,68,68,0.06);
-    border: 1px solid rgba(239,68,68,0.2);
-    color: var(--signal-blood);
-    font-size: 0.875rem;
+    border: 1px solid rgba(239,68,68,0.25);
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    color: rgba(239,68,68,0.85);
+    line-height: 1.6;
+    border-radius: 2px;
+  }
+  .form-error a {
+    color: rgba(239,68,68,0.85);
+    text-decoration: underline;
   }
 
-  /* ── RESPONSIVE ──────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .section-inner { grid-template-columns: 1fr; gap: 3rem; }
+  /* ── SUCCESS STATE ─────────────────────────────────────── */
+  .form-success-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    text-align: center;
+    padding: 2rem 1rem;
+    min-height: 280px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 400ms ease, transform 400ms ease;
   }
-  @media (max-width: 520px) {
+  .form-success-block.success-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .success-icon svg { display: block; }
+  .success-heading {
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text-pure);
+    letter-spacing: 0.06em;
+  }
+  .success-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .success-timer {
+    font-size: 0.5625rem;
+    letter-spacing: 0.25em;
+    color: rgba(0,212,255,0.55);
+    margin-top: 0.25rem;
+  }
+
+  /* ── REDUCED MOTION ────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .ct-frame-label, .ct-heading, .ct-para,
+    .ct-block, .ct-location, .ct-right,
+    .form-field, .form-sep, .form-actions {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .contact-glow { animation: none; }
+    .btn-sending span { animation: none; }
+  }
+
+  /* ── MOBILE ────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .section-inner {
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+    }
+    .ct-right { margin-top: 0; }
+  }
+
+  @media (max-width: 640px) {
+    section { padding: 5rem 1.25rem; }
+    .form-frame { padding: 1.75rem 1.5rem; }
     .form-row { grid-template-columns: 1fr; gap: 1.25rem; }
-    .form-footer { flex-direction: column; align-items: stretch; }
-    .submit-btn { width: 100%; justify-content: center; }
+    .form-actions { justify-content: stretch; }
+    .submit-btn { width: 100%; }
   }
 </style>
