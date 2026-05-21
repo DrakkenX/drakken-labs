@@ -136,6 +136,7 @@
         pin: '#hero-stats-frame',
         start: 'top top',
         end: '+=400vh',
+        pinSpacing: false,
         anticipatePin: 1,
         onUpdate(self) {
           const idx = Math.min(Math.floor(self.progress * 4), 3);
@@ -153,10 +154,10 @@
 </script>
 
 <style>
-  /* Outer section — provides the scroll runway (5× viewport = 4 chapters) */
+  /* Outer section — provides the scroll runway (4× viewport = 4 chapters, matching pin end) */
   #hero-stats {
     position: relative;
-    height: 500vh;
+    height: 400vh;
     background: var(--void);
     z-index: var(--z-page);
   }

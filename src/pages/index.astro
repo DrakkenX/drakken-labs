@@ -13,6 +13,7 @@ import Process from '../components/Process.astro';
 import Investment from '../components/Investment.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import ChapterMarker from '../components/ChapterMarker.astro';
 ---
 
 <Layout>
@@ -27,11 +28,17 @@ import Footer from '../components/Footer.astro';
   <main id="main-content" style="position:relative;z-index:var(--z-page)">
     <Hero />
     <HeroStats />
+    <ChapterMarker chapter="I" label="THE PHILOSOPHY" />
     <Manifesto />
+    <ChapterMarker chapter="II" label="THE DISCIPLINES" />
     <Capabilities />
+    <ChapterMarker chapter="III" label="THE PROOF" />
     <Showcase />
+    <ChapterMarker chapter="IV" label="THE METHOD" />
     <Process />
+    <ChapterMarker chapter="V" label="THE EXCHANGE" />
     <Investment />
+    <ChapterMarker chapter="VI" label="ESTABLISH CONTACT" />
     <Contact />
   </main>
 

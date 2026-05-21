@@ -1,0 +1,40 @@
+---
+interface Props {
+  chapter: string;  // e.g. "I", "II", "III"
+  label: string;    // e.g. "THE PHILOSOPHY"
+}
+const { chapter, label } = Astro.props;
+---
+
+<div class="chapter-marker" aria-hidden="true">
+  <div class="chapter-marker-inner" data-chapter-marker>
+    <div class="cm-line cm-line-l"></div>
+    <span class="cm-numeral">{chapter}</span>
+    <div class="cm-dot"></div>
+    <span class="cm-label">{label}</span>
+    <div class="cm-dot"></div>
+    <span class="cm-numeral">{chapter}</span>
+    <div class="cm-line cm-line-r"></div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const markers = document.querySelectorAll<HTMLElement>('[data-chapter-marker]');
+    if (!markers.length) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('cm-visible');
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    markers.forEach((m) => obs.observe(m));
+  })();
+</script>
