@@ -1,24 +1,24 @@
 ---
-// 12 ambient particles
+// 12 ambient particles — scattered across section bounds
 const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;delay:number;dx:number;dy:number}> = [
-  { x:'8%',  y:'18%', size:4, opacity:0.38, dur:13, delay:0,  dx:12,  dy:-10 },
-  { x:'22%', y:'62%', size:5, opacity:0.30, dur:16, delay:2,  dx:-8,  dy:14  },
-  { x:'42%', y:'12%', size:3, opacity:0.42, dur:11, delay:4,  dx:10,  dy:8   },
-  { x:'68%', y:'38%', size:4, opacity:0.32, dur:14, delay:1,  dx:-14, dy:-8  },
-  { x:'83%', y:'72%', size:5, opacity:0.28, dur:17, delay:3,  dx:8,   dy:-12 },
-  { x:'12%', y:'82%', size:3, opacity:0.36, dur:12, delay:5,  dx:-10, dy:-6  },
-  { x:'55%', y:'52%', size:4, opacity:0.30, dur:15, delay:2,  dx:6,   dy:10  },
-  { x:'88%', y:'22%', size:5, opacity:0.28, dur:10, delay:6,  dx:-8,  dy:14  },
-  { x:'34%', y:'88%', size:3, opacity:0.36, dur:13, delay:1,  dx:14,  dy:-8  },
-  { x:'76%', y:'8%',  size:4, opacity:0.32, dur:16, delay:4,  dx:-6,  dy:12  },
-  { x:'60%', y:'68%', size:5, opacity:0.28, dur:12, delay:3,  dx:10,  dy:-10 },
-  { x:'4%',  y:'44%', size:3, opacity:0.40, dur:14, delay:0,  dx:-12, dy:8   },
+  { x:'8%',  y:'18%', size:3, opacity:0.35, dur:13, delay:0,  dx:12,  dy:-10 },
+  { x:'22%', y:'62%', size:2, opacity:0.28, dur:16, delay:2,  dx:-8,  dy:14  },
+  { x:'42%', y:'12%', size:3, opacity:0.38, dur:11, delay:4,  dx:10,  dy:8   },
+  { x:'68%', y:'38%', size:2, opacity:0.30, dur:14, delay:1,  dx:-14, dy:-8  },
+  { x:'83%', y:'72%', size:3, opacity:0.25, dur:17, delay:3,  dx:8,   dy:-12 },
+  { x:'12%', y:'82%', size:2, opacity:0.32, dur:12, delay:5,  dx:-10, dy:-6  },
+  { x:'55%', y:'52%', size:3, opacity:0.27, dur:15, delay:2,  dx:6,   dy:10  },
+  { x:'88%', y:'22%', size:2, opacity:0.25, dur:10, delay:6,  dx:-8,  dy:14  },
+  { x:'34%', y:'88%', size:3, opacity:0.32, dur:13, delay:1,  dx:14,  dy:-8  },
+  { x:'76%', y:'8%',  size:2, opacity:0.28, dur:16, delay:4,  dx:-6,  dy:12  },
+  { x:'60%', y:'68%', size:3, opacity:0.25, dur:12, delay:3,  dx:10,  dy:-10 },
+  { x:'4%',  y:'44%', size:2, opacity:0.36, dur:14, delay:0,  dx:-12, dy:8   },
 ];
 ---
 
 <section id="manifesto" aria-labelledby="manifesto-heading">
 
-  <!-- L1: Cosmic texture background — lives OUTSIDE stage so it can zoom independently -->
+  <!-- Cosmic texture background -->
   <div class="m-bg" aria-hidden="true">
     <img
       id="m-bg-img"
@@ -31,199 +31,136 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
       height="1080"
     />
     <div class="m-bg-vignette"></div>
-    <div class="m-glow"></div>
+    <div class="m-bg-tint"></div>
   </div>
 
-  <!-- The pinned stage — GSAP ScrollTrigger pins this element -->
-  <div id="m-stage" class="m-stage">
+  <!-- Ambient cyan glow -->
+  <div class="m-glow" aria-hidden="true"></div>
 
-    <!-- Ambient floating particles -->
-    <div class="m-particles" aria-hidden="true">
-      {particles.map((p, i) => (
-        <div
-          class={`particle particle-${i}`}
-          style={`left:${p.x};top:${p.y};width:${p.size}px;height:${p.size}px;opacity:${p.opacity};--dur:${p.dur}s;--delay:-${p.delay}s;--dx:${p.dx}px;--dy:${p.dy}px`}
-        ></div>
-      ))}
+  <!-- 12 ambient floating particles -->
+  <div class="m-particles" aria-hidden="true">
+    {particles.map((p, i) => (
+      <div
+        class={`particle particle-${i}`}
+        style={`left:${p.x};top:${p.y};width:${p.size}px;height:${p.size}px;opacity:${p.opacity};--dur:${p.dur}s;--delay:-${p.delay}s;--dx:${p.dx}px;--dy:${p.dy}px`}
+      ></div>
+    ))}
+  </div>
+
+  <!-- Side ornament lines -->
+  <div class="ornament ornament-l" aria-hidden="true">
+    <div class="ornament-line"></div>
+    <span class="ornament-text">EST · 2025</span>
+    <div class="ornament-line"></div>
+  </div>
+  <div class="ornament ornament-r" aria-hidden="true">
+    <div class="ornament-line"></div>
+    <span class="ornament-text">DRAKKEN LABS</span>
+    <div class="ornament-line"></div>
+  </div>
+
+  <!-- Main editorial content -->
+  <div class="manifesto-content">
+
+    <!-- Section label: [ • MANIFESTO • ] -->
+    <div class="manifesto-label">
+      <span class="label-bracket">[</span>
+      <span class="label-dot" aria-hidden="true"></span>
+      <span class="label-text font-cinzel">MANIFESTO</span>
+      <span class="label-dot" aria-hidden="true"></span>
+      <span class="label-bracket">]</span>
     </div>
 
-    <!-- Side ornament lines — stay pinned with stage -->
-    <div class="ornament ornament-l" aria-hidden="true">
-      <div class="ornament-line"></div>
-      <span class="ornament-text">EST · 2025</span>
-      <div class="ornament-line"></div>
-    </div>
-    <div class="ornament ornament-r" aria-hidden="true">
-      <div class="ornament-line"></div>
-      <span class="ornament-text">DRAKKEN LABS</span>
-      <div class="ornament-line"></div>
-    </div>
+    <!-- Main heading: Cinzel with ONLY "shouldn't" in Instrument Serif italic -->
+    <h2 id="manifesto-heading" class="manifesto-heading">
+      <span class="word font-cinzel" style="--i:0">We</span>
+      <span class="word font-cinzel" style="--i:1">build</span>
+      <span class="word font-cinzel" style="--i:2">what</span>
+      <span class="word font-instrument-italic" style="--i:3">shouldn't</span>
+      <span class="word font-cinzel" style="--i:4">exist</span>
+      <span class="word font-cinzel" style="--i:5">yet.</span>
+    </h2>
 
-    <!-- Scroll progress indicator (left edge) -->
-    <div class="m-progress-track" aria-hidden="true">
-      <div id="m-progress-fill" class="m-progress-fill"></div>
-    </div>
-
-    <!-- Atmosphere spotlight (follows active content) -->
-    <div id="m-atmosphere" class="m-atmosphere" aria-hidden="true"></div>
-
-    <!-- CENTER CONTENT STAGE -->
-    <div class="m-center">
-
-      <!-- Label — visible in state 0 -->
-      <div id="m-label" class="m-label">
-        <div class="m-label-line"></div>
-        <div class="m-label-center">
-          <svg class="m-delta" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <polygon points="5,0 10,10 0,10" fill="none" stroke="#00d4ff" stroke-width="1.2" stroke-linejoin="round"/>
-          </svg>
-          <span class="m-label-text font-cinzel">MANIFESTO</span>
-          <svg class="m-delta m-delta-r" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <polygon points="5,0 10,10 0,10" fill="none" stroke="#00d4ff" stroke-width="1.2" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="m-label-line"></div>
-      </div>
-
-      <!-- Heading — state 1 + 2 -->
-      <div id="m-heading-wrap" class="m-heading-wrap">
-        <h2 id="manifesto-heading" class="m-heading font-serif">
-          We build what <em class="m-italic">shouldn't</em> exist yet.
-        </h2>
-      </div>
-
-      <!-- Three declarations — states 2/3/4/5 -->
-      <p id="m-line-1" class="m-declaration">
+    <!-- Three declarations: Geist Regular, left-aligned -->
+    <div class="manifesto-declarations">
+      <p class="declaration" style="--d:0">
+        <span class="dec-mark" aria-hidden="true">I.</span>
         Software as ceremony. Code as craft.
       </p>
-      <p id="m-line-2" class="m-declaration">
+      <p class="declaration" style="--d:1">
+        <span class="dec-mark" aria-hidden="true">II.</span>
         AI as creative partner — not replacement.
       </p>
-      <p id="m-line-3" class="m-declaration">
-        Quality compounds. Speed multiplies.<br/>
-        The future belongs to those who build with intention.
+      <p class="declaration" style="--d:2">
+        <span class="dec-mark" aria-hidden="true">III.</span>
+        Quality compounds. Speed multiplies. The future belongs to those who build with intention.
       </p>
+    </div>
 
-      <!-- Signoff — state 5 -->
-      <div id="m-signoff" class="m-signoff">
-        <div class="m-signoff-line"></div>
-        <p class="m-signoff-name font-serif">— DRAKKEN</p>
-        <p class="m-signoff-attr font-mono">Han Myo Naing, Founder</p>
-      </div>
+    <!-- Signoff -->
+    <div class="manifesto-signoff">
+      <div class="signoff-line"></div>
+      <div class="signoff-mark">— DRAKKEN</div>
+      <div class="signoff-name font-mono">Han Myo Naing, Founder</div>
+    </div>
 
-    </div><!-- /m-center -->
-  </div><!-- /m-stage -->
+  </div>
 
 </section>
 
 <script>
   (() => {
+    const section = document.getElementById('manifesto');
+    if (!section) return;
+
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // ── Static fallback for reduced-motion ─────────────────
+    // Snap to final state immediately if reduced motion
     if (prefersReduced) {
-      const stage = document.getElementById('m-stage');
-      if (stage) stage.classList.add('m-static');
+      section.classList.add('is-revealed');
       return;
     }
 
-    // ── GSAP scroll-pinned manifesto ───────────────────────
-    const loadGSAP = async () => {
-      const { gsap } = await import('gsap');
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
+    // One-shot IntersectionObserver reveal — fires once when section enters view
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          section.classList.add('is-revealed');
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.18 }
+    );
+    obs.observe(section);
 
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      const PIN_DIST = isMobile ? '200vh' : '400vh';
+    // Background parallax — only on desktop, only if not reduced motion
+    if (!window.matchMedia('(max-width: 768px)').matches) {
+      const loadParallax = async () => {
+        const { gsap } = await import('gsap');
+        const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+        gsap.registerPlugin(ScrollTrigger);
 
-      // Get all animated elements
-      const label      = document.getElementById('m-label');
-      const headingWrap = document.getElementById('m-heading-wrap');
-      const line1      = document.getElementById('m-line-1');
-      const line2      = document.getElementById('m-line-2');
-      const line3      = document.getElementById('m-line-3');
-      const signoff    = document.getElementById('m-signoff');
-      const bgImg      = document.getElementById('m-bg-img');
-      const atmosphere = document.getElementById('m-atmosphere');
-      const progressFill = document.getElementById('m-progress-fill');
+        const bgImg = document.getElementById('m-bg-img');
+        if (!bgImg) return;
 
-      // Set initial states
-      gsap.set([label], { opacity: 0 });
-      gsap.set([headingWrap, line1, line2, line3, signoff], { opacity: 0, y: 32 });
-      gsap.set(atmosphere, { opacity: 0 });
+        gsap.to(bgImg, {
+          yPercent: -25,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#manifesto',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      };
 
-      // ── Build the scrubbed timeline ─────────────────────
-      // Total duration = 10 (arbitrary unit, scrub maps it to scroll)
-      const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
-
-      // State 0 → label arrives (0 - 1.0)
-      tl.to(label, { opacity: 1, duration: 0.6 }, 0);
-
-      // State 1 → heading arrives, label holds (1.5 - 2.8)
-      tl.to(headingWrap, { opacity: 1, y: 0, duration: 1.0 }, 1.5);
-
-      // Label fades at 2.8
-      tl.to(label, { opacity: 0, duration: 0.5 }, 2.8);
-
-      // State 2 → heading moves up, line 1 enters (3.0 - 5.0)
-      tl.to(headingWrap, { y: -110, scale: 0.72, opacity: 0.22, duration: 1.2 }, 3.2);
-      tl.to(atmosphere, { opacity: 1, duration: 0.5 }, 3.4);
-      tl.to(line1, { opacity: 1, y: 0, duration: 0.9 }, 3.5);
-
-      // State 3 → line 1 dims, line 2 enters (5.0 - 6.8)
-      tl.to(line1, { opacity: 0.28, y: -28, duration: 0.6 }, 5.0);
-      tl.to(line2, { opacity: 1, y: 0, duration: 0.9 }, 5.4);
-
-      // State 4 → line 2 dims, line 3 enters (6.8 - 8.5)
-      tl.to(line2, { opacity: 0.28, y: -28, duration: 0.6 }, 6.8);
-      tl.to(line3, { opacity: 1, y: 0, duration: 0.9 }, 7.2);
-
-      // State 5 → final: all lines snap back to full, signoff appears (9.0 - 10.0)
-      tl.to(headingWrap, { opacity: 0, duration: 0.3 }, 8.8);
-      tl.to(line1, { opacity: 0.92, y: -72, duration: 0.4 }, 9.0);
-      tl.to(line2, { opacity: 0.92, y: -36, duration: 0.4 }, 9.0);
-      tl.to(line3, { opacity: 0.92, y: 0,   duration: 0.4 }, 9.0);
-      tl.to(atmosphere, { opacity: 0, duration: 0.4 }, 9.0);
-      tl.to(signoff, { opacity: 1, y: 0, duration: 0.5 }, 9.4);
-
-      // ── Pin + scrub ─────────────────────────────────────
-      ScrollTrigger.create({
-        trigger: '#manifesto',
-        animation: tl,
-        pin: '#m-stage',
-        start: 'top top',
-        end: `+=${PIN_DIST}`,
-        scrub: 1.5,
-        anticipatePin: 1,
-        onUpdate(self) {
-          // Drive progress fill
-          if (progressFill) {
-            gsap.set(progressFill, { height: `${self.progress * 62}vh` });
-          }
-        },
-      });
-
-      // ── Background zoom (independent ScrollTrigger) ─────
-      if (bgImg) {
-        gsap.fromTo(bgImg,
-          { scale: 1 },
-          {
-            scale: 1.08,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '#manifesto',
-              start: 'top top',
-              end: `+=${PIN_DIST}`,
-              scrub: true,
-            },
-          }
-        );
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(loadParallax, { timeout: 3000 });
+      } else {
+        setTimeout(loadParallax, 600);
       }
-    };
-
-    // Load immediately — manifesto pin must be set before user scrolls to it.
-    // DOM must be ready, so use minimal setTimeout rather than idleCallback.
-    setTimeout(loadGSAP, 0);
+    }
   })();
 </script>
 
@@ -231,13 +168,17 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
   /* ── SECTION SHELL ─────────────────────────────────────── */
   section {
     position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7.5rem 2rem 8rem;  /* 120px top, tighter than old 8rem all sides */
     background: var(--deep);
     overflow: hidden;
     z-index: var(--z-page);
-    /* No explicit height — GSAP pinSpacing handles the scroll runway */
   }
 
-  /* ── BACKGROUND IMAGE ──────────────────────────────────── */
+  /* ── BACKGROUND ────────────────────────────────────────── */
   .m-bg {
     position: absolute;
     inset: 0;
@@ -252,47 +193,41 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     width: 100%;
     height: 120%;
     object-fit: cover;
-    filter: brightness(0.4) saturate(0.7) blur(0.5px);
-    transform-origin: center center;
-    will-change: transform, scale;
+    filter: brightness(0.32) saturate(0.65) blur(0.5px);
+    will-change: transform;
   }
 
   .m-bg-vignette {
     position: absolute;
     inset: 0;
     background: radial-gradient(
-      circle at 50% 50%,
-      transparent 15%,
-      rgba(7,8,13,0.6) 55%,
-      #030308 90%
+      ellipse at center,
+      transparent 10%,
+      #030308 85%
     );
   }
 
+  .m-bg-tint {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 212, 255, 0.012);
+  }
+
+  /* Ambient glow — violet, breathing */
   .m-glow {
     position: absolute;
     width: 700px;
     height: 700px;
-    top: -100px;
+    top: -80px;
     left: 15%;
-    background: radial-gradient(ellipse at center, rgba(167,139,250,0.07) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(167,139,250,0.06) 0%, transparent 70%);
     pointer-events: none;
+    z-index: 1;
     animation: mGlow 18s ease-in-out infinite;
   }
-
   @keyframes mGlow {
     0%,100% { transform: scale(1) translate(0,0); }
     50%      { transform: scale(1.1) translate(3%,5%); }
-  }
-
-  /* ── PINNED STAGE ──────────────────────────────────────── */
-  .m-stage {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    overflow: hidden;
   }
 
   /* ── PARTICLES ─────────────────────────────────────────── */
@@ -301,13 +236,14 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     inset: 0;
     z-index: 1;
     pointer-events: none;
+    overflow: hidden;
   }
 
   .particle {
     position: absolute;
     border-radius: 50%;
     background: var(--signal-cyan);
-    box-shadow: 0 0 6px rgba(0,212,255,0.5);
+    box-shadow: 0 0 4px rgba(0,212,255,0.5);
     animation: particleDrift var(--dur, 13s) ease-in-out var(--delay, 0s) infinite alternate;
   }
 
@@ -340,18 +276,17 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0,212,255,0.45) 30%,
-      rgba(0,212,255,0.45) 70%,
+      rgba(0,212,255,0.4) 30%,
+      rgba(0,212,255,0.4) 70%,
       transparent 100%
     );
     min-height: 40px;
   }
-
   .ornament-text {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     letter-spacing: 0.25em;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.4);
     white-space: nowrap;
     margin: 10px 0;
     writing-mode: vertical-rl;
@@ -359,55 +294,12 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
   }
   .ornament-r .ornament-text { transform: rotate(180deg); }
 
-  /* ── SCROLL PROGRESS INDICATOR ─────────────────────────── */
-  .m-progress-track {
-    position: absolute;
-    left: 32px;
-    top: 20%;
-    width: 1px;
-    height: 60vh;
-    background: rgba(255,255,255,0.08);
-    z-index: 4;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .m-progress-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 0;
-    background: linear-gradient(to bottom, var(--signal-cyan), rgba(0,212,255,0.3));
-    transition: none;
-  }
-
-  /* ── ATMOSPHERE SPOTLIGHT ──────────────────────────────── */
-  .m-atmosphere {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(0,212,255,0.08) 0%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 2;
-    border-radius: 50%;
-  }
-
-  /* ── CENTER CONTENT ────────────────────────────────────── */
-  .m-center {
+  /* ── MAIN CONTENT ──────────────────────────────────────── */
+  .manifesto-content {
     position: relative;
     z-index: 4;
-    max-width: 900px;
+    max-width: 860px;
     width: 100%;
-    padding: 0 6rem;
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -415,123 +307,179 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
   }
 
   /* ── SECTION LABEL ─────────────────────────────────────── */
-  .m-label {
+  .manifesto-label {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.875rem;
     margin-bottom: 4rem;
-    will-change: opacity;
+    font-size: 12px;
+    letter-spacing: 0.4em;
+
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 800ms ease, transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .is-revealed .manifesto-label {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  .m-label-line {
-    width: 60px;
-    height: 1px;
-    background: rgba(0,212,255,0.5);
+  .label-bracket {
+    font-family: 'Cinzel', Georgia, serif;
+    font-variant: small-caps;
+    color: rgba(0,212,255,0.4);
+  }
+  .label-dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    opacity: 0.7;
     flex-shrink: 0;
   }
-  .m-label-center {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  .m-delta {
-    width: 9px; height: 9px;
-    opacity: 0.7; flex-shrink: 0;
-  }
-  .m-delta-r { transform: rotate(180deg); }
-  .m-label-text {
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.32em;
-    color: rgba(0,212,255,0.7);
+  .label-text {
+    color: rgba(0,212,255,0.65);
     font-variant: small-caps;
+    font-size: 12px;
+    letter-spacing: 0.4em;
   }
 
   /* ── HEADING ───────────────────────────────────────────── */
-  .m-heading-wrap {
-    will-change: transform, opacity;
-    margin-bottom: 2rem;
-  }
-  .m-heading {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-style: normal;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    line-height: 1.15;
-    color: rgba(255,255,255,0.95);
-    letter-spacing: -0.01em;
-    text-shadow: 0 0 80px rgba(0,212,255,0.2);
+  .manifesto-heading {
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 400;
+    color: rgba(255,255,255,0.96);
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    text-shadow: 0 0 60px rgba(0,212,255,0.15);
+    max-width: 1000px;
     text-align: center;
+    margin-bottom: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2em 0.28em;
   }
-  .m-italic { font-style: italic; }
 
-  /* ── DECLARATIONS ──────────────────────────────────────── */
-  .m-declaration {
+  .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(400ms + var(--i, 0) * 120ms);
+  }
+  .is-revealed .word {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .font-cinzel { font-family: 'Cinzel', Georgia, serif; }
+  /* ONLY "shouldn't" uses Instrument Serif italic */
+  .font-instrument-italic {
     font-family: 'Instrument Serif', Georgia, serif;
     font-style: italic;
-    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-    line-height: 1.45;
-    color: rgba(255,255,255,0.92);
-    text-align: center;
-    max-width: 880px;
-    will-change: transform, opacity;
-    margin: 0;
+    font-weight: 400;
+  }
+
+  /* ── DECLARATIONS ──────────────────────────────────────── */
+  .manifesto-declarations {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 720px;
+    margin-bottom: 5rem;
+  }
+
+  .declaration {
+    position: relative;
+    padding-left: 56px;
+    padding-bottom: 1.75rem;
+    text-align: left;
+
+    /* Geist Regular — the key typography shift */
+    font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif;
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    font-weight: 400;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.55;
+
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 700ms ease, transform 700ms ease;
+    transition-delay: calc(1400ms + var(--d, 0) * 250ms);
+  }
+  .is-revealed .declaration {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Roman numeral mark — Instrument Serif italic, cyan */
+  .dec-mark {
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 0.7em;
+    color: rgba(0,212,255,0.7);
+    line-height: 1;
   }
 
   /* ── SIGNOFF ───────────────────────────────────────────── */
-  .m-signoff {
+  .manifesto-signoff {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
-    margin-top: 2.5rem;
-    will-change: transform, opacity;
+    gap: 0;
+
+    opacity: 0;
+    transition: opacity 800ms ease;
+    transition-delay: 2400ms;
   }
-  .m-signoff-line {
-    width: 60px; height: 1px;
+  .is-revealed .manifesto-signoff {
+    opacity: 1;
+  }
+
+  .signoff-line {
+    width: 60px;
+    height: 1px;
     background: rgba(0,212,255,0.5);
-    margin-bottom: 0.25rem;
+    margin-bottom: 1rem;
   }
-  .m-signoff-name {
+  .signoff-mark {
     font-family: 'Instrument Serif', Georgia, serif;
     font-style: italic;
     font-size: 1.125rem;
-    color: rgba(0,212,255,0.7);
-    letter-spacing: 0.2em;
+    color: rgba(0,212,255,0.75);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
   }
-  .m-signoff-attr {
-    font-family: 'JetBrains Mono', monospace;
+  .signoff-name {
     font-size: 0.625rem;
     letter-spacing: 0.32em;
-    color: rgba(255,255,255,0.38);
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
   }
-
-  /* ── STATIC FALLBACK (reduced-motion) ──────────────────── */
-  .m-static .m-label,
-  .m-static .m-heading-wrap,
-  .m-static .m-declaration,
-  .m-static .m-signoff {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .m-static {
-    height: auto !important;
-    min-height: 100vh;
-    padding: 8rem 2rem;
-    align-items: center;
-  }
-  .m-static .m-center { padding: 0 2rem; }
 
   /* ── MOBILE ────────────────────────────────────────────── */
   @media (max-width: 768px) {
-    .ornament { display: none; }
-    .m-progress-track { display: none; }
-    .m-center {
-      padding: 0 2rem;
-      max-width: 100%;
+    section {
+      padding: 5rem 1.5rem 6rem;
     }
-    .m-heading { font-size: clamp(1.75rem, 7vw, 2.5rem); }
-    .m-declaration { font-size: clamp(1.125rem, 4vw, 1.5rem); }
-    .m-label { margin-bottom: 2.5rem; }
+    .ornament { display: none; }
+    .manifesto-heading {
+      font-size: clamp(2rem, 8vw, 3rem);
+      margin-bottom: 3rem;
+    }
+    .declaration {
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      padding-left: 40px;
+    }
+    .manifesto-declarations { max-width: 100%; }
     .particle:nth-child(odd) { display: none; }
   }
 
@@ -539,10 +487,13 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
   @media (prefers-reduced-motion: reduce) {
     .particle  { animation: none !important; }
     .m-glow    { animation: none !important; }
-    .m-stage   { height: auto !important; min-height: 100vh; padding: 8rem 2rem; }
-    .m-label, .m-heading-wrap, .m-declaration, .m-signoff {
+    .manifesto-label,
+    .word,
+    .declaration,
+    .manifesto-signoff {
       opacity: 1 !important;
       transform: none !important;
+      transition: none !important;
     }
   }
 </style>

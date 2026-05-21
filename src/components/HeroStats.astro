@@ -1,18 +1,17 @@
 ---
-// Hubtown-style scroll-pinned stats section.
-// Outer section is 500vh tall — inner content pins for that entire scroll.
-// 4 chapters transition at 25% scroll-progress intervals.
+// Scroll-pinned stats section.
+// 4 chapters cycle at 25% scroll-progress intervals.
+// Section is 400vh tall — pin matches exactly so no phantom space after.
 ---
 
-<!-- Outer scroll-area container — provides the scroll "runway" -->
 <section id="hero-stats" aria-label="Studio statistics">
-  <!-- Inner pinned frame — GSAP ScrollTrigger pins this -->
   <div class="hero-stats-frame" id="hero-stats-frame">
+
     <!-- Left vertical thread line -->
     <div class="stats-thread" aria-hidden="true"></div>
 
-    <!-- Chapter 0: INTENTION -->
-    <div class="stat-chapter active" data-chapter="0" role="region" aria-label="Intention">
+    <!-- Chapter 0: INTENTION — no 'active' in HTML, GSAP controls all opacity -->
+    <div class="stat-chapter" data-chapter="0" role="region" aria-label="Intention">
       <p class="chapter-eyebrow font-cinzel">[ INTENTION ]</p>
       <p class="chapter-stat font-serif">
         <span class="stat-num font-mono" data-final="8959">0</span>&hairsp;lines
@@ -57,12 +56,38 @@
 
     <!-- Right ambient glow -->
     <div class="stats-ambient" aria-hidden="true"></div>
+
   </div>
 </section>
 
 <script>
   (() => {
-    // GSAP + ScrollTrigger
+    // ── Reduced motion: static chapter 0 only ──────────────
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const ch0 = document.querySelector<HTMLElement>('.stat-chapter[data-chapter="0"]');
+      if (ch0) {
+        ch0.style.opacity = '1';
+        ch0.style.transform = 'translateY(0)';
+      }
+      return;
+    }
+
+    // ── Mobile: static, show only chapter 0 ────────────────
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      const ch0 = document.querySelector<HTMLElement>('.stat-chapter[data-chapter="0"]');
+      if (ch0) {
+        ch0.style.opacity = '1';
+        ch0.style.transform = 'translateY(0)';
+        // Tween the number on mobile
+        const numEl = ch0.querySelector<HTMLElement>('.stat-num');
+        if (numEl && numEl.dataset['final']) {
+          tweenNumber(numEl, parseInt(numEl.dataset['final'], 10));
+        }
+      }
+      return;
+    }
+
+    // ── GSAP setup ──────────────────────────────────────────
     const loadGSAP = async () => {
       const [{ gsap }, { ScrollTrigger }] = await Promise.all([
         import('gsap'),
@@ -76,44 +101,57 @@
 
       if (!frame || !section || !chapters.length) return;
 
-      // Reduced motion: don't animate, just show chapter 0
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        chapters[0]?.classList.add('active');
-        return;
+      // ── CRITICAL: set ALL chapters to opacity 0 first ───
+      // Never rely on CSS class for the initial visible state —
+      // use GSAP inline styles exclusively to avoid conflicts.
+      gsap.set(chapters, { opacity: 0, y: 20, pointerEvents: 'none' });
+      // Show chapter 0 immediately
+      gsap.set(chapters[0]!, { opacity: 1, y: 0, pointerEvents: 'auto' });
+
+      // Tween the number in chapter 0 on load
+      const initNum = chapters[0]?.querySelector<HTMLElement>('.stat-num');
+      if (initNum && initNum.dataset['final']) {
+        tweenNumber(initNum, parseInt(initNum.dataset['final'], 10));
       }
 
       let activeIndex = 0;
 
-      function tweenNumber(el: HTMLElement, target: number) {
-        const start = performance.now();
-        const dur   = 800;
-        function step(now: number) {
-          const p = Math.min((now - start) / dur, 1);
-          const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-          el.textContent = String(Math.round(e * target));
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
       function showChapter(index: number) {
         if (index === activeIndex) return;
+
         const outEl = chapters[activeIndex];
         const inEl  = chapters[index];
         if (!outEl || !inEl) return;
 
+        // ── Use overwrite: true to kill conflicting animations ──
+        // This is the fix for the "all chapters visible" bug:
+        // without overwrite, rapid scroll fires multiple competing
+        // gsap.to() calls on the same element.
         gsap.to(outEl, {
           opacity: 0,
-          y: -20,
-          duration: 0.4,
+          y: -24,
+          duration: 0.35,
           ease: 'power2.out',
-          onComplete: () => outEl.classList.remove('active'),
+          overwrite: true,
+          onComplete: () => {
+            gsap.set(outEl, { pointerEvents: 'none' });
+          },
         });
 
-        inEl.classList.add('active');
-        gsap.fromTo(inEl,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', delay: 0.1 }
+        gsap.fromTo(
+          inEl,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            ease: 'power2.out',
+            delay: 0.08,
+            overwrite: true,
+            onStart: () => {
+              gsap.set(inEl, { pointerEvents: 'auto' });
+            },
+          }
         );
 
         // Tween numbers in the incoming chapter
@@ -125,12 +163,6 @@
         activeIndex = index;
       }
 
-      // Initial number tween for chapter 0
-      const initNum = chapters[0]?.querySelector<HTMLElement>('.stat-num');
-      if (initNum && initNum.dataset['final']) {
-        tweenNumber(initNum, parseInt(initNum.dataset['final'], 10));
-      }
-
       ScrollTrigger.create({
         trigger: '#hero-stats',
         pin: '#hero-stats-frame',
@@ -139,22 +171,33 @@
         pinSpacing: false,
         anticipatePin: 1,
         onUpdate(self) {
+          // Floor progress × 4 to get chapter index 0–3
           const idx = Math.min(Math.floor(self.progress * 4), 3);
           showChapter(idx);
         },
       });
     };
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => loadGSAP(), { timeout: 3000 });
-    } else {
-      setTimeout(() => loadGSAP(), 500);
-    }
+    // Load immediately — pin must be set before user scrolls to this section
+    setTimeout(loadGSAP, 0);
   })();
+
+  // ── Number tween utility ─────────────────────────────────
+  function tweenNumber(el: HTMLElement, target: number) {
+    const start = performance.now();
+    const dur   = 800;
+    function step(now: number) {
+      const p = Math.min((now - start) / dur, 1);
+      const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+      el.textContent = String(Math.round(e * target));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
 </script>
 
 <style>
-  /* Outer section — provides the scroll runway (4× viewport = 4 chapters, matching pin end) */
+  /* Outer section — scroll runway. Height matches GSAP pin end (+=400vh). */
   #hero-stats {
     position: relative;
     height: 400vh;
@@ -208,7 +251,11 @@
     pointer-events: none;
   }
 
-  /* ── CHAPTERS ────────────────────────────────────────── */
+  /* ── CHAPTERS ────────────────────────────────────────────
+   * ALL chapters start hidden via CSS.
+   * GSAP controls opacity from this 0 baseline using inline
+   * styles + overwrite:true — no CSS class toggles.
+   * ──────────────────────────────────────────────────────── */
   .stat-chapter {
     position: absolute;
     left: 12vw;
@@ -216,19 +263,13 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    opacity: 0;
-    transform: translateY(20px);
     pointer-events: none;
     max-width: 700px;
-  }
-
-  .stat-chapter.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    transition:
-      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* CRITICAL: CSS baseline opacity:0 so all chapters are
+     * invisible before GSAP initialises. Without this, all 4
+     * chapters render at full opacity (browser default = 1). */
+    opacity: 0;
+    transform: translateY(20px);
   }
 
   /* Eyebrow label */
@@ -242,7 +283,7 @@
     gap: 0.5rem;
   }
 
-  /* Main stat — large Instrument Serif */
+  /* Main stat — large Instrument Serif italic */
   .chapter-stat {
     font-family: 'Instrument Serif', Georgia, serif;
     font-style: italic;
@@ -252,9 +293,10 @@
     letter-spacing: -0.02em;
   }
 
-  /* Numeric counter inside stat */
+  /* Numeric counter */
   .stat-num {
     font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
     font-variant-numeric: tabular-nums;
   }
 
@@ -264,17 +306,18 @@
     color: rgba(232, 237, 245, 0.6);
     line-height: 1.6;
     max-width: 480px;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 
-  /* ── MOBILE ──────────────────────────────────────────── */
+  /* ── MOBILE ──────────────────────────────────────────────
+   * Collapse to static single chapter — pinning is too complex.
+   * ──────────────────────────────────────────────────────── */
   @media (max-width: 768px) {
-    /* Collapse pinned section on mobile — too complex for small screens */
     #hero-stats {
       height: auto;
       min-height: 70vh;
     }
     .hero-stats-frame {
-      position: relative;
       height: auto;
       padding: 6rem 2rem;
     }
@@ -282,11 +325,9 @@
       position: relative;
       left: 0;
       right: 0;
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
     }
-    /* Show only chapter 0 on mobile */
-    .stat-chapter:not([data-chapter="0"]) { display: none; }
+    .stat-chapter:not([data-chapter="0"]) {
+      display: none;
+    }
   }
 </style>

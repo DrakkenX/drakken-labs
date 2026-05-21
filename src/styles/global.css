@@ -588,7 +588,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px 2rem;
+  padding: 28px 2rem;  /* tightened: was 48px, max 80px total vertical */
   gap: 0;
   overflow: hidden;
 }
