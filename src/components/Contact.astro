@@ -4,205 +4,212 @@ import SectionAnchor from './SectionAnchor.astro';
 
 <section id="contact" aria-labelledby="contact-heading">
 
-  <!-- //06 Section anchor — absolute so it floats above the two-column form layout -->
-  <SectionAnchor number="06" label="Begin the Work" class="sa-absolute" />
-
   <!-- Ambient glow -->
   <div class="contact-glow" aria-hidden="true"></div>
 
-  <div class="section-inner" id="contact-inner">
+  <!-- ── Aligned container: anchor + two-column grid share same left edge ── -->
+  <div class="ct-container" id="contact-inner">
 
-    <!-- ─── LEFT: EDITORIAL INVITATION ──────────────────── -->
-    <div class="ct-left">
-      <span class="ct-frame-label font-cinzel">[ ESTABLISH CONTACT ]</span>
+    <!-- //06 Section anchor — IN FLOW, aligned with container left edge -->
+    <SectionAnchor number="06" label="Begin the Work" />
 
-      <h2 id="contact-heading" class="ct-heading">
-        Begin the <em class="ct-italic">Work.</em>
-      </h2>
+    <!-- Two-column grid: 45% editorial / 55% form -->
+    <div class="ct-grid">
 
-      <p class="ct-para">
-        Initial contact within 24 hours. Replies are personal, written
-        by Han Myo Naing. No agencies, no junior pipeline. The same
-        person who shipped AEGIS reads your message.
-      </p>
+      <!-- ─── LEFT: EDITORIAL INVITATION ──────────────────── -->
+      <div class="ct-left">
+        <span class="ct-frame-label font-cinzel">[ ESTABLISH CONTACT ]</span>
 
-      <div class="ct-blocks">
-        <div class="ct-block">
-          <div class="ct-accent" aria-hidden="true"></div>
-          <div class="ct-block-inner">
-            <span class="ct-block-label font-mono">DIRECT EMAIL</span>
-            <a href="mailto:hello@drakkenlabs.com" class="ct-block-value">
-              hello@drakkenlabs.com
-            </a>
+        <h2 id="contact-heading" class="ct-heading">
+          Begin the <em class="ct-italic">Work.</em>
+        </h2>
+
+        <p class="ct-para">
+          Initial contact within 24 hours. Replies are personal, written
+          by Han Myo Naing. No agencies, no junior pipeline. The same
+          person who shipped AEGIS reads your message.
+        </p>
+
+        <div class="ct-blocks">
+          <div class="ct-block">
+            <div class="ct-accent" aria-hidden="true"></div>
+            <div class="ct-block-inner">
+              <span class="ct-block-label font-mono">DIRECT EMAIL</span>
+              <a href="mailto:hello@drakkenlabs.com" class="ct-block-value">
+                hello@drakkenlabs.com
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div class="ct-block">
-          <div class="ct-accent" aria-hidden="true"></div>
-          <div class="ct-block-inner">
-            <span class="ct-block-label font-mono">OPERATING HOURS</span>
-            <span class="ct-block-value ct-block-text">GMT+8 · 09:00 — 22:00 · MON–SAT</span>
+          <div class="ct-block">
+            <div class="ct-accent" aria-hidden="true"></div>
+            <div class="ct-block-inner">
+              <span class="ct-block-label font-mono">OPERATING HOURS</span>
+              <span class="ct-block-value ct-block-text">GMT+8 · 09:00 — 22:00 · MON–SAT</span>
+            </div>
           </div>
-        </div>
 
-        <div class="ct-block">
-          <div class="ct-accent" aria-hidden="true"></div>
-          <div class="ct-block-inner">
-            <span class="ct-block-label font-mono">RESPONSE TIME</span>
-            <span class="ct-block-value ct-block-text">≤ 24 HOURS · TYPICALLY &lt; 4</span>
+          <div class="ct-block">
+            <div class="ct-accent" aria-hidden="true"></div>
+            <div class="ct-block-inner">
+              <span class="ct-block-label font-mono">RESPONSE TIME</span>
+              <span class="ct-block-value ct-block-text">≤ 24 HOURS · TYPICALLY &lt; 4</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <p class="ct-location font-mono">Built in Malaysia · Operating worldwide</p>
-    </div>
+      <!-- ─── RIGHT: THE FORM ──────────────────────────────── -->
+      <div class="ct-right">
+        <div class="form-frame" id="form-frame">
+          <span class="fcorner fcorner-tl" aria-hidden="true"></span>
+          <span class="fcorner fcorner-tr" aria-hidden="true"></span>
+          <span class="fcorner fcorner-bl" aria-hidden="true"></span>
+          <span class="fcorner fcorner-br" aria-hidden="true"></span>
 
-    <!-- ─── RIGHT: THE FORM ──────────────────────────────── -->
-    <div class="ct-right">
-      <div class="form-frame" id="form-frame">
-        <span class="fcorner fcorner-tl" aria-hidden="true"></span>
-        <span class="fcorner fcorner-tr" aria-hidden="true"></span>
-        <span class="fcorner fcorner-bl" aria-hidden="true"></span>
-        <span class="fcorner fcorner-br" aria-hidden="true"></span>
-
-        <!-- Form inner content (hidden on success) -->
-        <div id="form-inner">
-          <div class="form-intro">
-            <span class="form-intro-label font-cinzel">[ INITIATE BRIEF ]</span>
-            <p class="form-intro-sub ct-italic">
-              A few details so we can respond with substance, not platitudes.
-            </p>
-          </div>
-
-          <form id="contact-form" novalidate>
-
-            <div class="form-row">
-              <div class="form-field ff1">
-                <label for="cf-name" class="form-label font-cinzel">YOUR NAME</label>
-                <input
-                  type="text"
-                  id="cf-name"
-                  name="name"
-                  class="form-input"
-                  placeholder="Han Myo Naing"
-                  required
-                  autocomplete="name"
-                />
-              </div>
-              <div class="form-field ff2">
-                <label for="cf-email" class="form-label font-cinzel">EMAIL ADDRESS</label>
-                <input
-                  type="email"
-                  id="cf-email"
-                  name="email"
-                  class="form-input"
-                  placeholder="you@company.com"
-                  required
-                  autocomplete="email"
-                />
-              </div>
+          <!-- Form inner content (hidden on success) -->
+          <div id="form-inner">
+            <div class="form-intro">
+              <span class="form-intro-label font-cinzel">[ INITIATE BRIEF ]</span>
+              <p class="form-intro-sub ct-italic">
+                A few details so we can respond with substance, not platitudes.
+              </p>
             </div>
 
-            <div class="form-row">
-              <div class="form-field ff3">
-                <label for="cf-type" class="form-label font-cinzel">PROJECT TYPE</label>
-                <div class="form-select-wrap">
-                  <select id="cf-type" name="type" class="form-select" required>
-                    <option value="" disabled selected>Select type…</option>
-                    <option value="desktop">Custom desktop app</option>
-                    <option value="ai">AI integration / automation</option>
-                    <option value="frontend">Frontend craft / interface design</option>
-                    <option value="strategy">Strategic consultation</option>
-                    <option value="other">Something else</option>
-                  </select>
-                  <span class="select-chevron" aria-hidden="true">↓</span>
+            <form id="contact-form" novalidate>
+
+              <div class="form-row">
+                <div class="form-field ff1">
+                  <label for="cf-name" class="form-label font-cinzel">YOUR NAME</label>
+                  <input
+                    type="text"
+                    id="cf-name"
+                    name="name"
+                    class="form-input"
+                    placeholder="Han Myo Naing"
+                    required
+                    autocomplete="name"
+                  />
+                </div>
+                <div class="form-field ff2">
+                  <label for="cf-email" class="form-label font-cinzel">EMAIL ADDRESS</label>
+                  <input
+                    type="email"
+                    id="cf-email"
+                    name="email"
+                    class="form-input"
+                    placeholder="you@company.com"
+                    required
+                    autocomplete="email"
+                  />
                 </div>
               </div>
-              <div class="form-field ff4">
-                <label for="cf-budget" class="form-label font-cinzel">BUDGET RANGE</label>
-                <div class="form-select-wrap">
-                  <select id="cf-budget" name="budget" class="form-select">
-                    <option value="" disabled selected>Approximate budget…</option>
-                    <option value="lt3k">Under USD 3K</option>
-                    <option value="3-10k">USD 3K — 10K</option>
-                    <option value="10-30k">USD 10K — 30K</option>
-                    <option value="gt30k">USD 30K+</option>
-                    <option value="open">Open to discussion</option>
-                  </select>
-                  <span class="select-chevron" aria-hidden="true">↓</span>
+
+              <div class="form-row">
+                <div class="form-field ff3">
+                  <label for="cf-type" class="form-label font-cinzel">PROJECT TYPE</label>
+                  <div class="form-select-wrap">
+                    <select id="cf-type" name="type" class="form-select" required>
+                      <option value="" disabled selected>Select type…</option>
+                      <option value="desktop">Custom desktop app</option>
+                      <option value="ai">AI integration / automation</option>
+                      <option value="frontend">Frontend craft / interface design</option>
+                      <option value="strategy">Strategic consultation</option>
+                      <option value="other">Something else</option>
+                    </select>
+                    <span class="select-chevron" aria-hidden="true">↓</span>
+                  </div>
+                </div>
+                <div class="form-field ff4">
+                  <label for="cf-budget" class="form-label font-cinzel">BUDGET RANGE</label>
+                  <div class="form-select-wrap">
+                    <select id="cf-budget" name="budget" class="form-select">
+                      <option value="" disabled selected>Approximate budget…</option>
+                      <option value="lt3k">Under USD 3K</option>
+                      <option value="3-10k">USD 3K — 10K</option>
+                      <option value="10-30k">USD 10K — 30K</option>
+                      <option value="gt30k">USD 30K+</option>
+                      <option value="open">Open to discussion</option>
+                    </select>
+                    <span class="select-chevron" aria-hidden="true">↓</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="form-field ff5">
-              <label for="cf-message" class="form-label font-cinzel">YOUR BRIEF</label>
-              <textarea
-                id="cf-message"
-                name="message"
-                class="form-textarea"
-                placeholder="Describe your project, the problem it solves, and your timeline…"
-                rows="4"
-                required
-              ></textarea>
-            </div>
+              <div class="form-field ff5">
+                <label for="cf-message" class="form-label font-cinzel">YOUR BRIEF</label>
+                <textarea
+                  id="cf-message"
+                  name="message"
+                  class="form-textarea"
+                  placeholder="Describe your project, the problem it solves, and your timeline…"
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
 
-            <div class="form-sep" aria-hidden="true">
-              <div class="form-sep-line"></div>
-              <span class="form-privacy font-mono">Form encrypted via TLS · Replies from a real human</span>
-            </div>
+              <div class="form-sep" aria-hidden="true">
+                <div class="form-sep-line"></div>
+                <span class="form-privacy font-mono">Form encrypted via TLS · Replies from a real human</span>
+              </div>
 
-            <div class="form-actions">
-              <button type="submit" id="cf-submit" class="submit-btn font-mono">
-                <span id="btn-label">SEND BRIEF →</span>
-                <span id="btn-sending" class="btn-sending" hidden>
-                  <span></span><span></span><span></span>
-                </span>
-              </button>
-            </div>
+              <div class="form-actions">
+                <button type="submit" id="cf-submit" class="submit-btn font-mono">
+                  <span id="btn-label">SEND BRIEF →</span>
+                  <span id="btn-sending" class="btn-sending" hidden>
+                    <span></span><span></span><span></span>
+                  </span>
+                </button>
+              </div>
 
-            <div id="form-error" class="form-error font-mono" hidden>
-              Signal interrupted. Try again or email directly:
-              <a href="mailto:hello@drakkenlabs.com">hello@drakkenlabs.com</a>
-            </div>
+              <div id="form-error" class="form-error font-mono" hidden>
+                Signal interrupted. Try again or email directly:
+                <a href="mailto:hello@drakkenlabs.com">hello@drakkenlabs.com</a>
+              </div>
 
-          </form>
-        </div>
-
-        <!-- Success block (shown after submit) -->
-        <div id="form-success-block" class="form-success-block" hidden>
-          <div class="success-icon" aria-hidden="true">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="32" cy="32" r="29" stroke="#00d4ff" stroke-width="1.5" opacity="0.3"/>
-              <circle cx="32" cy="32" r="21" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
-              <polyline points="19,33 27,41 45,23"
-                stroke="#00d4ff" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            </form>
           </div>
-          <h3 class="success-heading font-cinzel">Brief received.</h3>
-          <p class="success-sub">Reply within 24 hours.</p>
-          <span id="success-timer" class="success-timer font-mono">
-            [ SIGNAL CONFIRMED · T-00:00:00 ]
-          </span>
-        </div>
 
+          <!-- Success block (shown after submit) -->
+          <div id="form-success-block" class="form-success-block" hidden>
+            <div class="success-icon" aria-hidden="true">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="29" stroke="#00d4ff" stroke-width="1.5" opacity="0.3"/>
+                <circle cx="32" cy="32" r="21" stroke="#00d4ff" stroke-width="1" opacity="0.2"/>
+                <polyline points="19,33 27,41 45,23"
+                  stroke="#00d4ff" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="success-heading font-cinzel">Brief received.</h3>
+            <p class="success-sub">Reply within 24 hours.</p>
+            <span id="success-timer" class="success-timer font-mono">
+              [ SIGNAL CONFIRMED · T-00:00:00 ]
+            </span>
+          </div>
+
+        </div>
       </div>
+
     </div>
+    <!-- /ct-grid -->
 
   </div>
+  <!-- /ct-container -->
+
 </section>
 
 <script>
   (() => {
-    // ── Form submission ────────────────────────────────────
-    const form       = document.getElementById('contact-form') as HTMLFormElement | null;
-    const submitBtn  = document.getElementById('cf-submit')   as HTMLButtonElement | null;
-    const btnLabel   = document.getElementById('btn-label')   as HTMLElement | null;
-    const btnSending = document.getElementById('btn-sending') as HTMLElement | null;
-    const formInner  = document.getElementById('form-inner')  as HTMLElement | null;
-    const successBlock = document.getElementById('form-success-block') as HTMLElement | null;
-    const errorEl    = document.getElementById('form-error')  as HTMLElement | null;
-    const timerEl    = document.getElementById('success-timer') as HTMLElement | null;
+    // ── Form submission (unchanged) ────────────────────────
+    const form        = document.getElementById('contact-form')     as HTMLFormElement | null;
+    const submitBtn   = document.getElementById('cf-submit')        as HTMLButtonElement | null;
+    const btnLabel    = document.getElementById('btn-label')        as HTMLElement | null;
+    const btnSending  = document.getElementById('btn-sending')      as HTMLElement | null;
+    const formInner   = document.getElementById('form-inner')       as HTMLElement | null;
+    const successBlock= document.getElementById('form-success-block') as HTMLElement | null;
+    const errorEl     = document.getElementById('form-error')       as HTMLElement | null;
+    const timerEl     = document.getElementById('success-timer')    as HTMLElement | null;
 
     let timerInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -220,15 +227,12 @@ import SectionAnchor from './SectionAnchor.astro';
 
     function showSuccess() {
       if (!formInner || !successBlock) return;
-      // Fade form out
       formInner.style.transition = 'opacity 400ms ease, transform 400ms ease';
       formInner.style.opacity = '0';
       formInner.style.transform = 'translateY(-8px)';
-
       setTimeout(() => {
         formInner.hidden = true;
         successBlock.hidden = false;
-        // Trigger fade-in (needs a frame to register initial state)
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             successBlock.classList.add('success-visible');
@@ -240,13 +244,9 @@ import SectionAnchor from './SectionAnchor.astro';
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
+      if (!form.checkValidity()) { form.reportValidity(); return; }
       if (!submitBtn || !btnLabel || !btnSending) return;
 
-      // Loading state
       submitBtn.disabled = true;
       btnLabel.hidden = true;
       btnSending.hidden = false;
@@ -258,7 +258,6 @@ import SectionAnchor from './SectionAnchor.astro';
           body: new FormData(form),
           headers: { Accept: 'application/json' },
         });
-
         if (res.ok) {
           form.reset();
           showSuccess();
@@ -268,7 +267,6 @@ import SectionAnchor from './SectionAnchor.astro';
         }
       } catch {
         if (errorEl) errorEl.hidden = false;
-        // Reset button
         btnLabel.hidden = false;
         btnSending.hidden = true;
         submitBtn.disabled = false;
@@ -292,7 +290,7 @@ import SectionAnchor from './SectionAnchor.astro';
           obs.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.2 }
     );
     obs.observe(section);
   })();
@@ -301,7 +299,8 @@ import SectionAnchor from './SectionAnchor.astro';
 <style>
   /* ── SECTION BASE ──────────────────────────────────────── */
   section {
-    padding: 8rem 2rem;
+    /* padding-inline is handled by ct-container so anchor aligns with content */
+    padding-block: 10rem;
     background: var(--void);
     position: relative;
     overflow: hidden;
@@ -315,25 +314,33 @@ import SectionAnchor from './SectionAnchor.astro';
     height: 700px;
     top: -120px;
     right: -80px;
-    background: radial-gradient(ellipse at center, rgba(0,212,255,0.05) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
     pointer-events: none;
     animation: cGlow 22s ease-in-out infinite;
   }
   @keyframes cGlow {
-    0%,100% { transform: scale(1) translate(0,0); }
-    50%      { transform: scale(1.08) translate(-3%,5%); }
+    0%, 100% { transform: scale(1)    translate(0,   0);  }
+    50%       { transform: scale(1.08) translate(-3%, 5%); }
   }
 
-  /* ── LAYOUT ────────────────────────────────────────────── */
-  .section-inner {
-    max-width: 1100px;
+  /* ── ALIGNED CONTAINER ─────────────────────────────────── */
+  /* SectionAnchor + ct-grid share this container's left edge  */
+  .ct-container {
+    max-width: 1280px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    gap: 5rem;
-    align-items: start;
+    padding-inline: clamp(24px, 5vw, 80px);
+    display: flex;
+    flex-direction: column;
     position: relative;
     z-index: 1;
+  }
+
+  /* ── TWO-COLUMN GRID: 45% / 55% ───────────────────────── */
+  .ct-grid {
+    display: grid;
+    grid-template-columns: 9fr 11fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
   }
 
   /* ── LEFT COLUMN ───────────────────────────────────────── */
@@ -341,35 +348,40 @@ import SectionAnchor from './SectionAnchor.astro';
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding-top: 0.5rem;
   }
 
-  /* Frame label */
+  /* Frame label / eyebrow */
   .ct-frame-label {
-    font-size: 0.6875rem;
+    font-size: 12px;
     letter-spacing: 0.32em;
-    color: var(--signal-cyan);
+    color: rgba(0, 212, 255, 0.65);
     font-variant: small-caps;
     opacity: 0;
     transform: translateY(14px);
-    transition: opacity 500ms ease 0ms, transform 500ms ease 0ms;
+    transition:
+      opacity 500ms cubic-bezier(0.16, 1, 0.3, 1) 400ms,
+      transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 400ms;
   }
   .ct-visible .ct-frame-label { opacity: 0.9; transform: none; }
 
-  /* Heading */
+  /* Heading — larger, tighter tracking */
   .ct-heading {
     font-family: 'Cinzel', Georgia, serif;
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: clamp(3.5rem, 8vw, 6rem);  /* 56px – 96px */
     font-weight: 400;
-    color: rgba(255,255,255,0.95);
-    line-height: 1.1;
-    letter-spacing: 0.04em;
-    text-shadow: 0 0 50px rgba(0,212,255,0.15);
+    color: rgba(255, 255, 255, 0.96);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 60px rgba(0, 212, 255, 0.15);
+    margin-bottom: 0;
     opacity: 0;
     transform: translateY(16px);
-    transition: opacity 600ms ease 100ms, transform 600ms ease 100ms;
+    transition:
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1) 600ms,
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1) 600ms;
   }
   .ct-visible .ct-heading { opacity: 1; transform: none; }
+
   .ct-italic {
     font-family: 'Instrument Serif', Georgia, serif;
     font-style: italic;
@@ -378,39 +390,46 @@ import SectionAnchor from './SectionAnchor.astro';
 
   /* Editorial paragraph */
   .ct-para {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.65);
+    font-family: 'Geist', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.72);
     line-height: 1.7;
-    max-width: 380px;
+    max-width: 460px;
     opacity: 0;
     transform: translateY(12px);
-    transition: opacity 500ms ease 400ms, transform 500ms ease 400ms;
+    transition:
+      opacity 500ms cubic-bezier(0.16, 1, 0.3, 1) 800ms,
+      transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 800ms;
   }
   .ct-visible .ct-para { opacity: 1; transform: none; }
 
-  /* Contact blocks */
-  .ct-blocks { display: flex; flex-direction: column; gap: 0; }
+  /* Contact info blocks */
+  .ct-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
 
   .ct-block {
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
     padding: 1rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 500ms ease, transform 500ms ease;
   }
-  .ct-block:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+  .ct-block:first-child { border-top: 1px solid rgba(255, 255, 255, 0.06); }
 
-  .ct-visible .ct-block:nth-child(1) { opacity: 1; transform: none; transition-delay: 600ms; }
-  .ct-visible .ct-block:nth-child(2) { opacity: 1; transform: none; transition-delay: 700ms; }
-  .ct-visible .ct-block:nth-child(3) { opacity: 1; transform: none; transition-delay: 800ms; }
+  .ct-visible .ct-block:nth-child(1) { opacity: 1; transform: none; transition-delay: 900ms;  }
+  .ct-visible .ct-block:nth-child(2) { opacity: 1; transform: none; transition-delay: 980ms;  }
+  .ct-visible .ct-block:nth-child(3) { opacity: 1; transform: none; transition-delay: 1060ms; }
 
   .ct-accent {
     width: 2px;
     height: 34px;
-    background: rgba(0,212,255,0.5);
+    background: rgba(0, 212, 255, 0.5);
     flex-shrink: 0;
     margin-top: 3px;
     border-radius: 1px;
@@ -423,9 +442,9 @@ import SectionAnchor from './SectionAnchor.astro';
   }
 
   .ct-block-label {
-    font-size: 0.5625rem;
+    font-size: 9px;
     letter-spacing: 0.32em;
-    color: rgba(255,255,255,0.38);
+    color: rgba(255, 255, 255, 0.38);
   }
 
   .ct-block-value {
@@ -435,40 +454,33 @@ import SectionAnchor from './SectionAnchor.astro';
     transition: opacity 180ms ease;
   }
   a.ct-block-value:hover { opacity: 0.75; text-decoration: underline; }
-  .ct-block-text { color: rgba(255,255,255,0.8); }
+  .ct-block-text { color: rgba(255, 255, 255, 0.8); }
 
-  /* Location footer */
-  .ct-location {
-    font-size: 0.625rem;
-    letter-spacing: 0.25em;
-    color: rgba(255,255,255,0.35);
-    opacity: 0;
-    transition: opacity 500ms ease 900ms;
-  }
-  .ct-visible .ct-location { opacity: 1; }
-
-  /* ── RIGHT COLUMN / FORM FRAME ─────────────────────────── */
+  /* ── RIGHT COLUMN / FORM ───────────────────────────────── */
   .ct-right {
     opacity: 0;
     transform: scale(0.97);
-    transition: opacity 700ms cubic-bezier(0.23,1,0.32,1) 800ms,
-                transform 700ms cubic-bezier(0.23,1,0.32,1) 800ms;
+    transition:
+      opacity 700ms cubic-bezier(0.23, 1, 0.32, 1) 1000ms,
+      transform 700ms cubic-bezier(0.23, 1, 0.32, 1) 1000ms;
   }
   .ct-visible .ct-right { opacity: 1; transform: scale(1); }
 
+  /* Sacred frame — glassmorphism with octagonal clip + corner ticks */
   .form-frame {
-    background: rgba(12,14,21,0.65);
+    background: rgba(12, 14, 21, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0,212,255,0.2);
+    border: 1px solid rgba(0, 212, 255, 0.2);
     clip-path: polygon(
       14px 0%, calc(100% - 14px) 0%,
       100% 14px, 100% calc(100% - 14px),
       calc(100% - 14px) 100%, 14px 100%,
       0% calc(100% - 14px), 0% 14px
     );
-    padding: 2.5rem;
+    padding: clamp(32px, 4vw, 56px);
     position: relative;
+    width: 100%;
   }
 
   /* Corner ticks */
@@ -478,27 +490,29 @@ import SectionAnchor from './SectionAnchor.astro';
     height: 12px;
     pointer-events: none;
   }
-  .fcorner-tl { top: 7px;  left: 7px;  border-top: 1px solid var(--signal-cyan); border-left: 1px solid var(--signal-cyan); }
-  .fcorner-tr { top: 7px;  right: 7px; border-top: 1px solid var(--signal-cyan); border-right: 1px solid var(--signal-cyan); }
-  .fcorner-bl { bottom: 7px; left: 7px;  border-bottom: 1px solid var(--signal-cyan); border-left: 1px solid var(--signal-cyan); }
-  .fcorner-br { bottom: 7px; right: 7px; border-bottom: 1px solid var(--signal-cyan); border-right: 1px solid var(--signal-cyan); }
+  .fcorner-tl { top: 7px;    left: 7px;   border-top: 1px solid var(--signal-cyan); border-left: 1px solid var(--signal-cyan);   }
+  .fcorner-tr { top: 7px;    right: 7px;  border-top: 1px solid var(--signal-cyan); border-right: 1px solid var(--signal-cyan);  }
+  .fcorner-bl { bottom: 7px; left: 7px;   border-bottom: 1px solid var(--signal-cyan); border-left: 1px solid var(--signal-cyan); }
+  .fcorner-br { bottom: 7px; right: 7px;  border-bottom: 1px solid var(--signal-cyan); border-right: 1px solid var(--signal-cyan);}
 
   /* ── FORM INTRO ────────────────────────────────────────── */
   .form-intro {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 1.75rem;
+    margin-bottom: 40px;
   }
   .form-intro-label {
-    font-size: 0.6875rem;
+    font-size: 11px;
     letter-spacing: 0.32em;
-    color: rgba(0,212,255,0.65);
+    color: rgba(0, 212, 255, 0.65);
     font-variant: small-caps;
   }
   .form-intro-sub {
-    font-size: 0.8125rem;
-    color: rgba(255,255,255,0.5);
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.55);
     line-height: 1.5;
   }
 
@@ -506,13 +520,13 @@ import SectionAnchor from './SectionAnchor.astro';
   form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 24px;
   }
 
   .form-field {
@@ -523,17 +537,17 @@ import SectionAnchor from './SectionAnchor.astro';
     transform: translateY(8px);
     transition: opacity 400ms ease, transform 400ms ease;
   }
-  .ct-visible .ff1 { opacity: 1; transform: none; transition-delay: 1000ms; }
-  .ct-visible .ff2 { opacity: 1; transform: none; transition-delay: 1080ms; }
-  .ct-visible .ff3 { opacity: 1; transform: none; transition-delay: 1160ms; }
-  .ct-visible .ff4 { opacity: 1; transform: none; transition-delay: 1240ms; }
-  .ct-visible .ff5 { opacity: 1; transform: none; transition-delay: 1320ms; }
+  .ct-visible .ff1 { opacity: 1; transform: none; transition-delay: 1200ms; }
+  .ct-visible .ff2 { opacity: 1; transform: none; transition-delay: 1280ms; }
+  .ct-visible .ff3 { opacity: 1; transform: none; transition-delay: 1360ms; }
+  .ct-visible .ff4 { opacity: 1; transform: none; transition-delay: 1440ms; }
+  .ct-visible .ff5 { opacity: 1; transform: none; transition-delay: 1520ms; }
 
   /* ── FORM INPUTS ───────────────────────────────────────── */
   .form-label {
-    font-size: 0.5625rem;
+    font-size: 10px;
     letter-spacing: 0.32em;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.5);
     font-variant: small-caps;
   }
 
@@ -542,30 +556,34 @@ import SectionAnchor from './SectionAnchor.astro';
   .form-select {
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--text-pure);
-    font-size: 1rem;
+    font-size: 16px;
     font-family: 'Geist', 'Helvetica Neue', sans-serif;
-    padding: 0.875rem 0;
+    padding: 16px 0;
     width: 100%;
     outline: none;
-    transition: border-color 200ms ease;
+    transition:
+      border-color 200ms ease,
+      box-shadow 200ms ease;
     -webkit-appearance: none;
     border-radius: 0;
   }
   .form-input::placeholder,
   .form-textarea::placeholder {
-    color: rgba(255,255,255,0.2);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 15px;
   }
+  /* Focus: border + subtle cyan glow beneath */
   .form-input:focus,
   .form-textarea:focus,
   .form-select:focus {
-    border-bottom-color: rgba(0,212,255,0.6);
+    border-bottom-color: rgba(0, 212, 255, 0.7);
+    box-shadow: 0 4px 12px -4px rgba(0, 212, 255, 0.3);
   }
   .form-select {
     cursor: pointer;
-    color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
   }
   .form-select option { background: #0c0e15; color: #fff; }
 
@@ -575,12 +593,16 @@ import SectionAnchor from './SectionAnchor.astro';
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255,255,255,0.3);
+    color: rgba(255, 255, 255, 0.3);
     font-size: 0.7rem;
     pointer-events: none;
   }
 
-  .form-textarea { resize: vertical; min-height: 100px; line-height: 1.65; }
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.65;
+  }
 
   /* ── FORM SEPARATOR ────────────────────────────────────── */
   .form-sep {
@@ -588,18 +610,18 @@ import SectionAnchor from './SectionAnchor.astro';
     flex-direction: column;
     gap: 0.875rem;
     opacity: 0;
-    transition: opacity 400ms ease 1400ms;
+    transition: opacity 400ms ease 1600ms;
   }
   .ct-visible .form-sep { opacity: 1; }
   .form-sep-line {
     width: 60px;
     height: 1px;
-    background: rgba(0,212,255,0.4);
+    background: rgba(0, 212, 255, 0.4);
   }
   .form-privacy {
-    font-size: 0.5625rem;
+    font-size: 9px;
     letter-spacing: 0.18em;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255, 255, 255, 0.35);
   }
 
   /* ── SUBMIT BUTTON ─────────────────────────────────────── */
@@ -607,7 +629,7 @@ import SectionAnchor from './SectionAnchor.astro';
     display: flex;
     justify-content: flex-end;
     opacity: 0;
-    transition: opacity 400ms ease 1480ms;
+    transition: opacity 400ms ease 1680ms;
   }
   .ct-visible .form-actions { opacity: 1; }
 
@@ -616,11 +638,11 @@ import SectionAnchor from './SectionAnchor.astro';
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    font-size: 0.6875rem;
+    font-size: 11px;
     letter-spacing: 0.2em;
     color: var(--signal-cyan);
-    background: rgba(0,212,255,0.08);
-    border: 1px solid rgba(0,212,255,0.4);
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.4);
     border-radius: 9999px;
     padding: 0.75rem 2rem;
     cursor: pointer;
@@ -633,19 +655,16 @@ import SectionAnchor from './SectionAnchor.astro';
     min-width: 160px;
   }
   .submit-btn:hover:not(:disabled) {
-    background: rgba(0,212,255,0.14);
-    border-color: rgba(0,212,255,0.7);
+    background: rgba(0, 212, 255, 0.14);
+    border-color: rgba(0, 212, 255, 0.7);
     color: #fff;
-    box-shadow: 0 0 24px rgba(0,212,255,0.18);
+    box-shadow: 0 0 24px rgba(0, 212, 255, 0.18);
     transform: translateY(-1px);
   }
   .submit-btn:active:not(:disabled) { transform: scale(0.97); }
-  .submit-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  /* Pulsing dots for loading state */
+  /* Pulsing dots loading state */
   .btn-sending {
     display: inline-flex;
     gap: 4px;
@@ -661,23 +680,23 @@ import SectionAnchor from './SectionAnchor.astro';
   .btn-sending span:nth-child(2) { animation-delay: 0.2s; }
   .btn-sending span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes btnDot {
-    0%,100% { opacity: 1; transform: scale(1); }
-    50%      { opacity: 0.3; transform: scale(0.65); }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.3; transform: scale(0.65); }
   }
 
   /* ── ERROR STATE ───────────────────────────────────────── */
   .form-error {
     padding: 0.875rem 1rem;
-    background: rgba(239,68,68,0.06);
-    border: 1px solid rgba(239,68,68,0.25);
-    font-size: 0.625rem;
+    background: rgba(239, 68, 68, 0.06);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    font-size: 10px;
     letter-spacing: 0.1em;
-    color: rgba(239,68,68,0.85);
+    color: rgba(239, 68, 68, 0.85);
     line-height: 1.6;
     border-radius: 2px;
   }
   .form-error a {
-    color: rgba(239,68,68,0.85);
+    color: rgba(239, 68, 68, 0.85);
     text-decoration: underline;
   }
 
@@ -695,10 +714,7 @@ import SectionAnchor from './SectionAnchor.astro';
     transform: translateY(10px);
     transition: opacity 400ms ease, transform 400ms ease;
   }
-  .form-success-block.success-visible {
-    opacity: 1;
-    transform: none;
-  }
+  .form-success-block.success-visible { opacity: 1; transform: none; }
   .success-icon svg { display: block; }
   .success-heading {
     font-size: 2rem;
@@ -706,21 +722,18 @@ import SectionAnchor from './SectionAnchor.astro';
     color: var(--text-pure);
     letter-spacing: 0.06em;
   }
-  .success-sub {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.6);
-  }
+  .success-sub { font-size: 1rem; color: rgba(255, 255, 255, 0.6); }
   .success-timer {
-    font-size: 0.5625rem;
+    font-size: 9px;
     letter-spacing: 0.25em;
-    color: rgba(0,212,255,0.55);
+    color: rgba(0, 212, 255, 0.55);
     margin-top: 0.25rem;
   }
 
   /* ── REDUCED MOTION ────────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     .ct-frame-label, .ct-heading, .ct-para,
-    .ct-block, .ct-location, .ct-right,
+    .ct-block, .ct-right,
     .form-field, .form-sep, .form-actions {
       opacity: 1 !important;
       transform: none !important;
@@ -730,19 +743,34 @@ import SectionAnchor from './SectionAnchor.astro';
     .btn-sending span { animation: none; }
   }
 
-  /* ── MOBILE ────────────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .section-inner {
+  /* ── RESPONSIVE ────────────────────────────────────────── */
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .ct-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 5vw, 64px);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    section {
+      padding-block: 5rem;
+    }
+    .ct-grid {
       grid-template-columns: 1fr;
       gap: 3.5rem;
+    }
+    .ct-heading {
+      font-size: clamp(2.5rem, 10vw, 3.5rem);
+      line-height: 1.05;
     }
     .ct-right { margin-top: 0; }
   }
 
   @media (max-width: 640px) {
-    section { padding: 5rem 1.25rem; }
     .form-frame { padding: 1.75rem 1.5rem; }
-    .form-row { grid-template-columns: 1fr; gap: 1.25rem; }
+    .form-row   { grid-template-columns: 1fr; gap: 1.25rem; }
     .form-actions { justify-content: stretch; }
     .submit-btn { width: 100%; }
   }
