@@ -1,85 +1,243 @@
 ---
-// Custom cursor: 8px dot + 32px ring with damped lag.
-// Desktop/pointer-fine only. Respects reduced-motion.
+// Custom cursor: dot + lagged ring + cursor aurora + trailing particles.
+// Desktop / pointer-fine only. Respects reduced-motion.
 ---
 
-<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<!-- Element 1: Inner dot — instant 1:1 follow -->
+<div class="cursor-dot"  id="cursor-dot"  aria-hidden="true"></div>
+<!-- Element 2: Outer ring — damped lag, scale on hover -->
 <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+<!-- Element 4: Cursor aurora — large soft glow, slowest lag -->
+<div class="cursor-aurora" id="cursor-aurora" aria-hidden="true"></div>
 
 <script>
   (() => {
-  const dot  = document.getElementById('cursor-dot')  as HTMLElement | null;
-  const ring = document.getElementById('cursor-ring') as HTMLElement | null;
+    const dot    = document.getElementById('cursor-dot')    as HTMLElement | null;
+    const ring   = document.getElementById('cursor-ring')   as HTMLElement | null;
+    const aurora = document.getElementById('cursor-aurora') as HTMLElement | null;
 
-  if (!dot || !ring) return;
-  if (!window.matchMedia('(pointer: fine)').matches) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!dot || !ring) return;
+    if (!window.matchMedia('(pointer: fine)').matches) return;
 
-  // Alias after null guard so TypeScript knows they're non-null
-  const dotEl  = dot;
-  const ringEl = ring;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  let dotX  = 0, dotY  = 0;
-  let ringX = 0, ringY = 0;
-  let mouseX = 0, mouseY = 0;
-  let raf: number;
-  let isOver = false;
+    const dotEl    = dot;
+    const ringEl   = ring;
+    const auroraEl = aurora;
 
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dotEl.classList.add('visible');
-    ringEl.classList.add('visible');
-  });
+    let dotX    = 0, dotY    = 0;
+    let ringX   = 0, ringY   = 0;
+    let auroraX = 0, auroraY = 0;
+    let mouseX  = 0, mouseY  = 0;
+    let visible = false;
 
-  document.addEventListener('mouseleave', () => {
-    dotEl.classList.remove('visible');
-    ringEl.classList.remove('visible');
-  });
+    // Element 3: Trailing particles — spawned on mousemove
+    let lastParticleTime = 0;
+    let particleCount    = 0;
+    const MAX_PARTICLES  = 30;
 
-  // Large state on interactive elements
-  document.querySelectorAll<HTMLElement>(
-    'a, button, [role="button"], input, textarea, select, label'
-  ).forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      ringEl.classList.add('large');
-      isOver = true;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (!visible) {
+        dotEl.classList.add('visible');
+        ringEl.classList.add('visible');
+        auroraEl?.classList.add('visible');
+        visible = true;
+      }
+
+      // Trailing particles — every 60ms while moving (desktop, non-reduced only)
+      if (!prefersReduced) {
+        const now = performance.now();
+        if (now - lastParticleTime > 60 && particleCount < MAX_PARTICLES) {
+          spawnParticle(e.clientX, e.clientY);
+          lastParticleTime = now;
+        }
+      }
     });
-    el.addEventListener('mouseleave', () => {
-      ringEl.classList.remove('large');
-      isOver = false;
+
+    document.addEventListener('mouseleave', () => {
+      dotEl.classList.remove('visible');
+      ringEl.classList.remove('visible');
+      auroraEl?.classList.remove('visible');
+      visible = false;
     });
-  });
 
-  // Click spring — WAAPI, hardware accelerated
-  document.addEventListener('click', () => {
-    ringEl.animate(
-      [
-        { transform: 'translate(-50%,-50%) scale(1)',   opacity: '0.9' },
-        { transform: 'translate(-50%,-50%) scale(1.5)', opacity: '0.3' },
-        { transform: 'translate(-50%,-50%) scale(1)',   opacity: '0.6' },
-      ],
-      { duration: 400, easing: 'cubic-bezier(0.34,1.56,0.64,1)', fill: 'forwards' }
-    );
-  });
+    // Ring: scale up + fill on interactive elements
+    document.querySelectorAll<HTMLElement>(
+      'a, button, [role="button"], input, textarea, select, .m-cta'
+    ).forEach((el) => {
+      el.addEventListener('mouseenter', () => ringEl.classList.add('large'));
+      el.addEventListener('mouseleave', () => ringEl.classList.remove('large'));
+    });
 
-  function tick() {
-    raf = requestAnimationFrame(tick);
+    // Click: spring bounce via WAAPI (hardware-accelerated)
+    document.addEventListener('click', () => {
+      ringEl.animate(
+        [
+          { transform: 'translate(-50%,-50%) scale(1)',   opacity: '0.9' },
+          { transform: 'translate(-50%,-50%) scale(1.5)', opacity: '0.3' },
+          { transform: 'translate(-50%,-50%) scale(1)',   opacity: '0.6' },
+        ],
+        { duration: 400, easing: 'cubic-bezier(0.34,1.56,0.64,1)', fill: 'forwards' }
+      );
+    });
 
-    // Dot — instant
-    dotX = mouseX;
-    dotY = mouseY;
+    // Element 3: Spawn a trailing particle at (x, y) with slight random scatter
+    function spawnParticle(x: number, y: number) {
+      const p = document.createElement('div');
+      p.className = 'cursor-particle';
+      const size = 1.5 + Math.random() * 2;
+      const ox   = (Math.random() - 0.5) * 8;
+      const oy   = (Math.random() - 0.5) * 8;
+      p.style.cssText = [
+        `width:${size}px`,
+        `height:${size}px`,
+        `left:${x + ox}px`,
+        `top:${y + oy}px`,
+        `margin-left:-${size / 2}px`,
+        `margin-top:-${size / 2}px`,
+      ].join(';');
+      document.body.appendChild(p);
+      particleCount++;
+      // Remove after animation finishes (800ms)
+      setTimeout(() => {
+        p.remove();
+        particleCount--;
+      }, 820);
+    }
 
-    // Ring — damped lag (Emil Kowalski spring feel)
-    ringX += (mouseX - ringX) * 0.14;
-    ringY += (mouseY - ringY) * 0.14;
+    // rAF loop: update dot (instant), ring (damping 0.18), aurora (damping 0.12)
+    function tick() {
+      requestAnimationFrame(tick);
 
-    dotEl.style.left  = dotX  + 'px';
-    dotEl.style.top   = dotY  + 'px';
-    ringEl.style.left = ringX + 'px';
-    ringEl.style.top  = ringY + 'px';
-  }
+      // Dot — 1:1 with mouse
+      dotX = mouseX;
+      dotY = mouseY;
 
-  tick();
+      // Ring — damped lag (Emil Kowalski spring feel)
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+
+      // Aurora — slower lag for cinematic separation
+      auroraX += (mouseX - auroraX) * 0.12;
+      auroraY += (mouseY - auroraY) * 0.12;
+
+      // Use left/top (absolute positioning via cursor CSS)
+      dotEl.style.left   = dotX    + 'px';
+      dotEl.style.top    = dotY    + 'px';
+      ringEl.style.left  = ringX   + 'px';
+      ringEl.style.top   = ringY   + 'px';
+      if (auroraEl) {
+        auroraEl.style.left = auroraX + 'px';
+        auroraEl.style.top  = auroraY + 'px';
+      }
+
+      // Publish cursor position for cross-component access (X mark proximity)
+      document.documentElement.style.setProperty('--cursor-x', `${mouseX}px`);
+      document.documentElement.style.setProperty('--cursor-y', `${mouseY}px`);
+    }
+
+    tick();
   })();
 </script>
+
+<style>
+  /* ── CURSOR DOT — instant, 1:1 ─────────────────────── */
+  .cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--signal-cyan);
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    transform: translate(-50%, -50%);
+    transition: width 200ms, height 200ms, opacity 200ms;
+    opacity: 0;
+    mix-blend-mode: difference;
+  }
+  .cursor-dot.visible { opacity: 0.9; }
+
+  /* ── CURSOR RING — damped lag ───────────────────────── */
+  .cursor-ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 212, 255, 0.55);
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition:
+      opacity  200ms,
+      width    300ms var(--ease-out-expo),
+      height   300ms var(--ease-out-expo),
+      background 300ms;
+  }
+  .cursor-ring.visible { opacity: 0.65; }
+  .cursor-ring.large {
+    width: 56px;
+    height: 56px;
+    border-color: rgba(0, 212, 255, 0.7);
+    background: rgba(0, 212, 255, 0.05);
+    opacity: 0.85;
+  }
+
+  /* ── CURSOR AURORA — soft radial glow, slowest lag ─── */
+  /* Sits below content (z-index: 1) and above raw background.
+     mix-blend-mode: screen makes it additive — brightens what's under it.
+     Hero: controlled by Hero.astro for the larger/brighter variant. */
+  .cursor-aurora {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    margin-left: -200px;
+    margin-top: -200px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(
+      circle,
+      rgba(0, 212, 255, 0.04) 0%,
+      transparent 70%
+    );
+    mix-blend-mode: screen;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 600ms ease;
+  }
+  .cursor-aurora.visible { opacity: 1; }
+
+  /* ── CURSOR PARTICLES — trailing fading dots ────────── */
+  .cursor-particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: calc(var(--z-cursor) - 1);
+    background: rgba(0, 212, 255, 0.7);
+    animation: cpFade 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes cpFade {
+    from { opacity: 0.45; transform: scale(1);   }
+    to   { opacity: 0;    transform: scale(0.2); }
+  }
+
+  /* ── DISABLE on touch / mobile ──────────────────────── */
+  @media (max-width: 768px), (pointer: coarse) {
+    .cursor-dot,
+    .cursor-ring,
+    .cursor-aurora,
+    .cursor-particle { display: none !important; }
+  }
+
+  /* ── REDUCED MOTION: kill particles + aurora ─────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .cursor-aurora,
+    .cursor-particle { display: none !important; }
+  }
+</style>
