@@ -130,12 +130,13 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
       <span class="m-line font-cinzel">exist yet.</span>
     </h2>
 
-    <!-- INJECTION 3: Body — sentence-by-sentence reveal + shimmer -->
+    <!-- INJECTION 3: Body — 5-paragraph editorial, each fades in as a beat -->
     <div class="m-body">
-      <span class="sentence s1">Software is ceremony — code as craft, every commit deliberate.</span>
-      <span class="sentence s2">We treat AI as a creative partner, not a replacement: it writes the boilerplate so we can focus on architecture decisions, taste calls, and the error states that actually matter.</span>
-      <span class="sentence s3">Quality compounds. Speed multiplies.</span>
-      <span class="sentence s4">The future belongs to those who build with intention — and ship before consensus.</span>
+      <p class="m-body-line bp1">Software is ceremony — code as craft, every commit deliberate.</p>
+      <p class="m-body-line bp2">We treat AI as a creative partner, not a replacement: it writes the boilerplate so we can focus on the architecture decisions, the taste calls, and the error states that actually matter.</p>
+      <p class="m-body-line bp3">Quality compounds. Speed multiplies. Decisions stack.</p>
+      <p class="m-body-line bp4">The future belongs to those who build with intention — and ship before consensus.</p>
+      <p class="m-body-line bp5">One studio. One operator. Every line considered.</p>
     </div>
 
     <!-- INJECTION 4: Living CTA — continuous arrow bob + underline draw -->
@@ -536,7 +537,7 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     50%       { text-shadow: 0 0 52px rgba(0, 212, 255, 0.38); }
   }
 
-  /* ── INJECTION 3: Body — sentence reveal + shimmer ──────── */
+  /* ── INJECTION 3: Body — 5-paragraph editorial reveal + shimmer ── */
   .m-body {
     font-family: 'Geist', 'Helvetica Neue', sans-serif;
     font-size: clamp(18px, 1.6vw, 22px);
@@ -549,32 +550,42 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     margin-bottom: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.8em;
+    gap: 0;   /* each paragraph controls its own bottom margin */
   }
 
-  /* Each sentence: individual entrance + perpetual shimmer pass */
-  .sentence {
+  /* Each paragraph: individual entrance + perpetual shimmer pass */
+  .m-body-line {
     display: block;
     position: relative;
     overflow: hidden;
+    margin-bottom: 24px;  /* distinct beat spacing — not a wall of text */
     opacity: 0;
     transform: translateY(8px);
     transition:
       opacity   500ms cubic-bezier(0.16, 1, 0.3, 1),
       transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .m-body-line:last-child { margin-bottom: 0; }
 
-  /* Staggered entrance delays */
-  .is-revealed .s1 { transition-delay: 1200ms; }
-  .is-revealed .s2 { transition-delay: 1500ms; }
-  .is-revealed .s3 { transition-delay: 1750ms; }
-  .is-revealed .s4 { transition-delay: 2000ms; }
-  .is-revealed .sentence { opacity: 1; transform: translateY(0); }
+  /* Staggered entrance — editorial pacing */
+  .is-revealed .bp1 { transition-delay: 1200ms; }
+  .is-revealed .bp2 { transition-delay: 1450ms; }
+  .is-revealed .bp3 { transition-delay: 1700ms; }
+  .is-revealed .bp4 { transition-delay: 2000ms; }
+  .is-revealed .bp5 { transition-delay: 2250ms; }
+  .is-revealed .m-body-line { opacity: 1; transform: translateY(0); }
 
-  /* Shimmer: a 50%-wide gradient that travels left→right across each sentence.
-     Uses transform (GPU) not background-position to avoid style recalc.
-     Different durations + delays = desynchronized shimmer per sentence. */
-  .sentence::after {
+  /* Closer paragraph: distinct editorial treatment — brighter, italic serif */
+  .bp5 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 0.005em;
+  }
+
+  /* Shimmer: 50%-wide gradient travels left→right via GPU transform.
+     Desynchronized durations + delays across all 5 paragraphs. */
+  .m-body-line::after {
     content: '';
     position: absolute;
     top: 0; left: 0;
@@ -590,10 +601,11 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     pointer-events: none;
     animation: sentenceShimmer var(--s-dur, 10s) ease-in-out var(--s-dly, 0s) infinite;
   }
-  .s1::after { --s-dur: 10s; --s-dly: 0s;   }
-  .s2::after { --s-dur:  8s; --s-dly: 2.5s; }
-  .s3::after { --s-dur: 12s; --s-dly: 5.0s; }
-  .s4::after { --s-dur:  9s; --s-dly: 7.5s; }
+  .bp1::after { --s-dur: 10s; --s-dly:  0.0s; }
+  .bp2::after { --s-dur:  8s; --s-dly:  2.5s; }
+  .bp3::after { --s-dur: 12s; --s-dly:  5.0s; }
+  .bp4::after { --s-dur:  9s; --s-dly:  7.5s; }
+  .bp5::after { --s-dur: 11s; --s-dly: 10.0s; }
   @keyframes sentenceShimmer {
     0%   { transform: translateX(-200%); }
     100% { transform: translateX(400%);  }
@@ -730,8 +742,8 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     .m-shooting-star { display: none; }
     /* Light leak: hidden (performance) */
     .m-light-leak    { display: none; }
-    /* Sentence shimmer: disabled */
-    .sentence::after { animation: none !important; }
+    /* Paragraph shimmer: disabled */
+    .m-body-line::after { animation: none !important; }
     /* Heading breathing: disabled */
     .is-breathing .m-line { animation: none !important; }
     /* Nebula animation: disabled for performance */
@@ -755,14 +767,14 @@ const particles: Array<{x:string;y:string;size:number;opacity:number;dur:number;
     .m-signoff-mark           { animation: none !important; }
 
     /* Kill shimmer + arrow bob */
-    .sentence::after          { animation: none !important; }
+    .m-body-line::after       { animation: none !important; }
     .m-arrow                  { animation: none !important; }
 
     /* Hide shooting star entirely */
     .m-shooting-star          { display: none !important; }
 
     /* Snap all entrance animations to final state */
-    .m-eyebrow, .m-line, .sentence {
+    .m-eyebrow, .m-line, .m-body-line {
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;

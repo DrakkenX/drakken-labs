@@ -1,16 +1,6 @@
 ---
 ---
 
-<!-- Noto Serif JP for kanji backdrop — async, non-blocking -->
-<style is:global>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200&display=swap');
-
-  /* ── Signature character — swap here to change the kanji ── */
-  :root {
-    --signature-char: '守';  /* mamoru: guard / defend / protect */
-  }
-</style>
-
 <section id="hero" aria-label="Drakken Labs" data-animate="false">
 
   <!-- VIDEO BACKGROUND — deepest layer -->
@@ -25,12 +15,42 @@
   </div>
 
   <!-- ────────────────────────────────────────────────────── -->
-  <!-- LAYER 1: KANJI BACKDROP — 守 (mamoru / "protect")    -->
+  <!-- LAYER 1: DRAKKEN X MARK — tapered strokes + glow     -->
   <!-- ────────────────────────────────────────────────────── -->
-  <!-- data-parallax drives the JS mouse offset; char lives in CSS var -->
-  <div class="hero-kanji" aria-hidden="true" data-parallax="20"></div>
+  <!-- Wrapper handles positioning; SVG handles rotate+breathe -->
+  <div class="hero-xmark-wrap" aria-hidden="true" data-parallax="20">
+    <svg
+      class="hero-xmark"
+      viewBox="0 0 200 200"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <!-- Subtle cyan glow filter — applied to entire X group -->
+        <filter id="hero-xglow" x="-45%" y="-45%" width="190%" height="190%">
+          <feGaussianBlur stdDeviation="3.5" result="glow"/>
+          <feMerge>
+            <feMergeNode in="glow"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
 
-  <!-- Samurai lines removed — kanji backdrop carries atmospheric weight alone -->
+      <g filter="url(#hero-xglow)" fill="#00d4ff">
+        <!-- Arm 1: top-left → bottom-right, tapered (narrow tips, wide center) -->
+        <polygon points="21.8,18.2 106.4,93.6 181.8,178.2 178.2,181.8 93.6,106.4 18.2,21.8"/>
+        <!-- Arm 2: top-right → bottom-left, tapered -->
+        <polygon points="181.8,21.8 106.4,106.4 21.8,181.8 18.2,178.2 93.6,93.6 178.2,18.2"/>
+        <!-- Center diamond — marks the crossing -->
+        <polygon points="100,87 113,100 100,113 87,100"/>
+        <!-- 4 octagonal endpoint caps — one at each arm tip -->
+        <polygon points="26,20 24.2,24.2 20,26 15.8,24.2 14,20 15.8,15.8 20,14 24.2,15.8"/>
+        <polygon points="186,20 184.2,24.2 180,26 175.8,24.2 174,20 175.8,15.8 180,14 184.2,15.8"/>
+        <polygon points="26,180 24.2,184.2 20,186 15.8,184.2 14,180 15.8,175.8 20,174 24.2,175.8"/>
+        <polygon points="186,180 184.2,184.2 180,186 175.8,184.2 174,180 175.8,175.8 180,174 184.2,175.8"/>
+      </g>
+    </svg>
+  </div>
 
   <!-- LAYER 6: BLADE FLASH — idle sweep every 8s -->
   <div class="blade-flash" aria-hidden="true"></div>
@@ -259,54 +279,57 @@
   }
 
   /* ═══════════════════════════════════════════════════════
-     LAYER 1 — KANJI BACKDROP 守
+     LAYER 1 — DRAKKEN X MARK
+     Wrapper: handles absolute position + parallax offset.
+     SVG:     handles fade-in opacity + rotate+breathe loop.
      ═══════════════════════════════════════════════════════ */
-  .hero-kanji {
+  .hero-xmark-wrap {
     position: absolute;
     top: 50%;
     left: 50%;
-    /* Base transform — breathing overrides this in its keyframes */
     transform: translate(calc(-50% + 8vw), -50%);
+    width: clamp(300px, 55vh, 560px);
+    height: clamp(300px, 55vh, 560px);
     pointer-events: none;
     user-select: none;
     z-index: 2;
-    will-change: transform;
-    /* Default opacity: 0 until data-animate fires */
-    opacity: 0;
   }
 
-  /* The actual character lives here — swap via --signature-char */
-  .hero-kanji::before {
-    content: var(--signature-char, '\5B88'); /* 守 unicode fallback */
+  .hero-xmark {
     display: block;
-    font-family: 'Noto Serif JP', 'Hiragino Mincho Pro', 'Yu Mincho', 'MS PMincho', serif;
-    font-weight: 200;
-    font-size: 70vh;
-    line-height: 1;
-    color: var(--signal-cyan);
-    text-shadow:
-      0 0 120px rgba(0, 212, 255, 0.4),
-      0 0 60px  rgba(0, 212, 255, 0.2);
+    width: 100%;
+    height: 100%;
+    opacity: 0;   /* hidden until data-animate fires */
   }
 
-  @keyframes kanjiBreath {
-    0%, 100% { transform: translate(calc(-50% + 8vw), -50%) scale(1);    }
-    50%       { transform: translate(calc(-50% + 8vw), -50%) scale(1.02); }
-  }
-
-  /* Reveal + breathe — triggered by data-animate */
-  section[data-animate="true"] .hero-kanji {
+  /* Reveal: fade in to 0.10, then rotate 60s + breathe every 12s.
+     opacity and transform target different properties → no conflict. */
+  section[data-animate="true"] .hero-xmark {
     animation:
-      kanjiFadeIn  1.5s cubic-bezier(0, 0, 0.38, 0.9) 0ms     both,
-      kanjiBreath 12s  ease-in-out                    1.5s infinite;
+      xMarkFadeIn 1.5s cubic-bezier(0, 0, 0.38, 0.9) 0ms   both,
+      xMarkLive   60s  linear                         1.5s  infinite;
   }
 
-  @keyframes kanjiFadeIn {
+  @keyframes xMarkFadeIn {
     from { opacity: 0;    }
     to   { opacity: 0.10; }
   }
 
-  /* Samurai lines removed (A1) */
+  /* Combined rotation (60s) + breathing scale (12s = every 10% of the 60s cycle).
+     Scale peaks at 10%, 30%, 50%, 70%, 90% → every 6 seconds. */
+  @keyframes xMarkLive {
+    0%   { transform: rotate(0deg)   scale(1);     }
+    10%  { transform: rotate(36deg)  scale(1.022); }
+    20%  { transform: rotate(72deg)  scale(1);     }
+    30%  { transform: rotate(108deg) scale(1.022); }
+    40%  { transform: rotate(144deg) scale(1);     }
+    50%  { transform: rotate(180deg) scale(1.022); }
+    60%  { transform: rotate(216deg) scale(1);     }
+    70%  { transform: rotate(252deg) scale(1.022); }
+    80%  { transform: rotate(288deg) scale(1);     }
+    90%  { transform: rotate(324deg) scale(1.022); }
+    100% { transform: rotate(360deg) scale(1);     }
+  }
 
   /* ═══════════════════════════════════════════════════════
      LAYER 6 — BLADE FLASH (idle, pure CSS)
@@ -788,8 +811,11 @@
      MOBILE
      ═══════════════════════════════════════════════════════ */
   @media (max-width: 768px) {
-    .hero-kanji::before { font-size: 50vh; }
-    .hero-kanji { transform: translate(-50%, -50%); }
+    .hero-xmark-wrap {
+      width: clamp(220px, 45vh, 360px);
+      height: clamp(220px, 45vh, 360px);
+      transform: translate(-50%, -50%);  /* centered, no offset on mobile */
+    }
   }
 
   @media (max-width: 480px) {
@@ -814,7 +840,7 @@
     .drakken-wordmark span       { opacity: 1 !important; animation: none !important; }
     .drakken-wordmark span::before { opacity: 0 !important; animation: none !important; }
     section[data-animate="true"] * { animation-duration: 0.01ms !important; }
-    .hero-kanji { opacity: 0.10 !important; }
+    .hero-xmark { opacity: 0.10 !important; animation: none !important; }
     .hero-name, .hero-tagline, .hero-sub, .hero-quote,
     .hero-cta, .hero-scroll-prompt, .viewport-corner { opacity: 1 !important; }
     .viewport-corner { border-color: rgba(0,212,255,0.4) !important; }
