@@ -1,4 +1,6 @@
 ---
+import SectionAnchor from './SectionAnchor.astro';
+
 const tiers = [
   {
     id: 'exploration',
@@ -55,6 +57,9 @@ const tiers = [
 ---
 
 <section id="investment" aria-labelledby="inv-heading">
+  <!-- //05 Section anchor — absolute so it never disrupts the tier grid below -->
+  <SectionAnchor number="05" label="Investment" class="sa-absolute" />
+
   <div class="section-inner">
     <div class="section-header reveal">
       <div class="section-label"><span>INVESTMENT</span></div>

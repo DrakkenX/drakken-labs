@@ -5,7 +5,6 @@ import CustomCursor from '../components/CustomCursor.astro';
 import CinematicLoader from '../components/CinematicLoader.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import HeroStats from '../components/HeroStats.astro';
 import Manifesto from '../components/Manifesto.astro';
 import Capabilities from '../components/Capabilities.astro';
 import Showcase from '../components/Showcase.astro';
@@ -13,7 +12,6 @@ import Process from '../components/Process.astro';
 import Investment from '../components/Investment.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
-import ChapterMarker from '../components/ChapterMarker.astro';
 ---
 
 <Layout>
@@ -27,23 +25,82 @@ import ChapterMarker from '../components/ChapterMarker.astro';
 
   <main id="main-content" style="position:relative;z-index:var(--z-page)">
     <Hero />
-    <HeroStats />
-    <ChapterMarker chapter="I" label="THE PHILOSOPHY" />
     <Manifesto />
-    <ChapterMarker chapter="II" label="THE DISCIPLINES" />
     <Capabilities />
-    <ChapterMarker chapter="III" label="THE PROOF" />
     <Showcase />
-    <ChapterMarker chapter="IV" label="THE METHOD" />
     <Process />
-    <ChapterMarker chapter="V" label="THE EXCHANGE" />
     <Investment />
-    <ChapterMarker chapter="VI" label="ESTABLISH CONTACT" />
     <Contact />
   </main>
 
   <Footer />
 </Layout>
+
+<script>
+  (() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── Inject SectionAnchors into locked sections ──────────────
+    // These components cannot be modified, so we inject via DOM.
+    // sa-absolute puts each anchor in absolute position so it never
+    // disrupts the locked section's existing flow layout.
+    const lockedConfigs: Array<{ id: string; number: string; label: string }> = [
+      { id: 'capabilities', number: '02', label: 'Capabilities' },
+      { id: 'showcase',     number: '03', label: 'Field-Tested'  },
+      { id: 'process',      number: '04', label: 'Methodology'   },
+    ];
+
+    lockedConfigs.forEach(({ id, number, label }) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      const anchor = document.createElement('div');
+      anchor.className = prefersReduced
+        ? 'section-anchor sa-absolute sa-visible'
+        : 'section-anchor sa-absolute';
+      anchor.setAttribute('aria-hidden', 'true');
+
+      anchor.innerHTML =
+        `<span class="sa-prefix">//</span>` +
+        `<span class="sa-num">${number}</span>` +
+        `<span class="sa-label">${label}</span>`;
+
+      section.insertBefore(anchor, section.firstChild);
+    });
+
+    // ── IntersectionObserver for all .section-anchor elements ───
+    // Handles both static anchors (data-sa from SectionAnchor.astro)
+    // and the injected anchors above (.sa-absolute without data-sa).
+    if (prefersReduced) {
+      document
+        .querySelectorAll<HTMLElement>('[data-sa]')
+        .forEach((a) => a.classList.add('sa-visible'));
+      return;
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add('sa-visible');
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    // Static anchors — from SectionAnchor.astro component (have [data-sa])
+    document
+      .querySelectorAll<HTMLElement>('[data-sa]')
+      .forEach((a) => obs.observe(a));
+
+    // Injected anchors — locked sections (have .sa-absolute, no [data-sa])
+    document
+      .querySelectorAll<HTMLElement>('.sa-absolute:not([data-sa])')
+      .forEach((a) => obs.observe(a));
+  })();
+</script>
 
 <style>
   .skip-link {

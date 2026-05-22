@@ -647,3 +647,57 @@ body::before {
   .chapter-marker-inner { opacity: 1 !important; }
   .cm-line { transform: scaleX(1) !important; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   POLISH 3 ADDITIONS — Hashgraph-hybrid section system
+   Additive only: no existing rules modified.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── FONT UTILITY: Instrument Serif italic ────────────────── */
+/* Used sparingly: decorative italic in Manifesto, Contact heading,
+   HeroStats stat numerals. < 10% of body text. */
+.font-instrument-italic {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ── ATMOSPHERIC BODY GRADIENT ────────────────────────────── */
+/* Very subtle fixed-position color shift:
+   - around Manifesto area: faint cyan tint (#030410)
+   - around Showcase area:  faint warm tint (#040508)
+   background-attachment: fixed means the gradient stays in place
+   as the user scrolls — different sections reveal different tints.
+   Disabled on mobile (fixed bg causes GPU paint thrashing). */
+body {
+  background-image: linear-gradient(
+    to bottom,
+    #030308  0%,
+    #030410 28%,
+    #030308 52%,
+    #040508 76%,
+    #030308 100%
+  );
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-image: none;
+    background-attachment: scroll;
+  }
+}
+
+/* ── SECTION SPACING STANDARD (Polish 3) ─────────────────── */
+/* Reference padding for rebuilt sections — 120px top/bottom.
+   Applied to Manifesto via its own scoped style.
+   Available as a utility for future sections. */
+.section-pad {
+  padding-block: 7.5rem; /* 120px */
+}
+@media (max-width: 768px) {
+  .section-pad {
+    padding-block: 5rem; /* 80px */
+  }
+}

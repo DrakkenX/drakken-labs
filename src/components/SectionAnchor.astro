@@ -1,0 +1,71 @@
+---
+interface Props {
+  number: string;  // "01", "02", etc.
+  label: string;   // "Manifesto", "Capabilities", etc.
+  class?: string;  // extra modifier classes
+}
+const { number, label, class: extraClass = '' } = Astro.props;
+---
+
+<div
+  class={`section-anchor${extraClass ? ' ' + extraClass : ''}`}
+  data-sa
+  aria-hidden="true"
+>
+  <span class="sa-prefix">//</span>
+  <span class="sa-num">{number}</span>
+  <span class="sa-label">{label}</span>
+</div>
+
+<!-- is:global so injected DOM copies (locked sections) also inherit these styles -->
+<style is:global>
+  .section-anchor {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 80px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateX(-16px);
+    transition:
+      opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .section-anchor.sa-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Absolute-overlay modifier — used for sections not fully rebuilt (Investment, Contact)
+     and for JS-injected anchors on locked sections (Capabilities, Showcase, Process).
+     position:absolute keeps it out of flow so it never disturbs existing section layout. */
+  .section-anchor.sa-absolute {
+    position: absolute;
+    top: 2.25rem;
+    left: max(2rem, 10vw);
+    z-index: 20;
+    margin-bottom: 0;
+  }
+
+  .sa-prefix { color: rgba(0, 212, 255, 0.5); }
+  .sa-num    { color: rgba(0, 212, 255, 0.8); font-weight: 500; }
+  .sa-label  { color: rgba(255, 255, 255, 0.5); }
+
+  @media (max-width: 768px) {
+    .section-anchor.sa-absolute {
+      top: 1.25rem;
+      left: 1.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-anchor {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
