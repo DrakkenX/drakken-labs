@@ -15,89 +15,61 @@
   </div>
 
   <!-- ────────────────────────────────────────────────────── -->
-  <!-- LAYER 1: DRAKKEN X MARK — futuristic multi-layer     -->
+  <!-- DRAKKEN LOGOMARK — single designed SVG, no effect pile -->
   <!-- ────────────────────────────────────────────────────── -->
-  <div class="hero-xmark-wrap" id="hero-xmark-wrap" aria-hidden="true" data-parallax="20">
+  <!--
+    Geometry: 8-point X-star (4 arm tips at diagonals + 4 notch waist
+    points at cardinals). fill-rule="evenodd" + inner 8-point void creates
+    the layered depth. Reads as crown / blade / wings simultaneously.
+    Slow 120s rotation + 8s opacity breathe. One mark, atmospheric.
+  -->
+  <svg
+    class="drakken-logomark"
+    aria-hidden="true"
+    viewBox="0 0 800 800"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <!-- Cyan gradient: light ice → signal cyan → bright aqua -->
+      <linearGradient id="lm-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"   stop-color="#e8f7ff" stop-opacity="1"/>
+        <stop offset="48%"  stop-color="#00d4ff" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#7ae8ff" stop-opacity="1"/>
+      </linearGradient>
+      <!-- Outer glow filter — soft, wide -->
+      <filter id="lm-glow" x="-35%" y="-35%" width="170%" height="170%">
+        <feGaussianBlur stdDeviation="10" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
 
-    <!-- Layer 4a: Red chromatic ghost (+1.5px right offset) -->
-    <svg class="hero-xmark xm-chroma xm-red" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="#ff4060">
-        <polygon points="21.8,18.2 106.4,93.6 181.8,178.2 178.2,181.8 93.6,106.4 18.2,21.8"/>
-        <polygon points="181.8,21.8 106.4,106.4 21.8,181.8 18.2,178.2 93.6,93.6 178.2,18.2"/>
-        <polygon points="26,20 24.2,24.2 20,26 15.8,24.2 14,20 15.8,15.8 20,14 24.2,15.8"/>
-        <polygon points="186,20 184.2,24.2 180,26 175.8,24.2 174,20 175.8,15.8 180,14 184.2,15.8"/>
-        <polygon points="26,180 24.2,184.2 20,186 15.8,184.2 14,180 15.8,175.8 20,174 24.2,175.8"/>
-        <polygon points="186,180 184.2,184.2 180,186 175.8,184.2 174,180 175.8,175.8 180,174 184.2,175.8"/>
-      </g>
-    </svg>
+    <!--
+      OUTER X STAR (8 vertices):
+        NE tip (640,160) · N notch (400,280) · NW tip (160,160)
+        W notch (280,400) · SW tip (160,640) · S notch (400,520)
+        SE tip (640,640) · E notch (520,400)
 
-    <!-- Layer 4b: Blue chromatic ghost (-1.5px left offset) -->
-    <svg class="hero-xmark xm-chroma xm-blue" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="#a78bfa">
-        <polygon points="21.8,18.2 106.4,93.6 181.8,178.2 178.2,181.8 93.6,106.4 18.2,21.8"/>
-        <polygon points="181.8,21.8 106.4,106.4 21.8,181.8 18.2,178.2 93.6,93.6 178.2,18.2"/>
-        <polygon points="26,20 24.2,24.2 20,26 15.8,24.2 14,20 15.8,15.8 20,14 24.2,15.8"/>
-        <polygon points="186,20 184.2,24.2 180,26 175.8,24.2 174,20 175.8,15.8 180,14 184.2,15.8"/>
-        <polygon points="26,180 24.2,184.2 20,186 15.8,184.2 14,180 15.8,175.8 20,174 24.2,175.8"/>
-        <polygon points="186,180 184.2,184.2 180,186 175.8,184.2 174,180 175.8,175.8 180,174 184.2,175.8"/>
-      </g>
-    </svg>
+      INNER VOID STAR (8 vertices, r=70 / notch=26):
+        Creates the center negative-space that gives the mark depth.
 
-    <!-- Layer 2: Scan lines — travel top to bottom over wrapper height -->
-    <div class="xm-scan-wrap">
-      <div class="xm-scan xm-scan-a"></div>
-      <div class="xm-scan xm-scan-b"></div>
-    </div>
-
-    <!-- Layer 1: Main X SVG — arms + diamond + caps + pulse rings + glitch -->
-    <svg
-      class="hero-xmark xm-main"
-      viewBox="0 0 200 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <!-- Glow filter -->
-        <filter id="hero-xglow" x="-45%" y="-45%" width="190%" height="190%">
-          <feGaussianBlur stdDeviation="3.5" result="glow"/>
-          <feMerge>
-            <feMergeNode in="glow"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-      </defs>
-
-      <!-- Layer 6: Endpoint caps with asynchronous glow pulses -->
-      <g class="xm-endpoints">
-        <polygon class="xm-ep ep-tl" points="26,20 24.2,24.2 20,26 15.8,24.2 14,20 15.8,15.8 20,14 24.2,15.8" fill="#00d4ff"/>
-        <polygon class="xm-ep ep-tr" points="186,20 184.2,24.2 180,26 175.8,24.2 174,20 175.8,15.8 180,14 184.2,15.8" fill="#00d4ff"/>
-        <polygon class="xm-ep ep-bl" points="26,180 24.2,184.2 20,186 15.8,184.2 14,180 15.8,175.8 20,174 24.2,175.8" fill="#00d4ff"/>
-        <polygon class="xm-ep ep-br" points="186,180 184.2,184.2 180,186 175.8,184.2 174,180 175.8,175.8 180,174 184.2,175.8" fill="#00d4ff"/>
-      </g>
-
-      <!-- Layer 1: Main X body — arms + diamond + caps (with glow filter) -->
-      <g filter="url(#hero-xglow)" fill="#00d4ff">
-        <polygon points="21.8,18.2 106.4,93.6 181.8,178.2 178.2,181.8 93.6,106.4 18.2,21.8"/>
-        <polygon points="181.8,21.8 106.4,106.4 21.8,181.8 18.2,178.2 93.6,93.6 178.2,18.2"/>
-        <polygon points="100,87 113,100 100,113 87,100"/>
-        <polygon points="26,20 24.2,24.2 20,26 15.8,24.2 14,20 15.8,15.8 20,14 24.2,15.8"/>
-        <polygon points="186,20 184.2,24.2 180,26 175.8,24.2 174,20 175.8,15.8 180,14 184.2,15.8"/>
-        <polygon points="26,180 24.2,184.2 20,186 15.8,184.2 14,180 15.8,175.8 20,174 24.2,175.8"/>
-        <polygon points="186,180 184.2,184.2 180,186 175.8,184.2 174,180 175.8,175.8 180,174 184.2,175.8"/>
-      </g>
-
-      <!-- Layer 5: Pulse rings — sonar ping from center every 8s -->
-      <circle class="xm-pulse-ring xm-pr-a" cx="100" cy="100" r="72" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
-      <circle class="xm-pulse-ring xm-pr-b" cx="100" cy="100" r="72" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
-
-      <!-- Layer 3: Glitch overlay — brief horizontal shift every ~7s -->
-      <g class="xm-glitch-g" filter="url(#hero-xglow)" fill="#00d4ff">
-        <polygon points="21.8,18.2 106.4,93.6 181.8,178.2 178.2,181.8 93.6,106.4 18.2,21.8"/>
-        <polygon points="181.8,21.8 106.4,106.4 21.8,181.8 18.2,178.2 93.6,93.6 178.2,18.2"/>
-      </g>
-    </svg>
-
-  </div>
+      fill-rule="evenodd" punches the void through the outer shape.
+    -->
+    <path
+      class="lm-shape"
+      fill="url(#lm-grad)"
+      fill-rule="evenodd"
+      filter="url(#lm-glow)"
+      d="
+        M 640,160 L 400,280 L 160,160 L 280,400
+        L 160,640 L 400,520 L 640,640 L 520,400 Z
+        M 449,351 L 400,374 L 351,351 L 374,400
+        L 351,449 L 400,426 L 449,449 L 426,400 Z
+      "
+    />
+  </svg>
 
   <!-- LAYER 6: BLADE FLASH — idle sweep every 8s -->
   <div class="blade-flash" aria-hidden="true"></div>
@@ -267,42 +239,6 @@
       }, { passive: true });
     }
 
-    // ── X mark proximity reaction (every 50ms, low-freq) ──────
-    // Cursor near the X: opacity bumps 0.12→0.18, scan lines speed up.
-    // Cursor position comes from mousemove on hero (no global dep).
-    const xWrap = document.getElementById('hero-xmark-wrap') as HTMLElement | null;
-    const xMain = hero.querySelector<HTMLElement>('.xm-main');
-
-    if (xWrap && xMain && !window.matchMedia('(max-width: 768px)').matches) {
-      let hMX = -9999, hMY = -9999;
-
-      hero.addEventListener('mousemove', (e) => {
-        hMX = e.clientX;
-        hMY = e.clientY;
-      });
-      hero.addEventListener('mouseleave', () => {
-        hMX = -9999; hMY = -9999;
-      });
-
-      setInterval(() => {
-        const rect = xWrap.getBoundingClientRect();
-        const cx = rect.left + rect.width  / 2;
-        const cy = rect.top  + rect.height / 2;
-        const dist = Math.hypot(hMX - cx, hMY - cy);
-        // Effective proximity: 0 (far) → 1 (very close, ≤30px)
-        const prox = Math.max(0, Math.min(1, 1 - (dist - 30) / 190));
-
-        // Opacity: 0.12 base → up to 0.18 when near
-        xMain.style.opacity = String(+(0.12 + prox * 0.06).toFixed(3));
-
-        // Scan speed: accelerate from 3s → 1.5s — add/remove class
-        if (prox > 0.25) {
-          xWrap.classList.add('xm-near');
-        } else {
-          xWrap.classList.remove('xm-near');
-        }
-      }, 50);
-    }
   })();
 </script>
 
@@ -363,171 +299,57 @@
   }
 
   /* ═══════════════════════════════════════════════════════
-     LAYER 1 — DRAKKEN X MARK (futuristic multi-layer)
+     DRAKKEN LOGOMARK — one mark, atmospheric
+     8-point X-star (outer bold) + 8-point void (inner depth).
+     120s slow rotation + 8s opacity/glow breathe.
      ═══════════════════════════════════════════════════════ */
-
-  /* ── Wrapper: positioning only ──────────────────────── */
-  .hero-xmark-wrap {
+  .drakken-logomark {
     position: absolute;
     top: 50%;
     left: 50%;
+    /* Base: positioned + offset. Animation keyframes carry this
+       translate so the mark stays put during rotation.          */
     transform: translate(calc(-50% + 8vw), -50%);
-    width: clamp(300px, 55vh, 560px);
-    height: clamp(300px, 55vh, 560px);
+    width: clamp(380px, 60vh, 720px);
+    height: clamp(380px, 60vh, 720px);
     pointer-events: none;
     user-select: none;
     z-index: 2;
+    opacity: 0;   /* hidden until data-animate fires */
+    will-change: transform, opacity;
   }
 
-  /* ── All SVG layers share the same base position ────── */
-  .hero-xmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    opacity: 0;
-  }
-
-  /* ── Main X: fade to 0.12, then rotate+breathe ────── */
-  section[data-animate="true"] .xm-main {
+  /* Fade in → then rotation + breathe take over their properties */
+  section[data-animate="true"] .drakken-logomark {
     animation:
-      xMarkFadeIn 1.5s cubic-bezier(0, 0, 0.38, 0.9) 0ms   both,
-      xMarkLive   60s  linear                         1.5s  infinite;
+      lmFadeIn  2.0s cubic-bezier(0, 0, 0.38, 0.9) 0.5s  forwards,
+      lmRotate  120s linear                         2.5s  infinite,
+      lmBreathe 8s   ease-in-out                    2.5s  infinite;
   }
 
-  @keyframes xMarkFadeIn {
+  /* Opacity: 0 → 0.18 (one-shot, holds via forwards fill)          */
+  @keyframes lmFadeIn {
     from { opacity: 0;    }
-    to   { opacity: 0.12; }
+    to   { opacity: 0.18; }
   }
 
-  /* Rotation (60s/rev) + breathing (every 12s = every 10% of 60s) */
-  @keyframes xMarkLive {
-    0%   { transform: rotate(0deg)   scale(1);     }
-    10%  { transform: rotate(36deg)  scale(1.022); }
-    20%  { transform: rotate(72deg)  scale(1);     }
-    30%  { transform: rotate(108deg) scale(1.022); }
-    40%  { transform: rotate(144deg) scale(1);     }
-    50%  { transform: rotate(180deg) scale(1.022); }
-    60%  { transform: rotate(216deg) scale(1);     }
-    70%  { transform: rotate(252deg) scale(1.022); }
-    80%  { transform: rotate(288deg) scale(1);     }
-    90%  { transform: rotate(324deg) scale(1.022); }
-    100% { transform: rotate(360deg) scale(1);     }
+  /* Rotation: full 360deg over 120s, carrying the centering translate */
+  @keyframes lmRotate {
+    from { transform: translate(calc(-50% + 8vw), -50%) rotate(0deg);   }
+    to   { transform: translate(calc(-50% + 8vw), -50%) rotate(360deg); }
   }
 
-  /* ── Layer 4: Chromatic aberration ghosts ───────────── */
-  /* Each ghost is a separate SVG offset by ±1.5px and tinted.
-     mix-blend-mode: screen makes them additive — CRT lens feel. */
-  .xm-chroma {
-    mix-blend-mode: screen;
-  }
-  .xm-red  { left:  1.5px; }
-  .xm-blue { left: -1.5px; }
-
-  section[data-animate="true"] .xm-chroma {
-    animation:
-      xChromaFadeIn 1.5s cubic-bezier(0, 0, 0.38, 0.9) 0ms   both,
-      xMarkLive     60s  linear                         1.5s  infinite;
-  }
-  @keyframes xChromaFadeIn {
-    from { opacity: 0;    }
-    to   { opacity: 0.15; }
-  }
-
-  /* ── Layer 2: Scan lines ────────────────────────────── */
-  /* Full-width divs travel from top to bottom of wrapper (overflow:hidden clips them).
-     --xm-scan-dur is updated by Hero JS proximity detection (default 3s). */
-  .xm-scan-wrap {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 3;
-  }
-
-  .xm-scan {
-    position: absolute;
-    left: -5%;
-    width: 110%;
-    height: 3px;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(0, 212, 255, 0.55) 30%,
-      rgba(0, 212, 255, 0.75) 50%,
-      rgba(0, 212, 255, 0.55) 70%,
-      transparent 100%
-    );
-    border-radius: 1px;
-    will-change: transform;
-  }
-
-  .xm-scan-a {
-    top: -3px;
-    animation: xScanDown var(--xm-scan-dur, 3s) linear 0s infinite;
-  }
-  .xm-scan-b {
-    top: -3px;
-    animation: xScanDown var(--xm-scan-dur, 3s) linear 1.5s infinite;
-  }
-
-  /* Travel the full wrapper height (same clamp as wrapper dimensions) */
-  @keyframes xScanDown {
-    from { transform: translateY(-3px); }
-    to   { transform: translateY(clamp(300px, 55vh, 560px)); }
-  }
-
-  /* Cursor proximity: accelerate scan lines */
-  .xm-near .xm-scan-a,
-  .xm-near .xm-scan-b { animation-duration: 1.5s; }
-
-  /* ── Layer 5: Pulse rings ───────────────────────────── */
-  /* SVG circles that emanate from center diamond like sonar pings */
-  .xm-pulse-ring {
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-  section[data-animate="true"] .xm-pr-a {
-    animation: xPulseRing 8s cubic-bezier(0.2, 0.6, 0.4, 1) 2.0s infinite;
-  }
-  section[data-animate="true"] .xm-pr-b {
-    animation: xPulseRing 8s cubic-bezier(0.2, 0.6, 0.4, 1) 6.0s infinite;
-  }
-  @keyframes xPulseRing {
-    0%   { transform: scale(0);   opacity: 0.4; stroke-width: 2;   }
-    70%  { transform: scale(1.9); opacity: 0;   stroke-width: 0.5; }
-    100% { transform: scale(1.9); opacity: 0;   stroke-width: 0.5; }
-  }
-
-  /* ── Layer 3: Glitch overlay ────────────────────────── */
-  /* Duplicate X arms that briefly flash with horizontal offset every ~7s.
-     Simulates data corruption / CRT scan artifact. */
-  .xm-glitch-g { opacity: 0; }
-  section[data-animate="true"] .xm-glitch-g {
-    animation: xGlitch 7s linear 4.5s infinite;
-  }
-  @keyframes xGlitch {
-    0%, 88%, 100% { opacity: 0;    transform: translateX(0);   }
-    89%           { opacity: 0.85; transform: translateX(9px);  }
-    90.5%         { opacity: 0.65; transform: translateX(-6px); }
-    92%           { opacity: 0;    transform: translateX(0);   }
-  }
-
-  /* ── Layer 6: Endpoint glow pulses ─────────────────── */
-  /* Each octagonal cap pulses independently (asynchronous offsets) */
-  .xm-ep {
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-  section[data-animate="true"] .ep-tl { animation: xEpGlow 3.0s ease-in-out 0.00s infinite; }
-  section[data-animate="true"] .ep-tr { animation: xEpGlow 3.0s ease-in-out 0.75s infinite; }
-  section[data-animate="true"] .ep-bl { animation: xEpGlow 3.0s ease-in-out 1.50s infinite; }
-  section[data-animate="true"] .ep-br { animation: xEpGlow 3.0s ease-in-out 2.25s infinite; }
-  @keyframes xEpGlow {
-    0%, 100% { opacity: 0.45; }
-    50%       { opacity: 1.0;  }
+  /* Breathe: opacity 0.18 ↔ 0.24 + glow expansion over 8s          */
+  /* lmBreathe listed last → wins over lmFadeIn's opacity after 2.5s */
+  @keyframes lmBreathe {
+    0%, 100% {
+      opacity: 0.18;
+      filter: drop-shadow(0 0 55px rgba(0, 212, 255, 0.28));
+    }
+    50% {
+      opacity: 0.24;
+      filter: drop-shadow(0 0 90px rgba(0, 212, 255, 0.44));
+    }
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -1010,16 +832,19 @@
      MOBILE
      ═══════════════════════════════════════════════════════ */
   @media (max-width: 768px) {
-    .hero-xmark-wrap {
-      width: clamp(220px, 45vh, 360px);
-      height: clamp(220px, 45vh, 360px);
+    .drakken-logomark {
+      width: clamp(260px, 52vh, 460px);
+      height: clamp(260px, 52vh, 460px);
+      /* No side offset on mobile — center it */
       transform: translate(-50%, -50%);
     }
-    /* Disable expensive effects on mobile */
-    .xm-chroma, .xm-scan-wrap, .xm-pulse-ring { display: none; }
-    @keyframes xScanDown {
-      from { transform: translateY(-3px); }
-      to   { transform: translateY(clamp(220px, 45vh, 360px)); }
+    @keyframes lmRotate {
+      from { transform: translate(-50%, -50%) rotate(0deg);   }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    @keyframes lmBreathe {
+      0%, 100% { opacity: 0.16; filter: drop-shadow(0 0 40px rgba(0,212,255,0.25)); }
+      50%       { opacity: 0.22; filter: drop-shadow(0 0 65px rgba(0,212,255,0.38)); }
     }
   }
 
@@ -1045,10 +870,12 @@
     .drakken-wordmark span       { opacity: 1 !important; animation: none !important; }
     .drakken-wordmark span::before { opacity: 0 !important; animation: none !important; }
     section[data-animate="true"] * { animation-duration: 0.01ms !important; }
-    .hero-xmark { opacity: 0.12 !important; animation: none !important; }
-    .xm-chroma  { opacity: 0.12 !important; animation: none !important; }
-    .xm-scan-wrap, .xm-pulse-ring, .xm-glitch-g { display: none !important; }
-    .xm-ep { animation: none !important; opacity: 0.5 !important; }
+    /* Logomark: snap to final visible state, no animation */
+    .drakken-logomark {
+      opacity: 0.18 !important;
+      animation: none !important;
+      filter: drop-shadow(0 0 55px rgba(0, 212, 255, 0.28)) !important;
+    }
     .hero-name, .hero-tagline, .hero-sub, .hero-quote,
     .hero-cta, .hero-scroll-prompt, .viewport-corner { opacity: 1 !important; }
     .viewport-corner { border-color: rgba(0,212,255,0.4) !important; }

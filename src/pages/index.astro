@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SceneCanvas from '../components/SceneCanvas.astro';
-import CustomCursor from '../components/CustomCursor.astro';
+import CursorRipple from '../components/CursorRipple.astro';
 import CinematicLoader from '../components/CinematicLoader.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
@@ -17,7 +17,7 @@ import Footer from '../components/Footer.astro';
 <Layout>
   <SceneCanvas slot="scene" />
   <CinematicLoader slot="loader" />
-  <CustomCursor slot="cursor" />
+  <CursorRipple slot="cursor" />
 
   <a href="#main-content" class="skip-link font-inter">Skip to main content</a>
 

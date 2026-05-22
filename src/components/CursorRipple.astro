@@ -1,0 +1,245 @@
+---
+// CursorRipple.astro — WebGL ripple cursor (Neue World style)
+// Full-screen canvas overlay. Vanilla WebGL, no Three.js.
+// Each mouse move (throttled 80ms) + every click spawns a ripple.
+// Up to 8 simultaneous ripples; each decays over 2 seconds.
+// Disabled on mobile/touch and prefers-reduced-motion.
+---
+
+<canvas id="cursor-ripple-canvas" aria-hidden="true"></canvas>
+
+<style>
+  #cursor-ripple-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+    mix-blend-mode: screen;
+  }
+
+  /* Disable on touch devices and mobile */
+  @media (max-width: 768px), (pointer: coarse) {
+    #cursor-ripple-canvas { display: none; }
+  }
+
+  /* Disable for reduced-motion users */
+  @media (prefers-reduced-motion: reduce) {
+    #cursor-ripple-canvas { display: none; }
+  }
+</style>
+
+<script>
+  (() => {
+    // Guard: skip on touch / reduced-motion
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const canvas = document.getElementById('cursor-ripple-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+
+    const gl = canvas.getContext('webgl', {
+      premultipliedAlpha: false,
+      antialias: false,   // not needed for a full-screen blurred effect
+      alpha: true,
+    });
+    if (!gl) return;   // WebGL not supported — silent fallback (no effect)
+
+    // ── Resize to device pixel ratio (capped at 2 for perf) ────────
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas!.width  = window.innerWidth  * dpr;
+      canvas!.height = window.innerHeight * dpr;
+      gl!.viewport(0, 0, canvas!.width, canvas!.height);
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    // ── Vertex shader ───────────────────────────────────────────────
+    // Full-screen quad: NDC positions → UV coordinates.
+    const VERT_SRC = `
+      attribute vec2 a_pos;
+      varying   vec2 v_uv;
+      void main() {
+        v_uv = a_pos * 0.5 + 0.5;
+        gl_Position = vec4(a_pos, 0.0, 1.0);
+      }
+    `;
+
+    // ── Fragment shader ─────────────────────────────────────────────
+    // Supports up to 8 simultaneous ripples.
+    // Each ripple: vec4(x_px, y_px, startTime_sec, intensity)
+    // Ring expands at 380 px/s, fades over 2s.
+    const FRAG_SRC = `
+      precision highp float;
+
+      varying vec2 v_uv;
+
+      uniform vec2  u_resolution;   /* canvas pixel dims (DPR-scaled) */
+      uniform float u_time;         /* seconds */
+      uniform vec4  u_ripples[8];   /* packed ripple data */
+      uniform int   u_count;        /* active ripple count (0-8) */
+
+      void main() {
+        vec2 px = v_uv * u_resolution;
+        float acc = 0.0;
+
+        for (int i = 0; i < 8; i++) {
+          if (i >= u_count) break;
+
+          vec2  center    = u_ripples[i].xy;
+          float startTime = u_ripples[i].z;
+          float intensity = u_ripples[i].w;
+
+          float age = u_time - startTime;
+          if (age < 0.0 || age > 2.0) continue;
+
+          float dist      = distance(px, center);
+          float radius    = age * 380.0;         /* expands 380 px/s */
+          float thickness = 55.0 + age * 30.0;  /* ring widens slightly */
+
+          /* Smooth ring mask — peak at exact radius */
+          float inner = smoothstep(radius - thickness, radius, dist);
+          float outer = 1.0 - smoothstep(radius, radius + thickness, dist);
+          float ring  = inner * outer;
+
+          /* Oscillation adds ripple character inside the ring */
+          float wave = sin((dist - radius) * 0.065) * 0.5 + 0.5;
+
+          /* Quadratic decay: fast falloff toward end of 2s life */
+          float decay = pow(max(0.0, 1.0 - age / 2.0), 1.8);
+
+          acc += ring * wave * decay * intensity;
+        }
+
+        /* Cyan-tinted output — matched to Drakken signal cyan */
+        vec3  col = vec3(0.0, 0.831, 1.0) * clamp(acc * 0.45, 0.0, 1.0);
+        float a   = clamp(acc * 0.65, 0.0, 1.0);
+
+        gl_FragColor = vec4(col * a, a);   /* premultiplied-style for screen blend */
+      }
+    `;
+
+    // ── Compile + link ──────────────────────────────────────────────
+    function compile(type: number, src: string): WebGLShader | null {
+      const sh = gl!.createShader(type);
+      if (!sh) return null;
+      gl!.shaderSource(sh, src);
+      gl!.compileShader(sh);
+      if (!gl!.getShaderParameter(sh, gl!.COMPILE_STATUS)) {
+        gl!.deleteShader(sh);
+        return null;
+      }
+      return sh;
+    }
+
+    const vert = compile(gl.VERTEX_SHADER,   VERT_SRC);
+    const frag = compile(gl.FRAGMENT_SHADER, FRAG_SRC);
+    if (!vert || !frag) return;
+
+    const prog = gl.createProgram();
+    if (!prog) return;
+    gl.attachShader(prog, vert);
+    gl.attachShader(prog, frag);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+
+    // ── Full-screen quad geometry ───────────────────────────────────
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1,  1, -1, -1,  1,  -1,  1,  1, -1,  1,  1]),
+      gl.STATIC_DRAW
+    );
+    const posLoc = gl.getAttribLocation(prog, 'a_pos');
+    gl.enableVertexAttribArray(posLoc);
+    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+    // ── Uniform locations ───────────────────────────────────────────
+    const uRes     = gl.getUniformLocation(prog, 'u_resolution');
+    const uTime    = gl.getUniformLocation(prog, 'u_time');
+    const uRipples = gl.getUniformLocation(prog, 'u_ripples');
+    const uCount   = gl.getUniformLocation(prog, 'u_count');
+
+    // ── Ripple state ────────────────────────────────────────────────
+    interface Ripple { x: number; y: number; t: number; intensity: number; }
+    const ripples: Ripple[] = [];
+    const MAX = 8;
+
+    function push(x: number, y: number, intensity: number) {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      ripples.push({
+        x: x * dpr,
+        y: (window.innerHeight - y) * dpr,   // WebGL Y is inverted
+        t: performance.now() / 1000,
+        intensity,
+      });
+      if (ripples.length > MAX) ripples.shift();
+    }
+
+    // Move: one ripple per 80ms while mouse is in motion
+    let lastMove = 0;
+    window.addEventListener('mousemove', (e) => {
+      const now = performance.now();
+      if (now - lastMove > 80) {
+        push(e.clientX, e.clientY, 0.55);
+        lastMove = now;
+      }
+    }, { passive: true });
+
+    // Click: stronger burst
+    window.addEventListener('click', (e) => {
+      push(e.clientX, e.clientY, 1.4);
+    }, { passive: true });
+
+    // ── Blending ────────────────────────────────────────────────────
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+    // ── Render loop ─────────────────────────────────────────────────
+    const ripBuf = new Float32Array(MAX * 4);   // reused every frame
+
+    function frame() {
+      requestAnimationFrame(frame);
+
+      const now = performance.now() / 1000;
+
+      // Cull ripples older than 2s from the front of the queue
+      while (ripples.length > 0 && now - ripples[0]!.t > 2.0) {
+        ripples.shift();
+      }
+
+      // Skip drawing if nothing to show
+      if (ripples.length === 0) {
+        gl!.clearColor(0, 0, 0, 0);
+        gl!.clear(gl!.COLOR_BUFFER_BIT);
+        return;
+      }
+
+      gl!.clearColor(0, 0, 0, 0);
+      gl!.clear(gl!.COLOR_BUFFER_BIT);
+
+      // Pack ripple data into flat Float32Array
+      for (let i = 0; i < ripples.length; i++) {
+        const r = ripples[i]!;
+        ripBuf[i * 4]     = r.x;
+        ripBuf[i * 4 + 1] = r.y;
+        ripBuf[i * 4 + 2] = r.t;
+        ripBuf[i * 4 + 3] = r.intensity;
+      }
+
+      gl!.uniform2f(uRes, canvas!.width, canvas!.height);
+      gl!.uniform1f(uTime, now);
+      gl!.uniform4fv(uRipples, ripBuf);
+      gl!.uniform1i(uCount, ripples.length);
+
+      gl!.drawArrays(gl!.TRIANGLES, 0, 6);
+    }
+
+    frame();
+  })();
+</script>
